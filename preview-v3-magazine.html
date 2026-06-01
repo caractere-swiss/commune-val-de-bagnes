@@ -124,14 +124,41 @@ img,svg{ display:block; max-width:100%; }
   border-left:1px solid var(--trait); padding-left:14px; max-width:150px;
 }
 .nav{ margin-left:auto; display:flex; align-items:center; gap:6px; }
-.nav a{
-  font-family:var(--corps); font-size:15px; color:var(--encre);
+.nav > a, .nav-item > a{
+  font-family:var(--corps); font-size:15px; color:var(--encre); cursor:pointer;
+  display:inline-flex; align-items:center; gap:7px;
   padding:10px 16px; border-radius:var(--r-pill);
   transition:background .2s ease, color .2s ease, transform .2s ease;
 }
-.nav a:hover{ background:var(--bleu-voile); color:var(--vdb-bleu); }
-.nav a.cta{ background:var(--vdb-bleu); color:#fff; }
-.nav a.cta:hover{ background:var(--vdb-bleu-fonce); transform:translateY(-1px); }
+.nav > a:hover, .nav-item:hover > a{ background:var(--bleu-voile); color:var(--vdb-bleu); }
+.nav > a.cta{ background:var(--vdb-bleu); color:#fff; }
+.nav > a.cta:hover{ background:var(--vdb-bleu-fonce); transform:translateY(-1px); }
+/* Chevron des items à sous-menu */
+.nav-item > a .caret{ width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg) translateY(-1px); transition:transform .2s ease; opacity:.55; }
+.nav-item:hover > a .caret{ transform:rotate(225deg) translateY(1px); }
+
+/* ---------- Sous-menu / méga-menu (repris de V1-V2, adapté V3) ---------- */
+.nav-item{ position:relative; display:flex; align-items:center; }
+.nav-item > a::after{ content:''; position:absolute; top:100%; left:0; right:0; height:16px; } /* pont anti-perte de survol */
+.mega{
+  position:absolute; top:calc(100% + 14px); left:0;
+  visibility:hidden; opacity:0; transform:translateY(6px); pointer-events:none;
+  background:var(--carte); border:1px solid var(--trait);
+  border-radius:var(--r-lg); box-shadow:var(--shadow-lift);
+  padding:16px; z-index:60; max-width:calc(100vw - 40px);
+  transition:opacity .18s ease, transform .18s ease, visibility .18s ease;
+}
+.nav-item:hover .mega{ visibility:visible; opacity:1; transform:translateY(0); pointer-events:auto; }
+.mega-title{ font-family:var(--corps); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--vdb-bleu); font-weight:700; margin:4px 10px 12px; }
+.mega-grid{ display:grid; grid-template-columns:1fr 1fr; gap:2px; width:520px; }
+.mega-grid.narrow{ grid-template-columns:1fr; width:240px; }
+.mega-link{ display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:var(--r-md); color:var(--encre); transition:background .15s ease; }
+.mega-link:hover{ background:var(--bleu-voile); }
+.mega-ico{ flex-shrink:0; width:38px; height:38px; border-radius:50%; display:grid; place-items:center; background:var(--sable-voile); color:var(--vdb-bleu); }
+.mega-ico svg{ width:20px; height:20px; }
+.mega-link .txt{ display:flex; flex-direction:column; line-height:1.2; }
+.mega-link .txt strong{ font-family:var(--titre); font-weight:bold; font-size:14px; }
+.mega-link .txt span{ font-size:11px; color:var(--estompe); margin-top:2px; }
 .burger{ display:none; margin-left:auto; border:0; background:transparent; cursor:pointer; padding:10px; border-radius:var(--r-pill); }
 .burger:hover{ background:var(--brun-voile); }
 .burger span{ display:block; width:24px; height:2px; background:var(--encre); margin:5px 0; border-radius:2px; transition:.25s; }
@@ -327,7 +354,10 @@ img,svg{ display:block; max-width:100%; }
     flex-direction:column; align-items:stretch; gap:4px;
     background:var(--fond); padding:16px var(--gut) 24px; border-bottom:1px solid var(--trait); }
   .nav.open{ display:flex; }
-  .nav a{ padding:14px 16px; }
+  .nav > a, .nav-item > a{ padding:14px 16px; width:100%; }
+  .nav-item{ display:block; width:100%; }
+  .nav-item > a .caret{ display:none; }
+  .mega{ display:none; }   /* sous-menus masqués sur mobile (survol non tactile) */
   .burger{ display:block; }
   .car-btn{ display:none; }
 }
@@ -367,8 +397,67 @@ img,svg{ display:block; max-width:100%; }
     </button>
 
     <nav class="nav" id="mainnav">
-      <a href="#shop">Shop</a>
-      <a href="#shop">Commande de vin</a>
+
+      <!-- Shop : méga-menu des 8 catégories (libellé marketing → famille Odoo) -->
+      <div class="nav-item">
+        <a href="#shop">Shop <i class="caret"></i></a>
+        <div class="mega">
+          <p class="mega-title">Catégories du shop</p>
+          <div class="mega-grid">
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span>
+              <span class="txt"><strong>Bureau</strong><span>Fournitures de bureau</span></span>
+            </a>
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+              <span class="txt"><strong>Informatique</strong><span>Informatique et électronique</span></span>
+            </a>
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14v5a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><path d="M17 9h2.5a2.5 2.5 0 0 1 0 5H17"/><path d="M6 2v2M10 2v2M14 2v2"/></svg></span>
+              <span class="txt"><strong>Café</strong><span>Presto Café Services</span></span>
+            </a>
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h8v-6H3z"/><path d="M7 15V9l4-5 2 2-3 3"/><path d="M13 6l5 5-3 3"/><path d="M18 11l2-2"/></svg></span>
+              <span class="txt"><strong>Nettoyage</strong><span>Produits d'entretien</span></span>
+            </a>
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 2-1.5 4L16 8v13H8V8L5.5 9 4 5l4-2"/><path d="M9 3a3 3 0 0 0 6 0"/></svg></span>
+              <span class="txt"><strong>Vêtements</strong><span>Vêtements de travail</span></span>
+            </a>
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-2a8 8 0 0 1 16 0v2"/><path d="M2 17h20"/><path d="M12 7V4"/></svg></span>
+              <span class="txt"><strong>Sécurité</strong><span>Protection individuelle - EPI</span></span>
+            </a>
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z"/><path d="M5 18v2M19 18v2"/></svg></span>
+              <span class="txt"><strong>Mobilier</strong><span>Mobilier & aménagement</span></span>
+            </a>
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/><path d="M7.2 6h9.6"/></svg></span>
+              <span class="txt"><strong>Vin</strong><span>Vin officiel (Chancellerie)</span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commande de vin : petit déroulant (sous-catégories Odoo) -->
+      <div class="nav-item">
+        <a href="#shop">Commande de vin <i class="caret"></i></a>
+        <div class="mega">
+          <p class="mega-title">Vin officiel</p>
+          <div class="mega-grid narrow">
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/></svg></span>
+              <span class="txt"><strong>Vin rouge</strong><span>Réceptions officielles</span></span>
+            </a>
+            <a class="mega-link" href="#shop">
+              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/></svg></span>
+              <span class="txt"><strong>Vin blanc</strong><span>Réceptions officielles</span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <a href="#shop">Flotte</a>
       <a href="#shop">Suivi de commandes</a>
       <a class="cta" href="#contact">Contact</a>
