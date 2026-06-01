@@ -240,6 +240,8 @@ img,svg{ display:block; max-width:100%; }
 .cat:nth-child(4){ --accent:var(--vdb-jaune); }     .cat:nth-child(4) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(5){ --accent:var(--vdb-bleu); }      .cat:nth-child(5) .pastille{ background:var(--bleu-voile); }
 .cat:nth-child(6){ --accent:var(--vdb-brun); }      .cat:nth-child(6) .pastille{ background:var(--brun-voile); }
+.cat:nth-child(7){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(7) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(8){ --accent:var(--vdb-jaune); }     .cat:nth-child(8) .pastille{ background:var(--jaune-voile); }
 
 /* =========================================================
    BANNIÈRE CHIFFRES
@@ -435,38 +437,18 @@ img,svg{ display:block; max-width:100%; }
     </div>
 
     <div class="cats">
+      <!-- Libellés marketing courts → familles Odoo réelles (product.public.category) -->
+
+      <!-- Bureau → Fournitures de bureau -->
       <a class="cat" href="#shop">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>
         </span>
-        <span class="label">Papeterie</span>
-        <span class="hint">Cahiers, stylos, classeurs</span>
+        <span class="label">Bureau</span>
+        <span class="hint">Papier, écriture, classement</span>
       </a>
 
-      <a class="cat" href="#shop">
-        <span class="pastille">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 2-1.5 4L16 8v13H8V8L5.5 9 4 5l4-2"/><path d="M9 3a3 3 0 0 0 6 0"/></svg>
-        </span>
-        <span class="label">Vêtements de travail</span>
-        <span class="hint">Tenues & EPI</span>
-      </a>
-
-      <a class="cat" href="#shop">
-        <span class="pastille">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>
-        </span>
-        <span class="label">Fournitures</span>
-        <span class="hint">Consommables & divers</span>
-      </a>
-
-      <a class="cat" href="#shop">
-        <span class="pastille">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14v5a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><path d="M17 9h2.5a2.5 2.5 0 0 1 0 5H17"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>
-        </span>
-        <span class="label">Café & restauration</span>
-        <span class="hint">Boissons & cuisine</span>
-      </a>
-
+      <!-- Informatique → Informatique et électronique -->
       <a class="cat" href="#shop">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
@@ -475,12 +457,58 @@ img,svg{ display:block; max-width:100%; }
         <span class="hint">Matériel & accessoires</span>
       </a>
 
+      <!-- Café → Presto Café Services -->
+      <a class="cat" href="#shop">
+        <span class="pastille">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14v5a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><path d="M17 9h2.5a2.5 2.5 0 0 1 0 5H17"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>
+        </span>
+        <span class="label">Café</span>
+        <span class="hint">Capsules, machines, thé</span>
+      </a>
+
+      <!-- Nettoyage → Produits d'entretien et de nettoyage -->
       <a class="cat" href="#shop">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h8v-6H3z"/><path d="M7 15V9l4-5 2 2-3 3"/><path d="M13 6l5 5-3 3"/><path d="M18 11l2-2"/></svg>
         </span>
         <span class="label">Nettoyage</span>
         <span class="hint">Hygiène & entretien</span>
+      </a>
+
+      <!-- Vêtements → Vêtements de travail -->
+      <a class="cat" href="#shop">
+        <span class="pastille">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 2-1.5 4L16 8v13H8V8L5.5 9 4 5l4-2"/><path d="M9 3a3 3 0 0 0 6 0"/></svg>
+        </span>
+        <span class="label">Vêtements</span>
+        <span class="hint">Tenues de travail</span>
+      </a>
+
+      <!-- Sécurité → Protection individuelle - EPI -->
+      <a class="cat" href="#shop">
+        <span class="pastille">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-2a8 8 0 0 1 16 0v2"/><path d="M2 17h20"/><path d="M12 7V4"/></svg>
+        </span>
+        <span class="label">Sécurité</span>
+        <span class="hint">EPI & protection</span>
+      </a>
+
+      <!-- Mobilier → Mobilier -->
+      <a class="cat" href="#shop">
+        <span class="pastille">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z"/><path d="M5 18v2M19 18v2"/></svg>
+        </span>
+        <span class="label">Mobilier</span>
+        <span class="hint">Aménagement & bureau</span>
+      </a>
+
+      <!-- Vin → Vin officiel (Chancellerie) -->
+      <a class="cat" href="#shop">
+        <span class="pastille">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/><path d="M7.2 6h9.6"/></svg>
+        </span>
+        <span class="label">Vin</span>
+        <span class="hint">Réceptions officielles</span>
       </a>
     </div>
   </div>
