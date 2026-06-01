@@ -132,8 +132,9 @@ img,svg{ display:block; max-width:100%; }
   transition:background .2s ease, color .2s ease, transform .2s ease;
 }
 .nav > a:hover, .nav-item:hover > a{ background:var(--bleu-voile); color:var(--vdb-bleu); }
-.nav > a.cta{ background:var(--vdb-bleu); color:#fff; }
-.nav > a.cta:hover{ background:var(--vdb-bleu-fonce); transform:translateY(-1px); }
+.nav > a.cta{ background:var(--vdb-jaune); color:var(--vdb-noir); }
+.nav > a.cta:hover{ filter:brightness(.94); transform:translateY(-1px); }
+.nav > a.cta svg{ flex-shrink:0; }
 /* Chevron des items à sous-menu */
 .nav-item > a .caret{ width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg) translateY(-1px); transition:transform .2s ease; opacity:.55; }
 .nav-item:hover > a .caret{ transform:rotate(225deg) translateY(1px); }
@@ -492,9 +493,12 @@ img,svg{ display:block; max-width:100%; }
         </div>
       </div>
 
-      <a href="#flotte">Flotte</a>
+      <a href="#flotte">Flotte automobile</a>
       <a href="#shop">Suivi de commandes</a>
-      <a class="cta" href="#contact">Contact</a>
+      <a class="cta" href="#">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+        Mon compte
+      </a>
     </nav>
   </div>
 </header>
