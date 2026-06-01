@@ -244,9 +244,10 @@ img,svg{ display:block; max-width:100%; }
 .section-head p{ text-align:center; color:var(--estompe); font-size:17px; }
 
 .cats{
-  display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
-  gap:clamp(18px,2.4vw,32px); max-width:980px; margin-inline:auto;
+  display:grid; grid-template-columns:repeat(4, 1fr);   /* 8 catégories → 4 + 4 équilibré */
+  gap:clamp(18px,2.4vw,32px); max-width:900px; margin-inline:auto;
 }
+@media (max-width:760px){ .cats{ grid-template-columns:repeat(2, 1fr); } }   /* 2×4, jamais de ligne orpheline */
 .cat{ display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center; padding:8px; }
 .cat .pastille{
   width:clamp(108px,11vw,132px); aspect-ratio:1; border-radius:50%;
