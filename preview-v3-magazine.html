@@ -285,10 +285,12 @@ img,svg{ display:block; max-width:100%; }
 .footer-col a:hover{ color:var(--vdb-bleu); text-decoration:underline; text-underline-offset:3px; }
 .contact-btn{
   display:inline-flex; align-items:center; gap:10px; margin-top:6px;
-  background:var(--vdb-bleu); color:#fff;
-  padding:12px 20px; border-radius:var(--r-pill); border:1px solid var(--vdb-bleu);
+  background:var(--vdb-bleu); color:#fff; font-size:14px;
+  padding:12px 22px; border-radius:14px; border:1px solid var(--vdb-bleu);
+  white-space:nowrap; max-width:100%;
   transition:background .2s ease, transform .2s ease;
 }
+.contact-btn svg{ flex-shrink:0; }
 .contact-btn:hover{ background:var(--vdb-bleu-fonce); border-color:var(--vdb-bleu-fonce); transform:translateY(-1px); }
 /* Zone crédibilité bas-gauche : blason officiel + labels */
 .footer-creds{ margin-top:24px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
