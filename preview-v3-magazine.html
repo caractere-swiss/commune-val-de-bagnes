@@ -257,10 +257,11 @@ img,svg{ display:block; max-width:100%; }
   font-family:var(--titre); font-weight:bold;
   font-size:clamp(38px,5vw,62px); line-height:1; color:var(--vdb-bleu); letter-spacing:-.02em;
 }
-.stat .num .suffix{ color:var(--vdb-jaune); }
-.stat:nth-child(2) .num{ color:var(--vdb-brun); }
-.stat:nth-child(3) .num{ color:var(--vdb-vert-fonce); }
-.stat:nth-child(4) .num{ color:var(--vdb-bleu); }
+.stat .num .suffix{ color:inherit; }            /* suffixe = même couleur que le nombre */
+.stat:nth-child(1) .num{ color:var(--vdb-bleu); }
+.stat:nth-child(2) .num{ color:var(--vdb-vert-fonce); }
+.stat:nth-child(3) .num{ color:var(--vdb-jaune); }
+.stat:nth-child(4) .num{ color:var(--vdb-brun); }
 .stat .cap{ margin-top:10px; font-size:15px; color:var(--estompe); }
 .stats-note{ text-align:center; color:var(--estompe); font-size:13px; margin-top:28px; font-style:italic; }
 
