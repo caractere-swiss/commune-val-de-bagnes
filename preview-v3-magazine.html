@@ -132,8 +132,8 @@ img,svg{ display:block; max-width:100%; }
   transition:background .2s ease, color .2s ease, transform .2s ease;
 }
 .nav > a:hover, .nav-item:hover > a{ background:var(--bleu-voile); color:var(--vdb-bleu); }
-.nav > a.cta{ background:var(--vdb-jaune); color:var(--vdb-noir); }
-.nav > a.cta:hover{ filter:brightness(.94); transform:translateY(-1px); }
+.nav > a.cta{ background:var(--vdb-bleu); color:#fff; }
+.nav > a.cta:hover{ background:var(--vdb-bleu-fonce); transform:translateY(-1px); }
 .nav > a.cta svg{ flex-shrink:0; }
 /* Chevron des items à sous-menu */
 .nav-item > a .caret{ width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg) translateY(-1px); transition:transform .2s ease; opacity:.55; }
@@ -271,14 +271,15 @@ img,svg{ display:block; max-width:100%; }
   border-color:transparent; outline:3px solid var(--accent, var(--vdb-bleu)); outline-offset:4px;
 }
 /* Accent + voile de fond par catégorie (couleur ponctuelle) */
+/* Couleurs alternées — ligne 2 ≠ ligne 1 pour casser la répétition */
 .cat:nth-child(1){ --accent:var(--vdb-bleu); }      .cat:nth-child(1) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(2){ --accent:var(--vdb-brun); }      .cat:nth-child(2) .pastille{ background:var(--brun-voile); }
-.cat:nth-child(3){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(3) .pastille{ background:var(--vert-voile); }
-.cat:nth-child(4){ --accent:var(--vdb-jaune); }     .cat:nth-child(4) .pastille{ background:var(--jaune-voile); }
-.cat:nth-child(5){ --accent:var(--vdb-bleu); }      .cat:nth-child(5) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(6){ --accent:var(--vdb-brun); }      .cat:nth-child(6) .pastille{ background:var(--brun-voile); }
-.cat:nth-child(7){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(7) .pastille{ background:var(--vert-voile); }
-.cat:nth-child(8){ --accent:var(--vdb-jaune); }     .cat:nth-child(8) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(2){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(3){ --accent:var(--vdb-jaune); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(4){ --accent:var(--vdb-brun); }      .cat:nth-child(4) .pastille{ background:var(--brun-voile); }
+.cat:nth-child(5){ --accent:var(--vdb-brun); }      .cat:nth-child(5) .pastille{ background:var(--brun-voile); }
+.cat:nth-child(6){ --accent:var(--vdb-jaune); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(7){ --accent:var(--vdb-bleu); }      .cat:nth-child(7) .pastille{ background:var(--bleu-voile); }
+.cat:nth-child(8){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
 
 /* =========================================================
    BANNIÈRE CHIFFRES
@@ -494,7 +495,6 @@ img,svg{ display:block; max-width:100%; }
       </div>
 
       <a href="#flotte">Flotte automobile</a>
-      <a href="#shop">Suivi de commandes</a>
       <a class="cta" href="#">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
         Mon compte
@@ -652,6 +652,24 @@ img,svg{ display:block; max-width:100%; }
   </div>
 </section>
 
+<!-- ===================== BANNIÈRE CHIFFRES ===================== -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="stats-wrap">
+      <div class="section-head" style="margin-bottom:clamp(20px,3vw,36px);">
+        <h2>La boutique en chiffres</h2>
+      </div>
+      <div class="stats" id="stats">
+        <div class="stat"><div class="num" data-to="2800" data-prefix="~"></div><div class="cap">commandes traitées par an</div></div>
+        <div class="stat"><div class="num" data-to="48" data-suffix="h"></div><div class="cap">délai de traitement moyen</div></div>
+        <div class="stat"><div class="num" data-to="1250" data-suffix="+"></div><div class="cap">références au catalogue</div></div>
+        <div class="stat"><div class="num" data-to="100" data-suffix="%"></div><div class="cap">des services équipés</div></div>
+      </div>
+      <p class="stats-note">Données fictives pour la maquette — à remplacer par les chiffres réels.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== SECTION FLOTTE ===================== -->
 <section class="section" id="flotte" style="padding-top:0;">
   <div class="wrap">
@@ -670,24 +688,6 @@ img,svg{ display:block; max-width:100%; }
         </ul>
         <a class="btn" href="#flotte">Démarrer <span class="arr">→</span></a>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== BANNIÈRE CHIFFRES ===================== -->
-<section class="section" style="padding-top:0;">
-  <div class="wrap">
-    <div class="stats-wrap">
-      <div class="section-head" style="margin-bottom:clamp(20px,3vw,36px);">
-        <h2>La boutique en chiffres</h2>
-      </div>
-      <div class="stats" id="stats">
-        <div class="stat"><div class="num" data-to="2800" data-prefix="~"></div><div class="cap">commandes traitées par an</div></div>
-        <div class="stat"><div class="num" data-to="48" data-suffix="h"></div><div class="cap">délai de traitement moyen</div></div>
-        <div class="stat"><div class="num" data-to="1250" data-suffix="+"></div><div class="cap">références au catalogue</div></div>
-        <div class="stat"><div class="num" data-to="100" data-suffix="%"></div><div class="cap">des services équipés</div></div>
-      </div>
-      <p class="stats-note">Données fictives pour la maquette — à remplacer par les chiffres réels.</p>
     </div>
   </div>
 </section>
