@@ -273,13 +273,13 @@ img,svg{ display:block; max-width:100%; }
 /* Accent + voile de fond par catégorie (couleur ponctuelle) */
 /* Couleurs alternées — ligne 2 ≠ ligne 1 pour casser la répétition */
 .cat:nth-child(1){ --accent:var(--vdb-bleu); }      .cat:nth-child(1) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(2){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
-.cat:nth-child(3){ --accent:var(--vdb-jaune); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(2){ --accent:var(--vdb-bleu-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(3){ --accent:var(--vdb-brun); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(4){ --accent:var(--vdb-brun); }      .cat:nth-child(4) .pastille{ background:var(--brun-voile); }
 .cat:nth-child(5){ --accent:var(--vdb-brun); }      .cat:nth-child(5) .pastille{ background:var(--brun-voile); }
-.cat:nth-child(6){ --accent:var(--vdb-jaune); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(6){ --accent:var(--vdb-brun); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(7){ --accent:var(--vdb-bleu); }      .cat:nth-child(7) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(8){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(8){ --accent:var(--vdb-bleu-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
 
 /* =========================================================
    BANNIÈRE CHIFFRES
@@ -297,8 +297,8 @@ img,svg{ display:block; max-width:100%; }
 }
 .stat .num .suffix{ color:inherit; }            /* suffixe = même couleur que le nombre */
 .stat:nth-child(1) .num{ color:var(--vdb-bleu); }
-.stat:nth-child(2) .num{ color:var(--vdb-vert-fonce); }
-.stat:nth-child(3) .num{ color:var(--vdb-jaune); }
+.stat:nth-child(2) .num{ color:var(--vdb-bleu-fonce); }   /* contraste AA : le vert ne passe pas sur fond clair */
+.stat:nth-child(3) .num{ color:var(--vdb-brun); }   /* contraste AA : le jaune ne passe pas sur fond clair */
 .stat:nth-child(4) .num{ color:var(--vdb-brun); }
 .stat .cap{ margin-top:10px; font-size:15px; color:var(--estompe); }
 .stats-note{ text-align:center; color:var(--estompe); font-size:13px; margin-top:28px; font-style:italic; }
@@ -518,6 +518,80 @@ img,svg{ display:block; max-width:100%; }
   margin-top:20px; padding:16px 20px; border-radius:var(--r-md);
   background:var(--vert-voile); border:1px solid var(--vdb-vert-fonce); color:var(--encre); font-size:15px;
 }
+
+/* ---------- Validation en direct ---------- */
+.field.is-invalid input, .field.is-invalid select{ border-color:#C0392B; background:#FDF3F2; }
+.field.is-valid input, .field.is-valid select{ border-color:var(--vdb-vert-fonce); }
+.field-error{
+  font-size:13px; color:#A5281B; display:none; align-items:center; gap:6px; margin-top:2px;
+}
+.field.is-invalid .field-error{ display:flex; }
+.form-hint{ font-size:13px; color:var(--estompe); margin:0 0 18px; }
+.btn[disabled]{ opacity:.45; cursor:not-allowed; box-shadow:none; }
+.btn[disabled]:hover{ transform:none; background:var(--vdb-bleu); }
+
+/* ---------- Écran de confirmation ---------- */
+.confirm-screen{
+  background:var(--carte); border:1px solid var(--vdb-vert-fonce); border-radius:var(--r-xl);
+  box-shadow:var(--shadow-soft); padding:clamp(28px,4vw,48px); text-align:left;
+}
+.confirm-mark{
+  width:56px; height:56px; border-radius:50%; background:var(--bleu-voile); color:var(--vdb-bleu);
+  display:grid; place-items:center; margin-bottom:18px;
+}
+.confirm-screen h2{ font-size:clamp(22px,2.6vw,30px); margin-bottom:10px; }
+.confirm-lead{ color:var(--estompe); font-size:17px; margin:0 0 24px; text-align:left; }
+.confirm-recap{ border-top:1px solid var(--trait); padding-top:22px; }
+.confirm-recap h3{ font-family:var(--titre); font-size:15px; letter-spacing:.05em; text-transform:uppercase; color:var(--vdb-bleu); margin:0 0 14px; }
+.recap-table{ width:100%; border-collapse:collapse; font-size:15px; margin-bottom:24px; }
+.recap-table th, .recap-table td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--trait); }
+.recap-table th{ font-weight:400; color:var(--estompe); width:45%; }
+.recap-table td{ font-weight:600; }
+.recap-total{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:14px 12px; background:var(--bleu-voile); border-radius:var(--r-md); font-size:16px; }
+.recap-total strong{ font-family:var(--titre); color:var(--vdb-bleu); }
+.confirm-reminder{
+  display:flex; gap:10px; align-items:flex-start; margin-top:22px; padding:14px 16px;
+  background:var(--jaune-voile); border-radius:var(--r-md); font-size:14px;
+}
+.confirm-actions{ margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; }
+.btn-ghost{
+  display:inline-flex; align-items:center; gap:8px; font-family:var(--corps); font-size:15px; font-weight:600;
+  background:transparent; color:var(--vdb-bleu); border:1px solid var(--vdb-bleu);
+  padding:13px 24px; border-radius:var(--r-pill); cursor:pointer; min-height:44px;
+  transition:background .18s ease;
+}
+.btn-ghost:hover{ background:var(--bleu-voile); }
+.confirm-note{ font-size:13px; color:var(--estompe); font-style:italic; margin:18px 0 0; }
+
+/* ---------- Accessibilité : focus visible ---------- */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
+  outline:3px solid var(--vdb-bleu); outline-offset:2px; border-radius:4px;
+}
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+}
+
+/* =========================================================
+   ACCESSIBILITÉ + MICRO-INTERACTIONS (passe globale)
+   ========================================================= */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
+  outline:3px solid var(--vdb-bleu); outline-offset:2px; border-radius:4px;
+}
+/* États actifs : retour tactile sobre */
+.btn:active, .btn-sm:active, .btn-ghost:active, .contact-btn:active{ transform:translateY(1px); }
+.cat:active .pastille{ transform:translateY(-4px) scale(1.02); }
+/* Le survol ne doit pas « sauter » : transitions dans la plage 150-250ms */
+.btn, .btn-sm, .btn-ghost, .contact-btn, .product, .cat .pastille, .similar-item{
+  transition-duration:.2s; transition-timing-function:ease;
+}
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important; scroll-behavior:auto !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -634,41 +708,50 @@ img,svg{ display:block; max-width:100%; }
         <div class="form-grid">
           <label class="field">
             <span>Dicastère</span>
-            <select required>
+            <select data-name="dicastere" required>
               <option value="" disabled selected>— Liste des dicastères à venir —</option>
             </select>
+            <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
             <span>Évènement</span>
-            <input type="text" placeholder="Ex. Assemblée bourgeoisiale" required>
+            <input data-name="evenement" type="text" placeholder="Ex. Assemblée bourgeoisiale" required>
+            <span class="field-error" role="alert"></span>
           </label>
           <label class="field field-wide">
             <span>Justification</span>
-            <input type="text" placeholder="Motif de la commande">
+            <input data-name="justification" type="text" placeholder="Motif de la commande">
+            <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
             <span>Lieu et salle</span>
-            <input type="text" placeholder="Ex. Salle de l'Arvine">
+            <input data-name="lieu" type="text" placeholder="Ex. Salle de l'Arvine">
+            <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
             <span>Date et heure</span>
-            <input type="datetime-local" required>
+            <input data-name="date" type="datetime-local" required>
+            <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
             <span>Nombre de personnes</span>
-            <input type="number" min="1" placeholder="Ex. 40" required>
+            <input data-name="personnes" type="number" min="1" placeholder="Ex. 40" required>
+            <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
             <span>Personne de contact</span>
-            <input type="text" placeholder="Nom et prénom" required>
+            <input data-name="contact" type="text" placeholder="Nom et prénom" required>
+            <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
             <span>Téléphone</span>
-            <input type="tel" placeholder="079 000 00 00" required>
+            <input data-name="telephone" type="tel" placeholder="079 000 00 00" required>
+            <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
             <span>E-mail</span>
-            <input type="email" placeholder="prenom.nom@valdebagnes.ch" required>
+            <input data-name="email" type="email" placeholder="prenom.nom@valdebagnes.ch" required>
+            <span class="field-error" role="alert"></span>
           </label>
         </div>
       </div>
@@ -741,7 +824,7 @@ img,svg{ display:block; max-width:100%; }
 
         <h3 class="wine-group-title">Fourniture</h3>
         <div class="wine-list">
-        <div class="wine-row">
+        <div class="wine-row" data-supply="1">
           <div class="wine-name">Tire-bouchons</div>
           <div class="qty-stepper" data-qty="0">
             <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
@@ -761,13 +844,48 @@ img,svg{ display:block; max-width:100%; }
             <p>À transmettre au minimum une semaine avant l'évènement.</p>
           </div>
         </div>
-        <button type="submit" class="btn btn-send">Envoyer la demande <span class="arr">→</span></button>
-        <div class="form-confirm" id="form-confirm" hidden>
-          <strong>Demande enregistrée (maquette).</strong> Aucun envoi réel : à l'intégration, ce bouton déclenchera un e-mail vers la Chancellerie.
-        </div>
+        <p class="form-hint" id="send-hint"></p>
+        <button type="submit" class="btn btn-send" id="send-btn" disabled>Envoyer la demande <span class="arr">→</span></button>
       </div>
 
     </form>
+
+    <!-- Écran de confirmation (maquette) -->
+    <div class="confirm-screen" id="confirm-screen" tabindex="-1" hidden>
+      <div class="confirm-mark" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 5.5 5.5L20 7"/></svg>
+      </div>
+      <h2>Demande enregistrée</h2>
+      <p class="confirm-lead">Votre commande de vin a bien été prise en compte. Un récapitulatif vous est présenté ci-dessous.</p>
+
+      <div class="confirm-recap">
+        <h3>Informations générales</h3>
+        <table class="recap-table"><tbody id="recap-body"></tbody></table>
+
+        <h3>Vins commandés</h3>
+        <table class="recap-table"><tbody id="recap-lines"></tbody></table>
+
+        <div id="supplies-block" hidden>
+          <h3>Fourniture</h3>
+          <table class="recap-table"><tbody id="recap-supplies"></tbody></table>
+        </div>
+
+        <div class="recap-total">
+          <span>Total commandé</span>
+          <strong id="recap-total">0 bouteille</strong>
+        </div>
+
+        <div class="confirm-reminder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <span>À transmettre au minimum <strong>une semaine avant l'évènement</strong>.</span>
+        </div>
+
+        <div class="confirm-actions">
+          <button type="button" class="btn-ghost" id="confirm-back">← Modifier ma demande</button>
+        </div>
+        <p class="confirm-note">Simulation de maquette : aucun e-mail n'est envoyé. À l'intégration, la demande partira vers la Chancellerie.</p>
+      </div>
+    </div>
   </div>
 </section>
 <!-- ===================== FOOTER ===================== -->
@@ -865,29 +983,164 @@ function toggleNav(btn){
   }
 })();
 
+
 /* ---------- Sélecteurs de quantité +/- (tactile tablette) ---------- */
 (function(){
   document.querySelectorAll('.qty-stepper').forEach(function(stepper){
     var input=stepper.querySelector('.qty-input');
     var minus=stepper.querySelector('.minus');
     var plus=stepper.querySelector('.plus');
-    function set(v){ v=Math.max(0, v); input.value=v; stepper.setAttribute('data-qty', v); }
+    function set(v){
+      v=Math.max(0, v); input.value=v; stepper.setAttribute('data-qty', v);
+      stepper.dispatchEvent(new CustomEvent('qtychange', {bubbles:true}));
+    }
     minus.addEventListener('click', function(){ set((+input.value||0)-1); });
     plus.addEventListener('click', function(){ set((+input.value||0)+1); });
     input.addEventListener('change', function(){ set(+input.value||0); });
   });
 })();
 
-/* ---------- Envoi du formulaire (maquette, pas de vrai envoi) ---------- */
+/* ---------- Validation en direct + envoi (maquette) ---------- */
 (function(){
-  var form=document.getElementById('wine-form');
-  var confirm=document.getElementById('form-confirm');
+  var form = document.getElementById('wine-form');
   if(!form) return;
+  var sendBtn = document.getElementById('send-btn');
+  var confirmScreen = document.getElementById('confirm-screen');
+
+  var RULES = {
+    telephone: { test:function(v){ return /^[0-9+\s().\-]{9,}$/.test(v); }, msg:"Numéro de téléphone incomplet (min. 9 chiffres)." },
+    email:     { test:function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }, msg:"Adresse e-mail invalide." },
+    personnes: { test:function(v){ return +v >= 1; }, msg:"Indiquez au moins 1 personne." }
+  };
+
+  function fieldsList(){ return Array.prototype.slice.call(form.querySelectorAll('.field')); }
+
+  function checkField(wrap, showError){
+    var input = wrap.querySelector('input, select');
+    if(!input) return true;
+    var name = input.getAttribute('data-name');
+    var val = (input.value || '').trim();
+    var required = input.hasAttribute('required');
+    var ok = true, msg = '';
+
+    if(required && !val){ ok = false; msg = 'Ce champ est obligatoire.'; }
+    else if(val && RULES[name] && !RULES[name].test(val)){ ok = false; msg = RULES[name].msg; }
+
+    var err = wrap.querySelector('.field-error');
+    if(err) err.textContent = msg;
+    wrap.classList.toggle('is-invalid', !ok && showError);
+    wrap.classList.toggle('is-valid', ok && !!val);
+    input.setAttribute('aria-invalid', (!ok && showError) ? 'true' : 'false');
+    return ok;
+  }
+
+  function totalBottles(){
+    var t = 0;
+    form.querySelectorAll('.wine-row').forEach(function(r){
+      if(r.getAttribute('data-supply') === '1') return;   /* tire-bouchons hors total bouteilles */
+      t += +r.querySelector('.qty-stepper').getAttribute('data-qty') || 0;
+    });
+    return t;
+  }
+
+  function formValid(){
+    var allOk = fieldsList().every(function(w){ return checkField(w, false); });
+    return allOk && totalBottles() > 0;
+  }
+
+  function refresh(){
+    var ok = formValid();
+    sendBtn.disabled = !ok;
+    var hint = document.getElementById('send-hint');
+    if(hint){
+      hint.textContent = ok
+        ? 'Formulaire complet, vous pouvez envoyer votre demande.'
+        : (totalBottles() === 0
+            ? 'Complétez les informations générales et commandez au moins une bouteille.'
+            : 'Complétez les champs obligatoires pour activer l\'envoi.');
+    }
+  }
+
+  fieldsList().forEach(function(w){
+    var input = w.querySelector('input, select');
+    if(!input) return;
+    input.addEventListener('input', function(){ checkField(w, false); refresh(); });
+    input.addEventListener('change', function(){ checkField(w, true); refresh(); });
+    input.addEventListener('blur', function(){ checkField(w, true); refresh(); });
+  });
+  form.addEventListener('qtychange', refresh);
+
   form.addEventListener('submit', function(ev){
     ev.preventDefault();
-    confirm.hidden=false;
-    confirm.scrollIntoView({behavior:'smooth', block:'center'});
+    var ok = fieldsList().map(function(w){ return checkField(w, true); }).every(Boolean);
+    refresh();
+    if(!ok || totalBottles() === 0){
+      var firstBad = form.querySelector('.field.is-invalid input, .field.is-invalid select');
+      if(firstBad) firstBad.focus();
+      return;
+    }
+
+    function val(n){
+      var el = form.querySelector('[data-name="' + n + '"]');
+      if(!el) return '';
+      if(el.tagName === 'SELECT'){
+        var o = el.options[el.selectedIndex];
+        return (o && !o.disabled) ? o.text : '';
+      }
+      return (el.value || '').trim();
+    }
+
+    var lines = [], supplies = [];
+    form.querySelectorAll('.wine-row').forEach(function(r){
+      var q = +r.querySelector('.qty-stepper').getAttribute('data-qty') || 0;
+      if(q <= 0) return;
+      var entry = { name:r.querySelector('.wine-name').childNodes[0].textContent.trim(), qty:q };
+      if(r.getAttribute('data-supply') === '1') supplies.push(entry);
+      else lines.push(entry);
+    });
+
+    var dateVal = val('date');
+    if(dateVal){
+      var d = new Date(dateVal);
+      if(!isNaN(d)) dateVal = d.toLocaleString('fr-CH', {dateStyle:'long', timeStyle:'short'});
+    }
+
+    document.getElementById('recap-body').innerHTML =
+      '<tr><th scope="row">Dicastère</th><td>' + (val('dicastere') || 'Non renseigné') + '</td></tr>' +
+      '<tr><th scope="row">Évènement</th><td>' + val('evenement') + '</td></tr>' +
+      (val('justification') ? '<tr><th scope="row">Justification</th><td>' + val('justification') + '</td></tr>' : '') +
+      (val('lieu') ? '<tr><th scope="row">Lieu et salle</th><td>' + val('lieu') + '</td></tr>' : '') +
+      '<tr><th scope="row">Date et heure</th><td>' + dateVal + '</td></tr>' +
+      '<tr><th scope="row">Nombre de personnes</th><td>' + val('personnes') + '</td></tr>' +
+      '<tr><th scope="row">Personne de contact</th><td>' + val('contact') + '</td></tr>' +
+      '<tr><th scope="row">Téléphone</th><td>' + val('telephone') + '</td></tr>' +
+      '<tr><th scope="row">E-mail</th><td>' + val('email') + '</td></tr>';
+
+    function rows(arr){
+      return arr.map(function(l){
+        return '<tr><th scope="row">' + l.name + '</th><td>' + l.qty + '</td></tr>';
+      }).join('');
+    }
+    document.getElementById('recap-lines').innerHTML = rows(lines);
+    document.getElementById('recap-supplies').innerHTML = rows(supplies);
+    document.getElementById('supplies-block').hidden = supplies.length === 0;
+
+    var bottles = totalBottles();
+    document.getElementById('recap-total').textContent = bottles + (bottles > 1 ? ' bouteilles' : ' bouteille');
+
+    form.hidden = true;
+    confirmScreen.hidden = false;
+    confirmScreen.focus();
+    confirmScreen.scrollIntoView({ behavior:'smooth', block:'start' });
   });
+
+  document.getElementById('confirm-back').addEventListener('click', function(){
+    confirmScreen.hidden = true;
+    form.hidden = false;
+    form.scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+
+  refresh();
 })();
 </script>
 </body>

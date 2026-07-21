@@ -135,6 +135,10 @@ img,svg{ display:block; max-width:100%; }
 .nav > a.cta{ background:var(--vdb-bleu); color:#fff; }
 .nav > a.cta:hover{ background:var(--vdb-bleu-fonce); transform:translateY(-1px); }
 .nav > a.cta svg{ flex-shrink:0; }
+.nav-cart{ position:relative; display:inline-grid; place-items:center; width:44px; height:44px;
+  border:1px solid var(--trait); background:var(--carte); border-radius:50%; cursor:pointer;
+  color:var(--encre); transition:background .18s ease, color .18s ease; }
+.nav-cart:hover{ background:var(--bleu-voile); color:var(--vdb-bleu); }
 /* Chevron des items à sous-menu */
 .nav-item > a .caret{ width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg) translateY(-1px); transition:transform .2s ease; opacity:.55; }
 .nav-item:hover > a .caret{ transform:rotate(225deg) translateY(1px); }
@@ -273,13 +277,13 @@ img,svg{ display:block; max-width:100%; }
 /* Accent + voile de fond par catégorie (couleur ponctuelle) */
 /* Couleurs alternées — ligne 2 ≠ ligne 1 pour casser la répétition */
 .cat:nth-child(1){ --accent:var(--vdb-bleu); }      .cat:nth-child(1) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(2){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
-.cat:nth-child(3){ --accent:var(--vdb-jaune); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(2){ --accent:var(--vdb-bleu-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(3){ --accent:var(--vdb-brun); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(4){ --accent:var(--vdb-brun); }      .cat:nth-child(4) .pastille{ background:var(--brun-voile); }
 .cat:nth-child(5){ --accent:var(--vdb-brun); }      .cat:nth-child(5) .pastille{ background:var(--brun-voile); }
-.cat:nth-child(6){ --accent:var(--vdb-jaune); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(6){ --accent:var(--vdb-brun); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(7){ --accent:var(--vdb-bleu); }      .cat:nth-child(7) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(8){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(8){ --accent:var(--vdb-bleu-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
 
 /* =========================================================
    BANNIÈRE CHIFFRES
@@ -297,8 +301,8 @@ img,svg{ display:block; max-width:100%; }
 }
 .stat .num .suffix{ color:inherit; }            /* suffixe = même couleur que le nombre */
 .stat:nth-child(1) .num{ color:var(--vdb-bleu); }
-.stat:nth-child(2) .num{ color:var(--vdb-vert-fonce); }
-.stat:nth-child(3) .num{ color:var(--vdb-jaune); }
+.stat:nth-child(2) .num{ color:var(--vdb-bleu-fonce); }   /* contraste AA : le vert ne passe pas sur fond clair */
+.stat:nth-child(3) .num{ color:var(--vdb-brun); }   /* contraste AA : le jaune ne passe pas sur fond clair */
 .stat:nth-child(4) .num{ color:var(--vdb-brun); }
 .stat .cap{ margin-top:10px; font-size:15px; color:var(--estompe); }
 .stats-note{ text-align:center; color:var(--estompe); font-size:13px; margin-top:28px; font-style:italic; }
@@ -462,6 +466,223 @@ img,svg{ display:block; max-width:100%; }
   transition:background .2s ease;
 }
 .btn-sm:hover{ background:var(--vdb-bleu-fonce); }
+
+/* =========================================================
+   CATALOGUE — sidebar + grille (Boutique v3)
+   ========================================================= */
+.catalogue-layout{ display:grid; grid-template-columns:288px 1fr; gap:clamp(20px,3vw,40px); align-items:start; }
+@media (max-width:1023px){ .catalogue-layout{ grid-template-columns:1fr; } }
+
+.cat-sidebar{
+  background:var(--carte); border:1px solid var(--trait); border-radius:var(--r-lg);
+  box-shadow:var(--shadow-soft); padding:20px 16px; position:sticky; top:96px;
+}
+.cat-sidebar-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; padding:0 6px; }
+.cat-sidebar-head h3{ font-family:var(--titre); font-size:15px; letter-spacing:.06em; text-transform:uppercase; color:var(--vdb-bleu); margin:0; }
+.cat-reset{
+  border:0; background:transparent; cursor:pointer; font-family:var(--corps);
+  font-size:13px; color:var(--estompe); text-decoration:underline; text-underline-offset:3px;
+  padding:4px 6px; border-radius:8px; transition:color .18s ease;
+}
+.cat-reset:hover{ color:var(--vdb-bleu); }
+.cat-tree{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px; }
+.cat-fam-row{ display:flex; align-items:stretch; gap:2px; }
+.cat-fam{
+  flex:1; display:flex; align-items:center; gap:10px; text-align:left;
+  border:0; background:transparent; cursor:pointer; font-family:var(--corps); font-size:14px;
+  color:var(--encre); padding:9px 10px; border-radius:var(--r-md); min-height:44px;
+  transition:background .18s ease, color .18s ease;
+}
+.cat-fam:hover{ background:var(--bleu-voile); color:var(--vdb-bleu); }
+.cat-fam-ico{ flex-shrink:0; width:26px; height:26px; display:grid; place-items:center; color:var(--vdb-bleu); }
+.cat-fam-ico svg{ width:18px; height:18px; }
+.cat-fam-name{ flex:1; line-height:1.25; }
+.cat-count{ font-size:12px; color:var(--estompe); font-variant-numeric:tabular-nums; }
+.cat-node.is-active > .cat-fam-row > .cat-fam{ background:var(--vdb-bleu); color:#fff; }
+.cat-node.is-active > .cat-fam-row > .cat-fam .cat-fam-ico,
+.cat-node.is-active > .cat-fam-row > .cat-fam .cat-count{ color:#fff; }
+.cat-toggle{
+  flex-shrink:0; width:38px; min-height:44px; border:0; background:transparent; cursor:pointer;
+  display:grid; place-items:center; border-radius:var(--r-md); color:var(--estompe);
+  transition:background .18s ease;
+}
+.cat-toggle:hover{ background:var(--bleu-voile); }
+.chev{ width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor;
+  transform:rotate(45deg) translate(-1px,-1px); transition:transform .2s ease; }
+.cat-toggle[aria-expanded="true"] .chev{ transform:rotate(225deg) translate(-1px,-1px); }
+.cat-subs{ list-style:none; margin:2px 0 6px; padding:0 0 0 36px; display:flex; flex-direction:column; gap:1px; }
+.cat-sub{
+  width:100%; text-align:left; border:0; background:transparent; cursor:pointer;
+  font-family:var(--corps); font-size:13px; color:var(--estompe);
+  padding:8px 10px; border-radius:var(--r-md); min-height:38px;
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  transition:background .18s ease, color .18s ease;
+}
+.cat-sub:hover{ background:var(--bleu-voile); color:var(--vdb-bleu); }
+.cat-sub.is-active{ background:var(--bleu-voile); color:var(--vdb-bleu); font-weight:600; }
+.cat-sub-name{ line-height:1.3; }
+
+/* Tiroir catégories (mobile / tablette) */
+.cat-drawer-btn{
+  display:none; align-items:center; gap:9px; margin-bottom:16px;
+  font-family:var(--corps); font-size:15px; color:var(--encre);
+  background:var(--carte); border:1px solid var(--trait); border-radius:var(--r-pill);
+  padding:12px 20px; min-height:44px; cursor:pointer; box-shadow:var(--shadow-soft);
+  transition:background .18s ease;
+}
+.cat-drawer-btn:hover{ background:var(--bleu-voile); }
+@media (max-width:1023px){
+  .cat-drawer-btn{ display:inline-flex; }
+  .cat-sidebar{ display:none; position:static; margin-bottom:20px; }
+  .cat-sidebar.is-open{ display:block; }
+}
+
+/* Fil d'Ariane */
+.breadcrumb ol{ list-style:none; display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0 0 16px; padding:0; font-size:13px; color:var(--estompe); }
+.breadcrumb li{ display:flex; align-items:center; gap:8px; }
+.breadcrumb li + li::before{ content:'›'; color:var(--trait); }
+.breadcrumb button{ border:0; background:transparent; cursor:pointer; font-family:var(--corps); font-size:13px; color:var(--vdb-bleu); padding:2px 4px; border-radius:6px; text-decoration:underline; text-underline-offset:3px; }
+.breadcrumb [aria-current="page"]{ color:var(--encre); }
+
+/* Barre d'outils */
+.toolbar{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px; margin-bottom:22px; }
+.toolbar-search{ position:relative; display:flex; align-items:center; flex:1 1 280px; }
+.toolbar-search svg{ position:absolute; left:16px; color:var(--estompe); pointer-events:none; }
+.toolbar-search input{
+  width:100%; font-family:var(--corps); font-size:15px; color:var(--encre);
+  padding:12px 16px 12px 44px; min-height:46px;
+  border:1px solid var(--trait); border-radius:var(--r-pill); background:var(--carte);
+}
+.toolbar-right{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.toolbar-sort{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--estompe); }
+.toolbar-sort select{
+  font-family:var(--corps); font-size:14px; color:var(--encre); background:var(--carte);
+  border:1px solid var(--trait); border-radius:var(--r-pill); padding:10px 14px; min-height:44px; cursor:pointer;
+}
+.toolbar-count{ font-size:13px; color:var(--estompe); font-variant-numeric:tabular-nums; }
+.empty-state{ text-align:center; color:var(--estompe); padding:40px 0; }
+
+/* Carte produit cliquable */
+.product{ cursor:pointer; text-align:left; width:100%; font-family:inherit; color:inherit; padding:0; }
+.product .product-ref{ font-size:11px; color:var(--estompe); font-variant-numeric:tabular-nums; }
+.product-flag.is-best{ background:var(--vdb-jaune); color:var(--vdb-noir); border-color:var(--vdb-jaune); font-weight:700; }
+.product-price small{ font-family:var(--corps); font-weight:400; font-size:11px; color:var(--estompe); display:block; margin-top:2px; }
+
+/* =========================================================
+   FICHE PRODUIT (modale)
+   ========================================================= */
+.modal-backdrop{
+  position:fixed; inset:0; z-index:200; background:rgba(28,26,23,.5);
+  display:grid; place-items:center; padding:clamp(16px,4vw,48px);
+  backdrop-filter:blur(2px);
+}
+/* display:grid ci-dessus l'emporte sur le [hidden] du navigateur : on le rétablit */
+.modal-backdrop[hidden]{ display:none; }
+.modal{
+  position:relative; background:var(--carte); border-radius:var(--r-xl); box-shadow:var(--shadow-lift);
+  width:min(880px,100%); max-height:88vh; overflow-y:auto; padding:clamp(28px,4vw,48px);
+}
+.modal-close{
+  position:absolute; top:16px; right:16px; width:44px; height:44px; border-radius:50%;
+  border:1px solid var(--trait); background:var(--carte); cursor:pointer; color:var(--encre);
+  display:grid; place-items:center; transition:background .18s ease;
+}
+.modal-close:hover{ background:var(--bleu-voile); color:var(--vdb-bleu); }
+.modal-top{ display:grid; grid-template-columns:200px 1fr; gap:clamp(20px,3vw,36px); align-items:start; }
+@media (max-width:640px){ .modal-top{ grid-template-columns:1fr; } }
+.modal-visual{ border-radius:var(--r-lg); display:grid; place-items:center; min-height:180px; padding:24px; }
+.modal-visual svg{ width:72px; height:72px; }
+.modal-eyebrow{ font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--estompe); }
+.modal h2{ font-size:clamp(22px,2.6vw,30px); margin:6px 0 4px; }
+.modal-ref{ font-size:13px; color:var(--estompe); font-variant-numeric:tabular-nums; margin-bottom:14px; }
+.modal-short{ font-size:17px; color:var(--encre); margin:0 0 20px; text-align:left; }
+.spec-table{ width:100%; border-collapse:collapse; font-size:15px; margin-bottom:18px; }
+.spec-table th, .spec-table td{ text-align:left; padding:11px 14px; border-bottom:1px solid var(--trait); }
+.spec-table th{ font-family:var(--corps); font-weight:400; color:var(--estompe); width:45%; }
+.spec-table td{ font-weight:600; }
+.modal-more{ margin-bottom:20px; }
+.modal-more summary{ cursor:pointer; font-size:14px; color:var(--vdb-bleu); padding:8px 0; min-height:38px; display:flex; align-items:center; }
+.modal-more p{ font-size:15px; color:var(--estompe); margin:6px 0 0; }
+.modal-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding-top:6px; }
+.modal-similar{ margin-top:36px; border-top:1px solid var(--trait); padding-top:28px; }
+.modal-similar h3{ font-family:var(--titre); font-size:16px; margin:0 0 16px; }
+.similar-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media (max-width:640px){ .similar-list{ grid-template-columns:1fr; } }
+.similar-item{
+  display:flex; align-items:center; gap:12px; text-align:left; width:100%;
+  background:var(--fond); border:1px solid var(--trait); border-radius:var(--r-md);
+  padding:12px 14px; cursor:pointer; font-family:var(--corps); color:var(--encre);
+  transition:background .18s ease, transform .18s ease;
+}
+.similar-item:hover{ background:var(--bleu-voile); transform:translateY(-2px); }
+.similar-ico{ flex-shrink:0; width:34px; height:34px; border-radius:50%; display:grid; place-items:center; background:var(--carte); color:var(--vdb-bleu); }
+.similar-ico svg{ width:18px; height:18px; }
+.similar-txt{ display:flex; flex-direction:column; gap:2px; line-height:1.25; }
+.similar-txt strong{ font-size:13px; font-weight:600; }
+.similar-txt span{ font-size:12px; color:var(--estompe); }
+
+/* =========================================================
+   PANIER SIMULÉ
+   ========================================================= */
+.cart-btn{ position:relative; }
+.cart-count{
+  position:absolute; top:-5px; right:-5px; min-width:20px; height:20px; padding:0 5px;
+  border-radius:var(--r-pill); background:var(--vdb-jaune); color:var(--vdb-noir);
+  font-size:11px; font-weight:700; display:grid; place-items:center; font-variant-numeric:tabular-nums;
+}
+.cart-count[hidden]{ display:none; }
+.cart-count.pulse{ animation:cartPulse .45s ease; }
+@keyframes cartPulse{ 0%{ transform:scale(1); } 45%{ transform:scale(1.35); } 100%{ transform:scale(1); } }
+.cart-panel{
+  position:fixed; top:84px; right:clamp(12px,3vw,32px); z-index:150; width:min(360px, calc(100vw - 24px));
+  background:var(--carte); border:1px solid var(--trait); border-radius:var(--r-lg);
+  box-shadow:var(--shadow-lift); padding:20px;
+}
+.cart-panel-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; }
+.cart-panel-head h3{ font-family:var(--titre); font-size:16px; margin:0; }
+.cart-close{ width:36px; height:36px; border-radius:50%; border:1px solid var(--trait); background:var(--carte); cursor:pointer; display:grid; place-items:center; color:var(--encre); transition:background .18s ease; }
+.cart-close:hover{ background:var(--bleu-voile); }
+.cart-list{ list-style:none; margin:0 0 14px; padding:0; display:flex; flex-direction:column; gap:10px; max-height:280px; overflow-y:auto; }
+.cart-list li{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; font-size:14px; }
+.cart-list .ci-name{ flex:1; line-height:1.3; }
+.cart-list .ci-qty{ color:var(--estompe); font-size:12px; }
+.cart-list .ci-price{ font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.cart-empty{ color:var(--estompe); font-size:14px; text-align:center; padding:12px 0; }
+.cart-foot{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-top:1px solid var(--trait); padding-top:14px; font-size:15px; }
+.cart-foot strong{ font-family:var(--titre); color:var(--vdb-bleu); font-variant-numeric:tabular-nums; }
+.cart-note{ font-size:12px; color:var(--estompe); font-style:italic; margin:10px 0 0; text-align:center; }
+
+/* =========================================================
+   ACCESSIBILITÉ — focus visible homogène
+   ========================================================= */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
+  outline:3px solid var(--vdb-bleu); outline-offset:2px; border-radius:4px;
+}
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+}
+
+/* =========================================================
+   ACCESSIBILITÉ + MICRO-INTERACTIONS (passe globale)
+   ========================================================= */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
+  outline:3px solid var(--vdb-bleu); outline-offset:2px; border-radius:4px;
+}
+/* États actifs : retour tactile sobre */
+.btn:active, .btn-sm:active, .btn-ghost:active, .contact-btn:active{ transform:translateY(1px); }
+.cat:active .pastille{ transform:translateY(-4px) scale(1.02); }
+/* Le survol ne doit pas « sauter » : transitions dans la plage 150-250ms */
+.btn, .btn-sm, .btn-ghost, .contact-btn, .product, .cat .pastille, .similar-item{
+  transition-duration:.2s; transition-timing-function:ease;
+}
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important; scroll-behavior:auto !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -542,8 +763,12 @@ img,svg{ display:block; max-width:100%; }
       </div>
 
       <a href="preview-vehicules.html">Flotte automobile</a>
+      <button type="button" class="nav-cart cart-btn" id="cart-btn" aria-expanded="false" aria-controls="cart-panel" aria-label="Voir ma commande">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        <span class="cart-count" id="cart-count" hidden>0</span>
+      </button>
       <a class="cta" href="#">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
         Mon compte
       </a>
     </nav>
@@ -574,7 +799,7 @@ img,svg{ display:block; max-width:100%; }
       <!-- Libellés marketing courts → familles Odoo réelles (product.public.category) -->
 
       <!-- Bureau → Fournitures de bureau -->
-      <a class="cat" href="/shop/category/bureau" data-filter="bureau">
+      <a class="cat" href="/shop/category/bureau" data-filter="bureau" data-famkey="fournitures-bureau">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>
         </span>
@@ -583,7 +808,7 @@ img,svg{ display:block; max-width:100%; }
       </a>
 
       <!-- Informatique → Informatique et électronique -->
-      <a class="cat" href="/shop/category/informatique" data-filter="informatique">
+      <a class="cat" href="/shop/category/informatique" data-filter="informatique" data-famkey="informatique">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         </span>
@@ -592,7 +817,7 @@ img,svg{ display:block; max-width:100%; }
       </a>
 
       <!-- Café → Presto Café Services -->
-      <a class="cat" href="/shop/category/cafe" data-filter="cafe">
+      <a class="cat" href="/shop/category/cafe" data-filter="cafe" data-famkey="presto-cafe">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14v5a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><path d="M17 9h2.5a2.5 2.5 0 0 1 0 5H17"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>
         </span>
@@ -601,7 +826,7 @@ img,svg{ display:block; max-width:100%; }
       </a>
 
       <!-- Nettoyage → Produits d'entretien et de nettoyage -->
-      <a class="cat" href="/shop/category/nettoyage" data-filter="nettoyage">
+      <a class="cat" href="/shop/category/nettoyage" data-filter="nettoyage" data-famkey="nettoyage">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="9" height="13" rx="3"/><path d="M7 14h9"/><path d="M10 8V5h4v3"/><path d="M14 6h3"/><path d="M19 4l1.2-1"/><path d="M19.5 6.2h1.6"/><path d="M19 8.4l1.2 1"/></svg>
         </span>
@@ -610,7 +835,7 @@ img,svg{ display:block; max-width:100%; }
       </a>
 
       <!-- Vêtements → Vêtements de travail -->
-      <a class="cat" href="/shop/category/vetements" data-filter="vetements">
+      <a class="cat" href="/shop/category/vetements" data-filter="vetements" data-famkey="vetements">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 2-1.5 4L16 8v13H8V8L5.5 9 4 5l4-2"/><path d="M9 3a3 3 0 0 0 6 0"/></svg>
         </span>
@@ -619,7 +844,7 @@ img,svg{ display:block; max-width:100%; }
       </a>
 
       <!-- Sécurité → Protection individuelle - EPI -->
-      <a class="cat" href="/shop/category/securite" data-filter="securite">
+      <a class="cat" href="/shop/category/securite" data-filter="securite" data-famkey="epi">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-2a8 8 0 0 1 16 0v2"/><path d="M2 17h20"/><path d="M12 7V4"/></svg>
         </span>
@@ -628,7 +853,7 @@ img,svg{ display:block; max-width:100%; }
       </a>
 
       <!-- Mobilier → Mobilier -->
-      <a class="cat" href="/shop/category/mobilier" data-filter="mobilier">
+      <a class="cat" href="/shop/category/mobilier" data-filter="mobilier" data-famkey="mobilier">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z"/><path d="M5 18v2M19 18v2"/></svg>
         </span>
@@ -637,7 +862,7 @@ img,svg{ display:block; max-width:100%; }
       </a>
 
       <!-- Vin → Vin officiel (Chancellerie) -->
-      <a class="cat" href="/shop/category/vin" data-filter="vin">
+      <a class="cat" href="/shop/category/vin" data-filter="vin" data-famkey="vin">
         <span class="pastille">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/><path d="M7.2 6h9.6"/></svg>
         </span>
@@ -648,97 +873,199 @@ img,svg{ display:block; max-width:100%; }
   </div>
 </section>
 
-<!-- ===================== PRODUITS (aperçu catalogue) ===================== -->
-<section class="section" id="produits" style="padding-top:0;">
+<!-- ===================== CATALOGUE (sidebar + grille) ===================== -->
+<section class="section" id="catalogue" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow"><span class="dot"></span> Aperçu du catalogue</span>
-      <h2>Quelques produits</h2>
-      <p>Un aperçu du catalogue par catégorie. Cliquez sur une pastille ci-dessus pour filtrer.</p>
+      <span class="eyebrow"><span class="dot"></span> Catalogue complet</span>
+      <h2>Parcourir le catalogue</h2>
+      <p>Toutes les familles de produits de la centrale d'achat, avec leurs sous-catégories.</p>
     </div>
-    <div class="products" id="products-grid">
-      <article class="product" data-cat="bureau">
-        <span class="product-flag">Exemple maquette</span>
-        <div class="product-visual" style="background:var(--bleu-voile); color:var(--vdb-bleu);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></div>
-        <div class="product-body">
-          <span class="product-tag">Bureau</span>
-          <h3 class="product-name">Ramette papier A4 80g</h3>
-          <p class="product-meta">Carton de 5 ramettes</p>
-          <div class="product-foot">
-            <span class="product-price">dès CHF 32.-</span>
-            <a class="btn-sm" href="#">Commander</a>
+
+    <button type="button" class="cat-drawer-btn" id="cat-drawer-btn" aria-expanded="false" aria-controls="cat-sidebar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      Catégories
+    </button>
+
+    <div class="catalogue-layout">
+      <!-- Sidebar catégories -->
+      <aside class="cat-sidebar" id="cat-sidebar" aria-label="Catégories du catalogue">
+        <div class="cat-sidebar-head">
+          <h3>Catégories</h3>
+          <button type="button" class="cat-reset" id="cat-reset">Tout voir</button>
+        </div>
+        <ul class="cat-tree">
+        <li class="cat-node" data-fam-node="bonnes-affaires">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="bonnes-affaires">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span>
+              <span class="cat-fam-name">% Bonnes affaires / Liquidation</span>
+              <span class="cat-count" data-count-fam="bonnes-affaires"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="bonnes-affaires" aria-expanded="false" aria-label="Afficher les sous-catégories de % Bonnes affaires / Liquidation"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="bonnes-affaires" hidden><li><button type="button" class="cat-sub" data-fam="bonnes-affaires" data-sub="Fourniture de bureau"><span class="cat-sub-name">Fourniture de bureau</span><span class="cat-count" data-count-sub="bonnes-affaires|Fourniture de bureau"></span></button></li><li><button type="button" class="cat-sub" data-fam="bonnes-affaires" data-sub="Informatique et électronique"><span class="cat-sub-name">Informatique et électronique</span><span class="cat-count" data-count-sub="bonnes-affaires|Informatique et électronique"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="fournitures-bureau">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="fournitures-bureau">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></span>
+              <span class="cat-fam-name">Fournitures de bureau</span>
+              <span class="cat-count" data-count-fam="fournitures-bureau"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="fournitures-bureau" aria-expanded="false" aria-label="Afficher les sous-catégories de Fournitures de bureau"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="fournitures-bureau" hidden><li><button type="button" class="cat-sub" data-fam="fournitures-bureau" data-sub="Papier et correspondance"><span class="cat-sub-name">Papier et correspondance</span><span class="cat-count" data-count-sub="fournitures-bureau|Papier et correspondance"></span></button></li><li><button type="button" class="cat-sub" data-fam="fournitures-bureau" data-sub="Poste de travail"><span class="cat-sub-name">Poste de travail</span><span class="cat-count" data-count-sub="fournitures-bureau|Poste de travail"></span></button></li><li><button type="button" class="cat-sub" data-fam="fournitures-bureau" data-sub="Ecrire et corriger"><span class="cat-sub-name">Ecrire et corriger</span><span class="cat-count" data-count-sub="fournitures-bureau|Ecrire et corriger"></span></button></li><li><button type="button" class="cat-sub" data-fam="fournitures-bureau" data-sub="Classement et archivage"><span class="cat-sub-name">Classement et archivage</span><span class="cat-count" data-count-sub="fournitures-bureau|Classement et archivage"></span></button></li><li><button type="button" class="cat-sub" data-fam="fournitures-bureau" data-sub="Emballage et expédition"><span class="cat-sub-name">Emballage et expédition</span><span class="cat-count" data-count-sub="fournitures-bureau|Emballage et expédition"></span></button></li><li><button type="button" class="cat-sub" data-fam="fournitures-bureau" data-sub="Bricolage et dessin"><span class="cat-sub-name">Bricolage et dessin</span><span class="cat-count" data-count-sub="fournitures-bureau|Bricolage et dessin"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="presto-cafe">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="presto-cafe">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14v5a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><path d="M17 9h2.5a2.5 2.5 0 0 1 0 5H17"/><path d="M6 2v2M10 2v2M14 2v2"/></svg></span>
+              <span class="cat-fam-name">Presto Café Services</span>
+              <span class="cat-count" data-count-fam="presto-cafe"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="presto-cafe" aria-expanded="false" aria-label="Afficher les sous-catégories de Presto Café Services"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="presto-cafe" hidden><li><button type="button" class="cat-sub" data-fam="presto-cafe" data-sub="Capsules NESPRESSO"><span class="cat-sub-name">Capsules NESPRESSO</span><span class="cat-count" data-count-sub="presto-cafe|Capsules NESPRESSO"></span></button></li><li><button type="button" class="cat-sub" data-fam="presto-cafe" data-sub="Sachets NEWBY"><span class="cat-sub-name">Sachets NEWBY</span><span class="cat-count" data-count-sub="presto-cafe|Sachets NEWBY"></span></button></li><li><button type="button" class="cat-sub" data-fam="presto-cafe" data-sub="Machines"><span class="cat-sub-name">Machines</span><span class="cat-count" data-count-sub="presto-cafe|Machines"></span></button></li><li><button type="button" class="cat-sub" data-fam="presto-cafe" data-sub="Ensemble d'accessoires"><span class="cat-sub-name">Ensemble d'accessoires</span><span class="cat-count" data-count-sub="presto-cafe|Ensemble d'accessoires"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="informatique">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="informatique">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+              <span class="cat-fam-name">Informatique et électronique</span>
+              <span class="cat-count" data-count-fam="informatique"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="informatique" aria-expanded="false" aria-label="Afficher les sous-catégories de Informatique et électronique"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="informatique" hidden><li><button type="button" class="cat-sub" data-fam="informatique" data-sub="Poste de travail"><span class="cat-sub-name">Poste de travail</span><span class="cat-count" data-count-sub="informatique|Poste de travail"></span></button></li><li><button type="button" class="cat-sub" data-fam="informatique" data-sub="Tablettes et coques"><span class="cat-sub-name">Tablettes et coques</span><span class="cat-count" data-count-sub="informatique|Tablettes et coques"></span></button></li><li><button type="button" class="cat-sub" data-fam="informatique" data-sub="Toners et cartouches d'encre"><span class="cat-sub-name">Toners et cartouches d'encre</span><span class="cat-count" data-count-sub="informatique|Toners et cartouches d'encre"></span></button></li><li><button type="button" class="cat-sub" data-fam="informatique" data-sub="Câbles et prises"><span class="cat-sub-name">Câbles et prises</span><span class="cat-count" data-count-sub="informatique|Câbles et prises"></span></button></li><li><button type="button" class="cat-sub" data-fam="informatique" data-sub="Ensemble d'accessoires"><span class="cat-sub-name">Ensemble d'accessoires</span><span class="cat-count" data-count-sub="informatique|Ensemble d'accessoires"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="nettoyage">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="nettoyage">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="9" height="13" rx="3"/><path d="M7 14h9"/><path d="M10 8V5h4v3"/><path d="M14 6h3"/><path d="M19 4l1.2-1"/><path d="M19.5 6.2h1.6"/><path d="M19 8.4l1.2 1"/></svg></span>
+              <span class="cat-fam-name">Produits d'entretien et de nettoyage</span>
+              <span class="cat-count" data-count-fam="nettoyage"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="nettoyage" aria-expanded="false" aria-label="Afficher les sous-catégories de Produits d'entretien et de nettoyage"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="nettoyage" hidden><li><button type="button" class="cat-sub" data-fam="nettoyage" data-sub="Papiers et sanitaires"><span class="cat-sub-name">Papiers et sanitaires</span><span class="cat-count" data-count-sub="nettoyage|Papiers et sanitaires"></span></button></li><li><button type="button" class="cat-sub" data-fam="nettoyage" data-sub="Produits d'hygiène et d'entretien"><span class="cat-sub-name">Produits d'hygiène et d'entretien</span><span class="cat-count" data-count-sub="nettoyage|Produits d'hygiène et d'entretien"></span></button></li><li><button type="button" class="cat-sub" data-fam="nettoyage" data-sub="Serviettes et lingettes"><span class="cat-sub-name">Serviettes et lingettes</span><span class="cat-count" data-count-sub="nettoyage|Serviettes et lingettes"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="mobilier">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="mobilier">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z"/><path d="M5 18v2M19 18v2"/></svg></span>
+              <span class="cat-fam-name">Mobilier</span>
+              <span class="cat-count" data-count-fam="mobilier"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="mobilier" aria-expanded="false" aria-label="Afficher les sous-catégories de Mobilier"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="mobilier" hidden><li><button type="button" class="cat-sub" data-fam="mobilier" data-sub="Aménagement (Bâtiments)"><span class="cat-sub-name">Aménagement (Bâtiments)</span><span class="cat-count" data-count-sub="mobilier|Aménagement (Bâtiments)"></span></button></li><li><button type="button" class="cat-sub" data-fam="mobilier" data-sub="Accessoires de bureaux/locaux"><span class="cat-sub-name">Accessoires de bureaux/locaux</span><span class="cat-count" data-count-sub="mobilier|Accessoires de bureaux/locaux"></span></button></li><li><button type="button" class="cat-sub" data-fam="mobilier" data-sub="Présentations et conférences"><span class="cat-sub-name">Présentations et conférences</span><span class="cat-count" data-count-sub="mobilier|Présentations et conférences"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="vetements">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="vetements">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 2-1.5 4L16 8v13H8V8L5.5 9 4 5l4-2"/><path d="M9 3a3 3 0 0 0 6 0"/></svg></span>
+              <span class="cat-fam-name">Vêtements de travail</span>
+              <span class="cat-count" data-count-fam="vetements"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="vetements" aria-expanded="false" aria-label="Afficher les sous-catégories de Vêtements de travail"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="vetements" hidden><li><button type="button" class="cat-sub" data-fam="vetements" data-sub="Strauss"><span class="cat-sub-name">Strauss</span><span class="cat-count" data-count-sub="vetements|Strauss"></span></button></li><li><button type="button" class="cat-sub" data-fam="vetements" data-sub="Würth"><span class="cat-sub-name">Würth</span><span class="cat-count" data-count-sub="vetements|Würth"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="epi">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="epi">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-2a8 8 0 0 1 16 0v2"/><path d="M2 17h20"/><path d="M12 7V4"/></svg></span>
+              <span class="cat-fam-name">Protection individuelle - EPI</span>
+              <span class="cat-count" data-count-fam="epi"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="epi" aria-expanded="false" aria-label="Afficher les sous-catégories de Protection individuelle - EPI"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="epi" hidden><li><button type="button" class="cat-sub" data-fam="epi" data-sub="Casques de protection"><span class="cat-sub-name">Casques de protection</span><span class="cat-count" data-count-sub="epi|Casques de protection"></span></button></li><li><button type="button" class="cat-sub" data-fam="epi" data-sub="Chaussures de sécurité"><span class="cat-sub-name">Chaussures de sécurité</span><span class="cat-count" data-count-sub="epi|Chaussures de sécurité"></span></button></li><li><button type="button" class="cat-sub" data-fam="epi" data-sub="Habits de sécurité - Vêtements haute visibilité"><span class="cat-sub-name">Habits de sécurité - Vêtements haute visibilité</span><span class="cat-count" data-count-sub="epi|Habits de sécurité - Vêtements haute visibilité"></span></button></li><li><button type="button" class="cat-sub" data-fam="epi" data-sub="Lunettes et gants de protection"><span class="cat-sub-name">Lunettes et gants de protection</span><span class="cat-count" data-count-sub="epi|Lunettes et gants de protection"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="divers">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="divers">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+              <span class="cat-fam-name">Divers</span>
+              <span class="cat-count" data-count-fam="divers"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="divers" aria-expanded="false" aria-label="Afficher les sous-catégories de Divers"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="divers" hidden><li><button type="button" class="cat-sub" data-fam="divers" data-sub="Matériel spécialisé"><span class="cat-sub-name">Matériel spécialisé</span><span class="cat-count" data-count-sub="divers|Matériel spécialisé"></span></button></li><li><button type="button" class="cat-sub" data-fam="divers" data-sub="Outils"><span class="cat-sub-name">Outils</span><span class="cat-count" data-count-sub="divers|Outils"></span></button></li><li><button type="button" class="cat-sub" data-fam="divers" data-sub="Piles et batteries"><span class="cat-sub-name">Piles et batteries</span><span class="cat-count" data-count-sub="divers|Piles et batteries"></span></button></li><li><button type="button" class="cat-sub" data-fam="divers" data-sub="Signalisation"><span class="cat-sub-name">Signalisation</span><span class="cat-count" data-count-sub="divers|Signalisation"></span></button></li><li><button type="button" class="cat-sub" data-fam="divers" data-sub="Goodies"><span class="cat-sub-name">Goodies</span><span class="cat-count" data-count-sub="divers|Goodies"></span></button></li></ul>
+        </li>
+        <li class="cat-node" data-fam-node="vin">
+          <div class="cat-fam-row">
+            <button type="button" class="cat-fam" data-fam="vin">
+              <span class="cat-fam-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/><path d="M7.2 6h9.6"/></svg></span>
+              <span class="cat-fam-name">Vin officiel (Chancellerie)</span>
+              <span class="cat-count" data-count-fam="vin"></span>
+            </button>
+            <button type="button" class="cat-toggle" data-toggle="vin" aria-expanded="false" aria-label="Afficher les sous-catégories de Vin officiel (Chancellerie)"><span class="chev" aria-hidden="true"></span></button>
+          </div>
+          <ul class="cat-subs" data-subs="vin" hidden><li><button type="button" class="cat-sub" data-fam="vin" data-sub="Rouge"><span class="cat-sub-name">Rouge</span><span class="cat-count" data-count-sub="vin|Rouge"></span></button></li><li><button type="button" class="cat-sub" data-fam="vin" data-sub="Blanc"><span class="cat-sub-name">Blanc</span><span class="cat-count" data-count-sub="vin|Blanc"></span></button></li></ul>
+        </li>
+        </ul>
+      </aside>
+
+      <!-- Zone produits -->
+      <div class="catalogue-main">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane">
+          <ol id="breadcrumb"></ol>
+        </nav>
+
+        <div class="toolbar">
+          <div class="toolbar-search">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+            <input type="search" id="search" placeholder="Rechercher un produit ou une référence" aria-label="Rechercher un produit ou une référence">
+          </div>
+          <div class="toolbar-right">
+            <label class="toolbar-sort">
+              <span>Trier</span>
+              <select id="sort" aria-label="Trier les produits">
+                <option value="nom">Nom (A → Z)</option>
+                <option value="prix-asc">Prix croissant</option>
+                <option value="prix-desc">Prix décroissant</option>
+              </select>
+            </label>
+            <span class="toolbar-count" id="count" aria-live="polite"></span>
           </div>
         </div>
-      </article>
-      <article class="product" data-cat="informatique">
-        <span class="product-flag">Exemple maquette</span>
-        <div class="product-visual" style="background:var(--vert-voile); color:var(--vdb-vert-fonce);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-        <div class="product-body">
-          <span class="product-tag">Informatique</span>
-          <h3 class="product-name">Souris optique USB</h3>
-          <p class="product-meta">À l'unité</p>
-          <div class="product-foot">
-            <span class="product-price">CHF 18.-</span>
-            <a class="btn-sm" href="#">Commander</a>
-          </div>
-        </div>
-      </article>
-      <article class="product" data-cat="cafe">
-        <span class="product-flag">Exemple maquette</span>
-        <div class="product-visual" style="background:var(--jaune-voile); color:var(--vdb-jaune);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14v5a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><path d="M17 9h2.5a2.5 2.5 0 0 1 0 5H17"/><path d="M6 2v2M10 2v2M14 2v2"/></svg></div>
-        <div class="product-body">
-          <span class="product-tag">Café</span>
-          <h3 class="product-name">Capsules café x50</h3>
-          <p class="product-meta">Par boîte</p>
-          <div class="product-foot">
-            <span class="product-price">CHF 24.-</span>
-            <a class="btn-sm" href="#">Commander</a>
-          </div>
-        </div>
-      </article>
-      <article class="product" data-cat="vetements">
-        <span class="product-flag">Exemple maquette</span>
-        <div class="product-visual" style="background:var(--brun-voile); color:var(--vdb-brun);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 2-1.5 4L16 8v13H8V8L5.5 9 4 5l4-2"/><path d="M9 3a3 3 0 0 0 6 0"/></svg></div>
-        <div class="product-body">
-          <span class="product-tag">Vêtements</span>
-          <h3 class="product-name">Veste de travail Softshell</h3>
-          <p class="product-meta">Tailles S à XXL, à l'unité</p>
-          <div class="product-foot">
-            <span class="product-price">CHF 65.-</span>
-            <a class="btn-sm" href="#">Commander</a>
-          </div>
-        </div>
-      </article>
-      <article class="product" data-cat="securite">
-        <span class="product-flag">Exemple maquette</span>
-        <div class="product-visual" style="background:var(--bleu-voile); color:var(--vdb-bleu);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-2a8 8 0 0 1 16 0v2"/><path d="M2 17h20"/><path d="M12 7V4"/></svg></div>
-        <div class="product-body">
-          <span class="product-tag">Sécurité</span>
-          <h3 class="product-name">Gants de protection EPI</h3>
-          <p class="product-meta">La paire</p>
-          <div class="product-foot">
-            <span class="product-price">CHF 8.-</span>
-            <a class="btn-sm" href="#">Commander</a>
-          </div>
-        </div>
-      </article>
-      <article class="product" data-cat="vin">
-        <span class="product-flag">Exemple maquette</span>
-        <div class="product-visual" style="background:var(--vert-voile); color:var(--vdb-vert-fonce);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/><path d="M7.2 6h9.6"/></svg></div>
-        <div class="product-body">
-          <span class="product-tag">Vin</span>
-          <h3 class="product-name">Fendant 2023</h3>
-          <p class="product-meta">Bouteille 70cl, carton de 6</p>
-          <div class="product-foot">
-            <span class="product-price">CHF 14.-</span>
-            <a class="btn-sm" href="#">Commander</a>
-          </div>
-        </div>
-      </article>
+
+        <div class="products" id="products-grid"></div>
+        <p class="empty-state" id="empty-state" hidden>Aucun produit ne correspond à cette recherche.</p>
+        <p class="stats-note">Les prix sont indiqués <strong>hors TVA</strong> (8.1 % en sus). Les produits marqués « Exemple » sont des ajouts de maquette : le catalogue réel sera repris depuis Odoo.</p>
+      </div>
     </div>
-    <p class="stats-note">Produits et prix d'exemple pour la maquette, données réelles à intégrer depuis le catalogue Odoo.</p>
   </div>
 </section>
+
+<!-- ===================== FICHE PRODUIT (modale) ===================== -->
+<div class="modal-backdrop" id="product-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button type="button" class="modal-close" id="modal-close" aria-label="Fermer la fiche produit">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ===================== MINI-PANIER ===================== -->
+<div class="cart-panel" id="cart-panel" hidden>
+  <div class="cart-panel-head">
+    <h3>Ma commande</h3>
+    <button type="button" class="cart-close" id="cart-close" aria-label="Fermer le récapitulatif">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <ul class="cart-list" id="cart-list"></ul>
+  <p class="cart-empty" id="cart-empty">Votre commande est vide.</p>
+  <div class="cart-foot">
+    <span>Total hors TVA</span>
+    <strong id="cart-total">CHF 0.00</strong>
+  </div>
+  <p class="cart-note">Simulation de maquette, aucune commande n'est transmise.</p>
+</div>
 
 <!-- ===================== BANNIÈRE CHIFFRES ===================== -->
 <section class="section" style="padding-top:0;">
@@ -844,7 +1171,7 @@ img,svg{ display:block; max-width:100%; }
 
     <div class="footer-bottom">
       <span>© Commune de Val de Bagnes, Boutique communale</span>
-      <span>Maquette Boutique v1 · VDB</span>
+      <span>Maquette Boutique v3 · VDB</span>
     </div>
   </div>
 </footer>
@@ -888,28 +1215,367 @@ function toggleNav(btn){
   }
 })();
 
-/* ---------- Filtre produits simulé (clic pastille catégorie) ---------- */
+
+/* ---------- Données catalogue ---------- */
+var VDB_FAMILIES = [{"key": "bonnes-affaires", "name": "% Bonnes affaires / Liquidation", "icon": "tag", "subs": ["Fourniture de bureau", "Informatique et électronique"]}, {"key": "fournitures-bureau", "name": "Fournitures de bureau", "icon": "bureau", "subs": ["Papier et correspondance", "Poste de travail", "Ecrire et corriger", "Classement et archivage", "Emballage et expédition", "Bricolage et dessin"]}, {"key": "presto-cafe", "name": "Presto Café Services", "icon": "cafe", "subs": ["Capsules NESPRESSO", "Sachets NEWBY", "Machines", "Ensemble d'accessoires"]}, {"key": "informatique", "name": "Informatique et électronique", "icon": "informatique", "subs": ["Poste de travail", "Tablettes et coques", "Toners et cartouches d'encre", "Câbles et prises", "Ensemble d'accessoires"]}, {"key": "nettoyage", "name": "Produits d'entretien et de nettoyage", "icon": "nettoyage", "subs": ["Papiers et sanitaires", "Produits d'hygiène et d'entretien", "Serviettes et lingettes"]}, {"key": "mobilier", "name": "Mobilier", "icon": "mobilier", "subs": ["Aménagement (Bâtiments)", "Accessoires de bureaux/locaux", "Présentations et conférences"]}, {"key": "vetements", "name": "Vêtements de travail", "icon": "vetements", "subs": ["Strauss", "Würth"]}, {"key": "epi", "name": "Protection individuelle - EPI", "icon": "securite", "subs": ["Casques de protection", "Chaussures de sécurité", "Habits de sécurité - Vêtements haute visibilité", "Lunettes et gants de protection"]}, {"key": "divers", "name": "Divers", "icon": "divers", "subs": ["Matériel spécialisé", "Outils", "Piles et batteries", "Signalisation", "Goodies"]}, {"key": "vin", "name": "Vin officiel (Chancellerie)", "icon": "vin", "subs": ["Rouge", "Blanc"]}];
+var VDB_PRODUCTS = [{"ref": "913232", "name": "Feuilles de rechange 044, A4 quadrillé bleu 4 mm, cadre noir", "fam": "fournitures-bureau", "sub": "Papier et correspondance", "cond": "Paquet de 100, vente à l'unité", "price": 3.5, "real": true, "badge": "Meilleure vente", "short": "Feuilles A4 quadrillées 4 mm, cadre noir.", "long": "Papier blanc, quadrillage bleu 4 mm avec cadre noir. Perforation universelle, compatible classeurs et registres standard."}, {"ref": "4048.01", "name": "Perforatrice d'angle, 3 rayons 4/7/10 mm", "fam": "fournitures-bureau", "sub": "Bricolage et dessin", "cond": "À l'unité", "price": 11.7, "real": true, "badge": null, "short": "Perforatrice d'angle pour arrondir les coins.", "long": "Trois rayons au choix (4, 7 et 10 mm). Perfore jusqu'à 180 g/m². Butée réglable et réceptacle à confettis intégré."}, {"ref": "F 17-B", "name": "Timbre à encrage automatique à formules, « Copie » bleu", "fam": "fournitures-bureau", "sub": "Ecrire et corriger", "cond": "À l'unité", "price": 15.25, "real": true, "badge": null, "short": "Timbre à formule « Copie », encrage automatique.", "long": "Encrage automatique, empreinte bleue. Cassette d'encre remplaçable."}, {"ref": "57.617.20", "name": "Poches transparentes A4 CopyResistant, surface lisse, 4 trous", "fam": "fournitures-bureau", "sub": "Classement et archivage", "cond": "Sachet de 10", "price": 2.25, "real": true, "badge": null, "short": "Poche transparente A4, surface lisse, 4 trous.", "long": "Qualité CopyResistant : n'adhère pas aux impressions laser et jet d'encre. Ouverture sur le côté long, perforation universelle 4 trous."}, {"ref": "6651933K", "name": "Ruban adhésif double face, 19 mm × 33 m", "fam": "fournitures-bureau", "sub": "Emballage et expédition", "cond": "À l'unité", "price": 18.98, "real": true, "badge": null, "short": "Ruban adhésif double face 19 mm × 33 m.", "long": "Adhésif permanent sur support papier, se déchire à la main."}, {"ref": "DTX/256GB", "name": "Clé USB 256 GB, USB 3.2 Gen1, USB-A", "fam": "informatique", "sub": "Ensemble d'accessoires", "cond": "À l'unité", "price": 19.0, "real": true, "badge": null, "short": "Clé USB 256 GB, connecteur USB-A.", "long": "Norme USB 3.2 Gen1, rétrocompatible USB 2.0. Capuchon coulissant intégré."}, {"ref": "2004256", "name": "Pile bouton CR2450", "fam": "divers", "sub": "Piles et batteries", "cond": "À l'unité", "price": 2.71, "real": true, "badge": null, "short": "Pile bouton lithium CR2450, 3 V.", "long": ""}, {"ref": "2011324", "name": "Pile AAA Longlife Power", "fam": "divers", "sub": "Piles et batteries", "cond": "Emballage de 40", "price": 27.7, "real": true, "badge": null, "short": "Piles alcalines AAA, emballage de 40.", "long": ""}, {"ref": "2010819", "name": "Pile AA Industrial Pro", "fam": "divers", "sub": "Piles et batteries", "cond": "Emballage de 40", "price": 22.41, "real": true, "badge": null, "short": "Piles alcalines AA usage intensif, emballage de 40.", "long": ""}, {"ref": "2010220", "name": "Pile bouton CR2032", "fam": "divers", "sub": "Piles et batteries", "cond": "À l'unité", "price": 0.92, "real": true, "badge": null, "short": "Pile bouton lithium CR2032, 3 V.", "long": ""}, {"ref": "EX-BA-01", "name": "Classeur A4 dos 8 cm, lot de 5, fin de série", "fam": "bonnes-affaires", "sub": "Fourniture de bureau", "cond": "Lot de 5", "price": 12.0, "real": false, "badge": null, "short": "Classeurs A4 dos 8 cm, lot de 5, en liquidation.", "long": ""}, {"ref": "EX-BA-02", "name": "Souris optique USB, fin de série", "fam": "bonnes-affaires", "sub": "Informatique et électronique", "cond": "À l'unité", "price": 9.5, "real": false, "badge": null, "short": "Souris optique filaire USB, en liquidation.", "long": ""}, {"ref": "EX-FB-01", "name": "Bloc-notes A5 ligné, lot de 10", "fam": "fournitures-bureau", "sub": "Poste de travail", "cond": "Lot de 10", "price": 16.4, "real": false, "badge": null, "short": "Blocs-notes A5 lignés, agrafés en tête.", "long": ""}, {"ref": "EX-PC-01", "name": "Capsules de café, assortiment", "fam": "presto-cafe", "sub": "Capsules NESPRESSO", "cond": "Boîte de 50", "price": 24.0, "real": false, "badge": null, "short": "Assortiment de capsules compatibles, boîte de 50.", "long": ""}, {"ref": "EX-PC-02", "name": "Sachets de thé, assortiment", "fam": "presto-cafe", "sub": "Sachets NEWBY", "cond": "Boîte de 25", "price": 8.9, "real": false, "badge": null, "short": "Assortiment de thés en sachets individuels.", "long": ""}, {"ref": "EX-PC-03", "name": "Machine à café à capsules, usage bureau", "fam": "presto-cafe", "sub": "Machines", "cond": "À l'unité", "price": 189.0, "real": false, "badge": null, "short": "Machine à capsules pour espace de pause.", "long": ""}, {"ref": "EX-PC-04", "name": "Set tasses et cuillères, 12 pièces", "fam": "presto-cafe", "sub": "Ensemble d'accessoires", "cond": "Set de 12", "price": 34.0, "real": false, "badge": null, "short": "Tasses et cuillères pour espace de pause.", "long": ""}, {"ref": "EX-IN-01", "name": "Écran 24 pouces, Full HD", "fam": "informatique", "sub": "Poste de travail", "cond": "À l'unité", "price": 189.0, "real": false, "badge": null, "short": "Écran 24\" Full HD, pied réglable en hauteur.", "long": ""}, {"ref": "EX-IN-02", "name": "Coque de protection pour tablette 10 pouces", "fam": "informatique", "sub": "Tablettes et coques", "cond": "À l'unité", "price": 29.0, "real": false, "badge": null, "short": "Coque renforcée pour tablette 10\".", "long": ""}, {"ref": "EX-IN-03", "name": "Toner noir, compatible imprimante de service", "fam": "informatique", "sub": "Toners et cartouches d'encre", "cond": "À l'unité", "price": 45.0, "real": false, "badge": null, "short": "Cartouche de toner noir, rendement standard.", "long": ""}, {"ref": "EX-IN-04", "name": "Câble HDMI 2 m", "fam": "informatique", "sub": "Câbles et prises", "cond": "À l'unité", "price": 12.0, "real": false, "badge": null, "short": "Câble HDMI haute vitesse, 2 mètres.", "long": ""}, {"ref": "EX-NE-01", "name": "Papier essuie-mains plié", "fam": "nettoyage", "sub": "Papiers et sanitaires", "cond": "Carton de 20 lots", "price": 38.5, "real": false, "badge": null, "short": "Essuie-mains pliés en V, 2 plis.", "long": ""}, {"ref": "EX-NE-02", "name": "Nettoyant multi-surfaces, 1 litre", "fam": "nettoyage", "sub": "Produits d'hygiène et d'entretien", "cond": "Flacon de 1 L", "price": 6.4, "real": false, "badge": null, "short": "Nettoyant multi-surfaces prêt à l'emploi.", "long": ""}, {"ref": "EX-NE-03", "name": "Lingettes désinfectantes", "fam": "nettoyage", "sub": "Serviettes et lingettes", "cond": "Boîte de 100", "price": 9.8, "real": false, "badge": null, "short": "Lingettes désinfectantes pour surfaces et objets.", "long": ""}, {"ref": "EX-MO-01", "name": "Chaise de bureau ergonomique", "fam": "mobilier", "sub": "Aménagement (Bâtiments)", "cond": "À l'unité", "price": 245.0, "real": false, "badge": null, "short": "Chaise de bureau réglable, soutien lombaire.", "long": ""}, {"ref": "EX-MO-02", "name": "Corbeille à papier 12 litres", "fam": "mobilier", "sub": "Accessoires de bureaux/locaux", "cond": "À l'unité", "price": 14.5, "real": false, "badge": null, "short": "Corbeille à papier métal perforé, 12 L.", "long": ""}, {"ref": "EX-MO-03", "name": "Paperboard mobile avec bloc papier", "fam": "mobilier", "sub": "Présentations et conférences", "cond": "À l'unité", "price": 189.0, "real": false, "badge": null, "short": "Chevalet de conférence mobile, surface magnétique.", "long": ""}, {"ref": "EX-VE-01", "name": "Veste de travail softshell", "fam": "vetements", "sub": "Strauss", "cond": "Tailles S à XXL, à l'unité", "price": 65.0, "real": false, "badge": null, "short": "Veste softshell coupe-vent, tailles S à XXL.", "long": ""}, {"ref": "EX-VE-02", "name": "Pantalon de travail multipoches", "fam": "vetements", "sub": "Würth", "cond": "Tailles 42 à 56, à l'unité", "price": 58.0, "real": false, "badge": null, "short": "Pantalon de travail renforcé, poches genouillères.", "long": ""}, {"ref": "EX-EP-01", "name": "Casque de protection de chantier", "fam": "epi", "sub": "Casques de protection", "cond": "À l'unité", "price": 18.9, "real": false, "badge": null, "short": "Casque de chantier avec harnais réglable.", "long": ""}, {"ref": "EX-EP-02", "name": "Chaussures de sécurité S3", "fam": "epi", "sub": "Chaussures de sécurité", "cond": "Pointures 39 à 47, la paire", "price": 89.0, "real": false, "badge": null, "short": "Chaussures de sécurité S3, embout et semelle anti-perforation.", "long": ""}, {"ref": "EX-EP-03", "name": "Gilet haute visibilité, classe 2", "fam": "epi", "sub": "Habits de sécurité - Vêtements haute visibilité", "cond": "À l'unité", "price": 12.5, "real": false, "badge": null, "short": "Gilet réfléchissant haute visibilité, classe 2.", "long": ""}, {"ref": "EX-EP-04", "name": "Gants de protection polyvalents", "fam": "epi", "sub": "Lunettes et gants de protection", "cond": "La paire", "price": 8.0, "real": false, "badge": null, "short": "Gants de manutention enduits, bonne préhension.", "long": ""}, {"ref": "EX-DI-01", "name": "Détecteur de tension sans contact", "fam": "divers", "sub": "Matériel spécialisé", "cond": "À l'unité", "price": 39.0, "real": false, "badge": null, "short": "Détecteur de tension sans contact, signal sonore.", "long": ""}, {"ref": "EX-DI-02", "name": "Mètre ruban 5 m", "fam": "divers", "sub": "Outils", "cond": "À l'unité", "price": 14.0, "real": false, "badge": null, "short": "Mètre ruban 5 m, boîtier antichoc.", "long": ""}, {"ref": "EX-DI-03", "name": "Cône de signalisation 50 cm", "fam": "divers", "sub": "Signalisation", "cond": "À l'unité", "price": 22.0, "real": false, "badge": null, "short": "Cône de chantier 50 cm, bande réfléchissante.", "long": ""}, {"ref": "EX-DI-04", "name": "Stylo aux couleurs de la commune", "fam": "divers", "sub": "Goodies", "cond": "Lot de 50", "price": 45.0, "real": false, "badge": null, "short": "Stylo bille personnalisé, lot de 50.", "long": ""}, {"ref": "EX-VI-01", "name": "Gamay Vieilles Vignes 2022", "fam": "vin", "sub": "Rouge", "cond": "Bouteille 70 cl, carton de 6", "price": 16.0, "real": false, "badge": null, "short": "Vin rouge officiel, millésime 2022.", "long": ""}, {"ref": "EX-VI-02", "name": "Humagne « Cinquième Saison » 2022", "fam": "vin", "sub": "Rouge", "cond": "Bouteille 70 cl, carton de 6", "price": 18.0, "real": false, "badge": null, "short": "Vin rouge officiel, millésime 2022.", "long": ""}, {"ref": "EX-VI-03", "name": "Fendant 2023", "fam": "vin", "sub": "Blanc", "cond": "Bouteille 70 cl, carton de 6", "price": 14.0, "real": false, "badge": null, "short": "Vin blanc officiel, millésime 2023.", "long": ""}, {"ref": "EX-VI-04", "name": "Johannisberg « Cinquième Saison » 2022", "fam": "vin", "sub": "Blanc", "cond": "Bouteille 70 cl, carton de 6", "price": 15.0, "real": false, "badge": null, "short": "Vin blanc officiel, millésime 2022.", "long": ""}];
+var VDB_ICONS = {"bureau": "<path d=\"M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z\"/><path d=\"M14 3v6h6\"/><path d=\"M8 13h8M8 17h5\"/>", "informatique": "<rect x=\"2\" y=\"4\" width=\"20\" height=\"13\" rx=\"2\"/><path d=\"M8 21h8M12 17v4\"/>", "cafe": "<path d=\"M3 8h14v5a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z\"/><path d=\"M17 9h2.5a2.5 2.5 0 0 1 0 5H17\"/><path d=\"M6 2v2M10 2v2M14 2v2\"/>", "nettoyage": "<rect x=\"7\" y=\"8\" width=\"9\" height=\"13\" rx=\"3\"/><path d=\"M7 14h9\"/><path d=\"M10 8V5h4v3\"/><path d=\"M14 6h3\"/><path d=\"M19 4l1.2-1\"/><path d=\"M19.5 6.2h1.6\"/><path d=\"M19 8.4l1.2 1\"/>", "vetements": "<path d=\"M16 3l4 2-1.5 4L16 8v13H8V8L5.5 9 4 5l4-2\"/><path d=\"M9 3a3 3 0 0 0 6 0\"/>", "securite": "<path d=\"M4 17v-2a8 8 0 0 1 16 0v2\"/><path d=\"M2 17h20\"/><path d=\"M12 7V4\"/>", "mobilier": "<path d=\"M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3\"/><path d=\"M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z\"/><path d=\"M5 18v2M19 18v2\"/>", "vin": "<path d=\"M8 22h8\"/><path d=\"M12 15v7\"/><path d=\"M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z\"/><path d=\"M7.2 6h9.6\"/>", "tag": "<path d=\"M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "divers": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/>"};
+
+/* ---------- Boutique : sidebar, filtres, fiche produit, panier ---------- */
 (function(){
-  var cats=document.querySelectorAll('.cat[data-filter]');
-  var grid=document.getElementById('products-grid');
+  var grid = document.getElementById('products-grid');
   if(!grid) return;
-  function filterProducts(cat){
-    var items=grid.querySelectorAll('.product');
-    var any=false;
-    items.forEach(function(p){
-      var match=p.getAttribute('data-cat')===cat;
-      p.style.display=match?'':'none';
-      if(match) any=true;
-    });
-    if(!any){ items.forEach(function(p){ p.style.display=''; }); } /* catégorie sans produit d'exemple : tout montrer */
+
+  var state = { fam:null, sub:null, q:'', sort:'nom' };
+  var cart = [];
+
+  var famName = {};
+  VDB_FAMILIES.forEach(function(f){ famName[f.key] = f.name; });
+
+  function fmt(n){ return 'CHF ' + n.toFixed(2); }
+  function icoFor(key){
+    var f = VDB_FAMILIES.filter(function(x){ return x.key === key; })[0];
+    return VDB_ICONS[f ? f.icon : 'divers'] || VDB_ICONS.divers;
   }
-  cats.forEach(function(a){
-    a.addEventListener('click', function(ev){
-      ev.preventDefault();
-      filterProducts(this.getAttribute('data-filter'));
-      document.getElementById('produits').scrollIntoView({behavior:'smooth', block:'start'});
+  function svg(key, cls){
+    return '<svg class="' + (cls||'') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + icoFor(key) + '</svg>';
+  }
+  var TINTS = ['bleu-voile','vert-voile','jaune-voile','brun-voile','sable-voile'];
+  function tintFor(key){
+    var i = VDB_FAMILIES.map(function(f){ return f.key; }).indexOf(key);
+    return TINTS[(i < 0 ? 0 : i) % TINTS.length];
+  }
+
+  /* ----- filtrage ----- */
+  function matches(p){
+    if(state.fam && p.fam !== state.fam) return false;
+    if(state.sub && p.sub !== state.sub) return false;
+    if(state.q){
+      var q = state.q.toLowerCase();
+      var hay = (p.name + ' ' + p.ref + ' ' + p.sub + ' ' + (famName[p.fam]||'')).toLowerCase();
+      if(hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  }
+  function sorted(list){
+    var l = list.slice();
+    if(state.sort === 'prix-asc') l.sort(function(a,b){ return a.price - b.price; });
+    else if(state.sort === 'prix-desc') l.sort(function(a,b){ return b.price - a.price; });
+    else l.sort(function(a,b){ return a.name.localeCompare(b.name, 'fr'); });
+    return l;
+  }
+
+  /* ----- rendu grille ----- */
+  function cardHTML(p){
+    var badge = p.badge ? '<span class="product-flag is-best">' + p.badge + '</span>'
+              : (!p.real ? '<span class="product-flag">Exemple</span>' : '');
+    return '<article class="product" data-ref="' + p.ref + '" tabindex="0" role="button" aria-label="Voir la fiche : ' + p.name + '">' +
+      badge +
+      '<div class="product-visual" style="background:var(--' + tintFor(p.fam) + ');color:var(--vdb-bleu);">' + svg(p.fam) + '</div>' +
+      '<div class="product-body">' +
+        '<span class="product-tag">' + p.sub + '</span>' +
+        '<h3 class="product-name">' + p.name + '</h3>' +
+        '<span class="product-ref">Réf. ' + p.ref + '</span>' +
+        '<p class="product-meta">' + p.cond + '</p>' +
+        '<div class="product-foot">' +
+          '<span class="product-price">' + fmt(p.price) + '<small>hors TVA</small></span>' +
+          '<span class="btn-sm" data-add="' + p.ref + '" role="button" tabindex="0">Commander</span>' +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function renderBreadcrumb(){
+    var ol = document.getElementById('breadcrumb');
+    var html = '<li><button type="button" data-crumb="all">Boutique</button></li>';
+    if(state.fam){
+      if(state.sub){
+        html += '<li><button type="button" data-crumb="fam">' + famName[state.fam] + '</button></li>';
+        html += '<li><span aria-current="page">' + state.sub + '</span></li>';
+      } else {
+        html += '<li><span aria-current="page">' + famName[state.fam] + '</span></li>';
+      }
+    }
+    ol.innerHTML = html;
+  }
+
+  function renderCounts(){
+    document.querySelectorAll('[data-count-fam]').forEach(function(el){
+      var k = el.getAttribute('data-count-fam');
+      el.textContent = VDB_PRODUCTS.filter(function(p){ return p.fam === k; }).length;
+    });
+    document.querySelectorAll('[data-count-sub]').forEach(function(el){
+      var parts = el.getAttribute('data-count-sub').split('|');
+      el.textContent = VDB_PRODUCTS.filter(function(p){ return p.fam === parts[0] && p.sub === parts[1]; }).length;
+    });
+  }
+
+  function syncSidebar(){
+    document.querySelectorAll('.cat-node').forEach(function(n){
+      n.classList.toggle('is-active', n.getAttribute('data-fam-node') === state.fam);
+    });
+    document.querySelectorAll('.cat-sub').forEach(function(b){
+      b.classList.toggle('is-active', state.sub === b.getAttribute('data-sub') && state.fam === b.getAttribute('data-fam'));
+    });
+    document.querySelectorAll('.cat[data-filter]').forEach(function(a){
+      a.setAttribute('aria-current', a.getAttribute('data-famkey') === state.fam ? 'true' : 'false');
+    });
+  }
+
+  function render(){
+    var list = sorted(VDB_PRODUCTS.filter(matches));
+    grid.innerHTML = list.map(cardHTML).join('');
+    document.getElementById('count').textContent = list.length + (list.length > 1 ? ' produits' : ' produit');
+    document.getElementById('empty-state').hidden = list.length !== 0;
+    renderBreadcrumb();
+    syncSidebar();
+  }
+
+  /* ----- fiche produit (modale) ----- */
+  var modal = document.getElementById('product-modal');
+  var modalBody = document.getElementById('modal-body');
+  var lastFocus = null;
+
+  function productByRef(ref){
+    return VDB_PRODUCTS.filter(function(p){ return p.ref === ref; })[0];
+  }
+
+  function openProduct(ref){
+    var p = productByRef(ref);
+    if(!p) return;
+    lastFocus = document.activeElement;
+    var similar = VDB_PRODUCTS.filter(function(x){ return x.fam === p.fam && x.ref !== p.ref; }).slice(0,3);
+    var tva = (p.price * 0.081);
+    modalBody.innerHTML =
+      '<div class="modal-top">' +
+        '<div class="modal-visual" style="background:var(--' + tintFor(p.fam) + ');color:var(--vdb-bleu);">' + svg(p.fam) + '</div>' +
+        '<div>' +
+          '<span class="modal-eyebrow">' + (famName[p.fam]||'') + ' › ' + p.sub + '</span>' +
+          '<h2 id="modal-title">' + p.name + '</h2>' +
+          '<p class="modal-ref">Réf. ' + p.ref + (p.real ? '' : ' · produit d\'exemple (maquette)') + '</p>' +
+          '<p class="modal-short">' + (p.short || p.cond) + '</p>' +
+          '<table class="spec-table"><tbody>' +
+            '<tr><th scope="row">Conditionnement</th><td>' + p.cond + '</td></tr>' +
+            '<tr><th scope="row">Unité de vente</th><td>' + (p.cond.indexOf('unité') > -1 ? "À l'unité" : p.cond) + '</td></tr>' +
+            '<tr><th scope="row">Minimum de commande</th><td>1</td></tr>' +
+            '<tr><th scope="row">Prix unitaire</th><td>' + fmt(p.price) + ' hors TVA</td></tr>' +
+            '<tr><th scope="row">TVA (8.1 %)</th><td>' + fmt(tva) + '</td></tr>' +
+          '</tbody></table>' +
+          (p.long ? '<details class="modal-more"><summary>En savoir plus</summary><p>' + p.long + '</p></details>' : '') +
+          '<div class="modal-actions">' +
+            '<div class="qty-stepper" data-qty="1">' +
+              '<button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">\u2212</button>' +
+              '<input type="number" class="qty-input" value="1" min="1" inputmode="numeric" aria-label="Quantité">' +
+              '<button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>' +
+            '</div>' +
+            '<button type="button" class="btn" data-add-modal="' + p.ref + '">Ajouter à la commande <span class="arr">\u2192</span></button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      (similar.length ? '<div class="modal-similar"><h3>Produits similaires</h3><div class="similar-list">' +
+        similar.map(function(s){
+          return '<button type="button" class="similar-item" data-open="' + s.ref + '">' +
+            '<span class="similar-ico">' + svg(s.fam) + '</span>' +
+            '<span class="similar-txt"><strong>' + s.name + '</strong><span>' + fmt(s.price) + ' hors TVA</span></span>' +
+          '</button>';
+        }).join('') + '</div></div>' : '');
+
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    bindStepper(modalBody);
+    var first = modal.querySelector('.modal-close');
+    if(first) first.focus();
+  }
+
+  function closeModal(){
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(ev){ if(ev.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape'){
+      if(!modal.hidden) closeModal();
+      else if(!cartPanel.hidden) toggleCart(false);
+    }
+    /* piège de focus dans la modale */
+    if(ev.key === 'Tab' && !modal.hidden){
+      var f = modal.querySelectorAll('button, [href], input, select, summary, [tabindex]:not([tabindex="-1"])');
+      if(!f.length) return;
+      var first = f[0], last = f[f.length-1];
+      if(ev.shiftKey && document.activeElement === first){ ev.preventDefault(); last.focus(); }
+      else if(!ev.shiftKey && document.activeElement === last){ ev.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* ----- steppers ----- */
+  function bindStepper(scope){
+    scope.querySelectorAll('.qty-stepper').forEach(function(st){
+      if(st.dataset.bound) return;
+      st.dataset.bound = '1';
+      var input = st.querySelector('.qty-input');
+      var min = parseInt(input.getAttribute('min') || '0', 10);
+      function set(v){ v = Math.max(min, v); input.value = v; st.setAttribute('data-qty', v); }
+      st.querySelector('.minus').addEventListener('click', function(){ set((+input.value||min) - 1); });
+      st.querySelector('.plus').addEventListener('click', function(){ set((+input.value||min) + 1); });
+      input.addEventListener('change', function(){ set(+input.value || min); });
+    });
+  }
+
+  /* ----- panier simulé ----- */
+  var cartPanel = document.getElementById('cart-panel');
+  var cartCountEl = document.getElementById('cart-count');
+
+  function cartQty(){ return cart.reduce(function(s,i){ return s + i.qty; }, 0); }
+  function cartTotal(){ return cart.reduce(function(s,i){ return s + i.qty * i.price; }, 0); }
+
+  function renderCart(){
+    var n = cartQty();
+    cartCountEl.textContent = n;
+    cartCountEl.hidden = n === 0;
+    cartCountEl.classList.remove('pulse');
+    void cartCountEl.offsetWidth;
+    if(n) cartCountEl.classList.add('pulse');
+
+    var ul = document.getElementById('cart-list');
+    ul.innerHTML = cart.map(function(i){
+      return '<li><span class="ci-name">' + i.name + '<br><span class="ci-qty">\u00d7 ' + i.qty + '</span></span>' +
+             '<span class="ci-price">' + fmt(i.qty * i.price) + '</span></li>';
+    }).join('');
+    document.getElementById('cart-empty').hidden = cart.length !== 0;
+    document.getElementById('cart-total').textContent = fmt(cartTotal());
+  }
+
+  function addToCart(ref, qty){
+    var p = productByRef(ref);
+    if(!p) return;
+    qty = qty || 1;
+    var line = cart.filter(function(i){ return i.ref === ref; })[0];
+    if(line) line.qty += qty;
+    else cart.push({ ref:p.ref, name:p.name, price:p.price, qty:qty });
+    renderCart();
+    toggleCart(true);
+  }
+
+  function toggleCart(open){
+    cartPanel.hidden = !open;
+    var btn = document.getElementById('cart-btn');
+    if(btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  document.getElementById('cart-btn').addEventListener('click', function(){ toggleCart(cartPanel.hidden); });
+  document.getElementById('cart-close').addEventListener('click', function(){ toggleCart(false); });
+
+  /* ----- délégation d'événements ----- */
+  grid.addEventListener('click', function(ev){
+    var add = ev.target.closest('[data-add]');
+    if(add){ ev.stopPropagation(); addToCart(add.getAttribute('data-add'), 1); return; }
+    var card = ev.target.closest('.product');
+    if(card) openProduct(card.getAttribute('data-ref'));
+  });
+  grid.addEventListener('keydown', function(ev){
+    if(ev.key !== 'Enter' && ev.key !== ' ') return;
+    var add = ev.target.closest('[data-add]');
+    if(add){ ev.preventDefault(); ev.stopPropagation(); addToCart(add.getAttribute('data-add'), 1); return; }
+    var card = ev.target.closest('.product');
+    if(card){ ev.preventDefault(); openProduct(card.getAttribute('data-ref')); }
+  });
+
+  modalBody.addEventListener('click', function(ev){
+    var addM = ev.target.closest('[data-add-modal]');
+    if(addM){
+      var st = modalBody.querySelector('.qty-stepper');
+      addToCart(addM.getAttribute('data-add-modal'), st ? (+st.getAttribute('data-qty') || 1) : 1);
+      return;
+    }
+    var open = ev.target.closest('[data-open]');
+    if(open) openProduct(open.getAttribute('data-open'));
+  });
+
+  /* ----- sidebar : familles, sous-catégories, accordéon ----- */
+  document.querySelectorAll('.cat-fam').forEach(function(b){
+    b.addEventListener('click', function(){
+      var k = this.getAttribute('data-fam');
+      state.fam = (state.fam === k && !state.sub) ? null : k;
+      state.sub = null;
+      render();
+      closeDrawer();
+      document.getElementById('catalogue').scrollIntoView({ behavior:'smooth', block:'start' });
     });
   });
+  document.querySelectorAll('.cat-sub').forEach(function(b){
+    b.addEventListener('click', function(){
+      state.fam = this.getAttribute('data-fam');
+      state.sub = this.getAttribute('data-sub');
+      render();
+      closeDrawer();
+      document.getElementById('catalogue').scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  document.querySelectorAll('.cat-toggle').forEach(function(b){
+    b.addEventListener('click', function(){
+      var k = this.getAttribute('data-toggle');
+      var ul = document.querySelector('[data-subs="' + k + '"]');
+      var open = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', open ? 'false' : 'true');
+      ul.hidden = open;
+    });
+  });
+  document.getElementById('cat-reset').addEventListener('click', function(){
+    state.fam = null; state.sub = null; state.q = '';
+    document.getElementById('search').value = '';
+    render();
+  });
+
+  /* ----- fil d'Ariane ----- */
+  document.getElementById('breadcrumb').addEventListener('click', function(ev){
+    var b = ev.target.closest('[data-crumb]');
+    if(!b) return;
+    if(b.getAttribute('data-crumb') === 'all'){ state.fam = null; state.sub = null; }
+    else state.sub = null;
+    render();
+  });
+
+  /* ----- recherche et tri ----- */
+  document.getElementById('search').addEventListener('input', function(){
+    state.q = this.value.trim();
+    render();
+  });
+  document.getElementById('sort').addEventListener('change', function(){
+    state.sort = this.value;
+    render();
+  });
+
+  /* ----- pastilles = mêmes filtres que la sidebar ----- */
+  document.querySelectorAll('.cat[data-filter]').forEach(function(a){
+    a.addEventListener('click', function(ev){
+      ev.preventDefault();
+      state.fam = this.getAttribute('data-famkey');
+      state.sub = null;
+      render();
+      document.getElementById('catalogue').scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+
+  /* ----- tiroir catégories (mobile) ----- */
+  var drawerBtn = document.getElementById('cat-drawer-btn');
+  var sidebar = document.getElementById('cat-sidebar');
+  function closeDrawer(){
+    if(window.matchMedia('(max-width:1023px)').matches){
+      sidebar.classList.remove('is-open');
+      drawerBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+  drawerBtn.addEventListener('click', function(){
+    var open = sidebar.classList.toggle('is-open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  renderCounts();
+  renderCart();
+  render();
 })();
 </script>
 </body>

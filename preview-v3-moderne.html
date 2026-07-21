@@ -185,7 +185,7 @@ img,svg{ display:block; max-width:100%; }
   padding:8px 16px; border-radius:var(--r-pill); border:1px solid var(--trait); margin-bottom:20px;
 }
 .eyebrow .dot{ width:8px; height:8px; border-radius:50%; background:var(--vdb-jaune); }
-.slide h1{ font-size:clamp(32px, 4.4vw, 54px); margin-bottom:16px; }
+.slide h1, .slide .slide-title{ font-size:clamp(32px, 4.4vw, 54px); margin-bottom:16px; }
 .slide p{ font-size:clamp(17px,1.4vw,19px); color:var(--estompe); margin:0 0 28px; }
 .btn{
   display:inline-flex; align-items:center; gap:10px;
@@ -273,13 +273,13 @@ img,svg{ display:block; max-width:100%; }
 /* Accent + voile de fond par catégorie (couleur ponctuelle) */
 /* Couleurs alternées — ligne 2 ≠ ligne 1 pour casser la répétition */
 .cat:nth-child(1){ --accent:var(--vdb-bleu); }      .cat:nth-child(1) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(2){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
-.cat:nth-child(3){ --accent:var(--vdb-jaune); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(2){ --accent:var(--vdb-bleu-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(3){ --accent:var(--vdb-brun); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(4){ --accent:var(--vdb-brun); }      .cat:nth-child(4) .pastille{ background:var(--brun-voile); }
 .cat:nth-child(5){ --accent:var(--vdb-brun); }      .cat:nth-child(5) .pastille{ background:var(--brun-voile); }
-.cat:nth-child(6){ --accent:var(--vdb-jaune); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(6){ --accent:var(--vdb-brun); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(7){ --accent:var(--vdb-bleu); }      .cat:nth-child(7) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(8){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(8){ --accent:var(--vdb-bleu-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
 
 /* =========================================================
    BANNIÈRE CHIFFRES
@@ -297,8 +297,8 @@ img,svg{ display:block; max-width:100%; }
 }
 .stat .num .suffix{ color:inherit; }            /* suffixe = même couleur que le nombre */
 .stat:nth-child(1) .num{ color:var(--vdb-bleu); }
-.stat:nth-child(2) .num{ color:var(--vdb-vert-fonce); }
-.stat:nth-child(3) .num{ color:var(--vdb-jaune); }
+.stat:nth-child(2) .num{ color:var(--vdb-bleu-fonce); }   /* contraste AA : le vert ne passe pas sur fond clair */
+.stat:nth-child(3) .num{ color:var(--vdb-brun); }   /* contraste AA : le jaune ne passe pas sur fond clair */
 .stat:nth-child(4) .num{ color:var(--vdb-brun); }
 .stat .cap{ margin-top:10px; font-size:15px; color:var(--estompe); }
 .stats-note{ text-align:center; color:var(--estompe); font-size:13px; margin-top:28px; font-style:italic; }
@@ -403,6 +403,27 @@ img,svg{ display:block; max-width:100%; }
   .blob{ animation:none; }
 }
 
+
+/* =========================================================
+   ACCESSIBILITÉ + MICRO-INTERACTIONS (passe globale)
+   ========================================================= */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
+  outline:3px solid var(--vdb-bleu); outline-offset:2px; border-radius:4px;
+}
+/* États actifs : retour tactile sobre */
+.btn:active, .btn-sm:active, .btn-ghost:active, .contact-btn:active{ transform:translateY(1px); }
+.cat:active .pastille{ transform:translateY(-4px) scale(1.02); }
+/* Le survol ne doit pas « sauter » : transitions dans la plage 150-250ms */
+.btn, .btn-sm, .btn-ghost, .contact-btn, .product, .cat .pastille, .similar-item{
+  transition-duration:.2s; transition-timing-function:ease;
+}
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important; scroll-behavior:auto !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -494,7 +515,7 @@ img,svg{ display:block; max-width:100%; }
 <!-- ===================== HERO CARROUSEL ===================== -->
 <section class="hero">
   <div class="wrap">
-    <div class="carousel" id="carousel" aria-roledescription="carrousel">
+    <div class="carousel" id="carousel" role="region" aria-roledescription="carrousel" aria-label="Mises en avant">
       <div class="slides" id="slides">
 
         <article class="slide" data-tint="sable">
@@ -515,7 +536,7 @@ img,svg{ display:block; max-width:100%; }
         <article class="slide" data-tint="bleu">
           <div class="copy">
             <span class="eyebrow"><span class="dot"></span> Chancellerie communale</span>
-            <h1>Votre commande de vin, sans paperasse.</h1>
+            <h2 class="slide-title">Votre commande de vin, sans paperasse.</h2>
             <p>Commande de vin officiel pour vos évènements et réceptions communales, directement en ligne.</p>
             <a class="btn" href="#shop">Commander du vin <span class="arr">→</span></a>
           </div>
@@ -528,7 +549,7 @@ img,svg{ display:block; max-width:100%; }
         <article class="slide" data-tint="jaune">
           <div class="copy">
             <span class="eyebrow"><span class="dot"></span> Flotte automobile</span>
-            <h1>Votre flotte communale, aux couleurs de la commune.</h1>
+            <h2 class="slide-title">Votre flotte communale, aux couleurs de la commune.</h2>
             <p>Véhicules modernes et sobres, conditions collaborateurs et procédure d'acquisition disponibles sur l'intranet.</p>
             <a class="btn" href="#flotte">Découvrir la flotte <span class="arr">→</span></a>
           </div>

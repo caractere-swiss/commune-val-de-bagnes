@@ -273,13 +273,13 @@ img,svg{ display:block; max-width:100%; }
 /* Accent + voile de fond par catégorie (couleur ponctuelle) */
 /* Couleurs alternées — ligne 2 ≠ ligne 1 pour casser la répétition */
 .cat:nth-child(1){ --accent:var(--vdb-bleu); }      .cat:nth-child(1) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(2){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
-.cat:nth-child(3){ --accent:var(--vdb-jaune); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(2){ --accent:var(--vdb-bleu-fonce); }.cat:nth-child(2) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(3){ --accent:var(--vdb-brun); }     .cat:nth-child(3) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(4){ --accent:var(--vdb-brun); }      .cat:nth-child(4) .pastille{ background:var(--brun-voile); }
 .cat:nth-child(5){ --accent:var(--vdb-brun); }      .cat:nth-child(5) .pastille{ background:var(--brun-voile); }
-.cat:nth-child(6){ --accent:var(--vdb-jaune); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
+.cat:nth-child(6){ --accent:var(--vdb-brun); }     .cat:nth-child(6) .pastille{ background:var(--jaune-voile); }
 .cat:nth-child(7){ --accent:var(--vdb-bleu); }      .cat:nth-child(7) .pastille{ background:var(--bleu-voile); }
-.cat:nth-child(8){ --accent:var(--vdb-vert-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
+.cat:nth-child(8){ --accent:var(--vdb-bleu-fonce); }.cat:nth-child(8) .pastille{ background:var(--vert-voile); }
 
 /* =========================================================
    BANNIÈRE CHIFFRES
@@ -297,8 +297,8 @@ img,svg{ display:block; max-width:100%; }
 }
 .stat .num .suffix{ color:inherit; }            /* suffixe = même couleur que le nombre */
 .stat:nth-child(1) .num{ color:var(--vdb-bleu); }
-.stat:nth-child(2) .num{ color:var(--vdb-vert-fonce); }
-.stat:nth-child(3) .num{ color:var(--vdb-jaune); }
+.stat:nth-child(2) .num{ color:var(--vdb-bleu-fonce); }   /* contraste AA : le vert ne passe pas sur fond clair */
+.stat:nth-child(3) .num{ color:var(--vdb-brun); }   /* contraste AA : le jaune ne passe pas sur fond clair */
 .stat:nth-child(4) .num{ color:var(--vdb-brun); }
 .stat .cap{ margin-top:10px; font-size:15px; color:var(--estompe); }
 .stats-note{ text-align:center; color:var(--estompe); font-size:13px; margin-top:28px; font-style:italic; }
@@ -517,6 +517,27 @@ img,svg{ display:block; max-width:100%; }
 .form-confirm{
   margin-top:20px; padding:16px 20px; border-radius:var(--r-md);
   background:var(--vert-voile); border:1px solid var(--vdb-vert-fonce); color:var(--encre); font-size:15px;
+}
+
+/* =========================================================
+   ACCESSIBILITÉ + MICRO-INTERACTIONS (passe globale)
+   ========================================================= */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
+  outline:3px solid var(--vdb-bleu); outline-offset:2px; border-radius:4px;
+}
+/* États actifs : retour tactile sobre */
+.btn:active, .btn-sm:active, .btn-ghost:active, .contact-btn:active{ transform:translateY(1px); }
+.cat:active .pastille{ transform:translateY(-4px) scale(1.02); }
+/* Le survol ne doit pas « sauter » : transitions dans la plage 150-250ms */
+.btn, .btn-sm, .btn-ghost, .contact-btn, .product, .cat .pastille, .similar-item{
+  transition-duration:.2s; transition-timing-function:ease;
+}
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important; scroll-behavior:auto !important;
+  }
 }
 </style>
 </head>
