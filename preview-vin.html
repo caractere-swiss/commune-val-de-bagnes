@@ -525,6 +525,7 @@ img,svg{ display:block; max-width:100%; }
 .field-error{
   font-size:13px; color:#A5281B; display:none; align-items:center; gap:6px; margin-top:2px;
 }
+.field-hint{ font-size:12px; color:var(--estompe); font-style:italic; margin-top:2px; }
 .field.is-invalid .field-error{ display:flex; }
 .form-hint{ font-size:13px; color:var(--estompe); margin:0 0 18px; }
 .btn[disabled]{ opacity:.45; cursor:not-allowed; box-shadow:none; }
@@ -709,8 +710,18 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
           <label class="field">
             <span>Dicastère</span>
             <select data-name="dicastere" required>
-              <option value="" disabled selected>— Liste des dicastères à venir —</option>
+              <option value="" disabled selected>— Sélectionnez un dicastère —</option>
+              <option value="admin-achats">Administration générale &mdash; Service des achats</option>
+              <option value="chancellerie">Chancellerie</option>
+              <option value="securite-emcr">Sécurité et santé publiques &mdash; EMCR</option>
+              <option value="autre">Autre (à préciser)</option>
             </select>
+            <span class="field-hint">Liste provisoire, à confirmer avec Christian.</span>
+            <span class="field-error" role="alert"></span>
+          </label>
+          <label class="field field-wide" id="dicastere-autre-wrap" hidden>
+            <span>Précisez le dicastère</span>
+            <input type="text" data-name="dicastere-autre" placeholder="Nom du service ou dicastère">
             <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
@@ -1016,6 +1027,7 @@ function toggleNav(btn){
   function fieldsList(){ return Array.prototype.slice.call(form.querySelectorAll('.field')); }
 
   function checkField(wrap, showError){
+    if(wrap.hidden) return true;
     var input = wrap.querySelector('input, select');
     if(!input) return true;
     var name = input.getAttribute('data-name');
@@ -1061,6 +1073,19 @@ function toggleNav(btn){
     }
   }
 
+  var dicastereSelect = form.querySelector('[data-name="dicastere"]');
+  var autreWrap = document.getElementById('dicastere-autre-wrap');
+  var autreInput = form.querySelector('[data-name="dicastere-autre"]');
+  dicastereSelect.addEventListener('change', function(){
+    var isAutre = this.value === 'autre';
+    autreWrap.hidden = !isAutre;
+    if(isAutre){ autreInput.setAttribute('required',''); }
+    else { autreInput.removeAttribute('required'); autreInput.value=''; checkField(autreWrap, false); }
+    refresh();
+  });
+  autreInput.addEventListener('input', function(){ checkField(autreWrap, false); refresh(); });
+  autreInput.addEventListener('blur', function(){ checkField(autreWrap, true); refresh(); });
+
   fieldsList().forEach(function(w){
     var input = w.querySelector('input, select');
     if(!input) return;
@@ -1083,6 +1108,10 @@ function toggleNav(btn){
     function val(n){
       var el = form.querySelector('[data-name="' + n + '"]');
       if(!el) return '';
+      if(n === 'dicastere' && el.value === 'autre'){
+        var precise = form.querySelector('[data-name="dicastere-autre"]');
+        return (precise && precise.value.trim()) ? precise.value.trim() : 'Autre (à préciser)';
+      }
       if(el.tagName === 'SELECT'){
         var o = el.options[el.selectedIndex];
         return (o && !o.disabled) ? o.text : '';
