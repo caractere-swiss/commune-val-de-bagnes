@@ -429,7 +429,10 @@ img,svg{ display:block; max-width:100%; }
 /* =========================================================
    PRODUITS (aperçu catalogue)
    ========================================================= */
-.products{ display:grid; grid-template-columns:repeat(3, 1fr); gap:clamp(18px,2.4vw,28px); }
+.products{ display:grid; grid-template-columns:repeat(3, 1fr); gap:clamp(18px,2.4vw,28px);
+  /* l'en-tete collant fait 83 px : on degage assez pour que la barre d'outils
+     et la premiere rangee de produits soient visibles a l'arrivee par #cat-<slug> */
+  scroll-margin-top:150px; }
 @media (max-width:900px){ .products{ grid-template-columns:repeat(2, 1fr); } }
 @media (max-width:560px){ .products{ grid-template-columns:1fr; } }
 .product{
@@ -1568,15 +1571,23 @@ var VDB_ICONS = {"bureau": "<path d=\"M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a
     nettoyage: 'nettoyage', vetements: 'vetements', securite: 'epi',
     mobilier: 'mobilier', vin: 'vin'
   };
-  function applyHash(scroll){
+  function showGrid(smooth){
+    document.getElementById('products-grid').scrollIntoView({
+      behavior: smooth ? 'smooth' : 'auto', block: 'start'
+    });
+  }
+  function applyHash(smooth){
     var m = /^#cat-([a-z]+)$/.exec(location.hash || '');
     if(!m || !SLUG_FAM[m[1]]) return false;
     state.fam = SLUG_FAM[m[1]];
     state.sub = null;
     render();
-    if(scroll){
-      document.getElementById('catalogue').scrollIntoView({ behavior:'smooth', block:'start' });
-    }
+    /* Arriver sur le hero apres avoir clique une categorie n'a aucun sens :
+       on amene la premiere rangee de produits sous l'en-tete collant. Au
+       chargement le saut est instantane, et differe d'une frame pour que la
+       grille soit rendue avant la mesure. */
+    if(smooth){ showGrid(true); }
+    else { requestAnimationFrame(function(){ showGrid(false); }); }
     return true;
   }
   window.addEventListener('hashchange', function(){ applyHash(true); });
