@@ -945,7 +945,7 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
         <div class="confirm-actions">
           <button type="button" class="btn-ghost" id="confirm-back">← Modifier ma demande</button>
         </div>
-        <p class="confirm-note">Simulation de maquette : aucun e-mail n'est envoyé. À l'intégration, la demande partira au service et au directeur opérationnel choisis, avec copie au service des achats.</p>
+        <p class="confirm-note">Simulation de maquette : aucun e-mail n'est envoyé. À l'intégration, la demande partira au service des achats, avec copie au service et au directeur opérationnel choisis.</p>
       </div>
     </div>
   </div>
@@ -1211,12 +1211,12 @@ function toggleNav(btn){
 
     var dicOpt = selectedDicastereOption();
     var recipients = [
-      { role:'Service des achats', email:'achats@valdebagnes.ch' },
-      { role:'Votre service', email:dicOpt ? (dicOpt.getAttribute('data-email') || '') : '' },
-      { role:'Directeur opérationnel', email:dicOpt ? (dicOpt.getAttribute('data-do') || '') : '' }
+      { label:'À', role:'Service des achats', email:'achats@valdebagnes.ch' },
+      { label:'Copie', role:'Votre service', email:dicOpt ? (dicOpt.getAttribute('data-email') || '') : '' },
+      { label:'Copie', role:'Directeur opérationnel', email:dicOpt ? (dicOpt.getAttribute('data-do') || '') : '' }
     ];
     document.getElementById('recap-destinataires').innerHTML = recipients.map(function(r){
-      return '<tr><th scope="row">' + r.role + '</th><td>' + (r.email || 'Non renseigné') + '</td></tr>';
+      return '<tr><th scope="row">' + r.label + ' — ' + r.role + '</th><td>' + (r.email || 'Non renseigné') + '</td></tr>';
     }).join('');
 
     form.hidden = true;
