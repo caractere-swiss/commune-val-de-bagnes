@@ -489,7 +489,6 @@ img,svg{ display:block; max-width:100%; }
   padding:14px 18px;
 }
 .wine-name{ font-size:17px; }
-.wine-note{ font-size:13px; color:var(--estompe); font-style:italic; }
 
 /* Sélecteur de quantité, cible tactile large (tablette) */
 .qty-stepper{ display:flex; align-items:center; gap:0; flex-shrink:0; }
@@ -504,6 +503,17 @@ img,svg{ display:block; max-width:100%; }
   border:0; background:transparent; color:var(--encre); -moz-appearance:textfield;
 }
 .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.qty-controls{ display:flex; align-items:center; gap:10px; flex-shrink:0; flex-wrap:wrap; }
+.qty-unit{
+  height:44px; padding:0 14px; border-radius:var(--r-pill); border:1px solid var(--trait);
+  background:var(--carte); font-size:13px; color:var(--estompe); font-family:var(--corps);
+}
+.wine-cave{ display:block; font-size:13px; color:var(--estompe); font-weight:normal; }
+.wine-placeholder{
+  background:var(--sable-voile); border:1px solid var(--trait); border-radius:var(--r-md);
+  padding:14px 18px; margin-top:10px; font-size:14px; color:var(--estompe);
+}
+.wine-placeholder strong{ color:var(--encre); }
 
 .btn-send{ font-size:18px; padding:18px 32px; }
 .form-confirm{
@@ -540,6 +550,8 @@ img,svg{ display:block; max-width:100%; }
 .recap-table th, .recap-table td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--trait); }
 .recap-table th{ font-weight:400; color:var(--estompe); width:45%; }
 .recap-table td{ font-weight:600; }
+.confirm-recipients{ margin:24px 0; }
+.confirm-recipients p{ font-size:14px; color:var(--estompe); margin:0 0 12px; text-align:left; }
 .recap-total{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:14px 12px; background:var(--bleu-voile); border-radius:var(--r-md); font-size:16px; }
 .recap-total strong{ font-family:var(--titre); color:var(--vdb-bleu); }
 .confirm-reminder{
@@ -640,29 +652,14 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
             </a>
             <a class="mega-link" href="preview-boutique.html#cat-vin">
               <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/><path d="M7.2 6h9.6"/></svg></span>
-              <span class="txt"><strong>Vin</strong><span>Vin officiel (Chancellerie)</span></span>
+              <span class="txt"><strong>Vin</strong><span>Vin officiel</span></span>
             </a>
           </div>
         </div>
       </div>
 
-      <!-- Commande de vin : petit déroulant (sous-catégories Odoo) -->
-      <div class="nav-item">
-        <a href="preview-vin.html">Commande de vin <i class="caret"></i></a>
-        <div class="mega">
-          <p class="mega-title">Vin officiel</p>
-          <div class="mega-grid narrow">
-            <a class="mega-link" href="preview-boutique.html#cat-vin">
-              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/></svg></span>
-              <span class="txt"><strong>Vin rouge</strong><span>Réceptions officielles</span></span>
-            </a>
-            <a class="mega-link" href="preview-boutique.html#cat-vin">
-              <span class="mega-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 15v7"/><path d="M7 2h10l-1 7a4 4 0 0 1-8 0L7 2z"/></svg></span>
-              <span class="txt"><strong>Vin blanc</strong><span>Réceptions officielles</span></span>
-            </a>
-          </div>
-        </div>
-      </div>
+      <!-- Commande de vin : lien direct (sous-entrees vin rouge/blanc retirees, 05.09) -->
+      <a href="preview-vin.html">Commande de vin</a>
 
       <a href="preview-vehicules.html">Flotte automobile</a>
       <a class="cta" href="#" data-demo="1" title="Fonction du site Odoo — non couverte par la maquette">
@@ -677,7 +674,7 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 <section class="hero hero-reduit">
   <div class="wrap">
     <div class="hero-reduit-panel">
-      <span class="eyebrow"><span class="dot"></span> Chancellerie communale</span>
+      <span class="eyebrow"><span class="dot"></span> Service des achats</span>
       <h1>Commande de vin</h1>
       <p>Formulaire officiel de commande de vin pour vos évènements et réceptions communales.</p>
     </div>
@@ -689,45 +686,93 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
   <div class="wrap">
     <form id="wine-form" novalidate>
 
-      <!-- ---------- Section 1 : Informations générales ---------- -->
+      <!-- ---------- Section 1 : Événement ---------- -->
       <div class="form-block">
         <div class="form-block-head">
           <span class="form-step">1</span>
           <div>
-            <h2>Informations générales</h2>
-            <p>Coordonnées de l'évènement et de la personne de contact.</p>
+            <h2>Événement</h2>
+            <p>Service demandeur et informations de l'évènement.</p>
           </div>
         </div>
         <div class="form-grid">
-          <label class="field">
+          <label class="field field-wide">
             <span>Dicastère</span>
             <select data-name="dicastere" required>
-              <option value="" disabled selected>— Sélectionnez un dicastère —</option>
-              <option value="admin-achats">Administration générale &mdash; Service des achats</option>
-              <option value="chancellerie">Chancellerie</option>
-              <option value="securite-emcr">Sécurité et santé publiques &mdash; EMCR</option>
-              <option value="autre">Autre (à préciser)</option>
+              <option value="" disabled selected>&mdash; S&eacute;lectionnez votre service &mdash;</option>
+              <optgroup label="Administration générale">
+                <option value="administration-generale--chancellerie" data-email="reception@valdebagnes.ch" data-do="gregory.thurre@valdebagnes.ch">Chancellerie</option>
+                <option value="administration-generale--guichet-verbier" data-email="olivier.volluz@valdebagnes.ch" data-do="gregory.thurre@valdebagnes.ch">Guichet Verbier</option>
+                <option value="administration-generale--informatique" data-email="informatique@valdebagnes.ch" data-do="gregory.thurre@valdebagnes.ch">Informatique</option>
+                <option value="administration-generale--msst" data-email="serge.amos@valdebagnes.ch" data-do="gregory.thurre@valdebagnes.ch">MSST</option>
+                <option value="administration-generale--qualite" data-email="corinne.dettwiler@valdebagnes.ch" data-do="gregory.thurre@valdebagnes.ch">Qualité</option>
+                <option value="administration-generale--rh" data-email="rh@valdebagnes.ch" data-do="gregory.thurre@valdebagnes.ch">RH</option>
+              </optgroup>
+              <optgroup label="Bâtiments, bourgeoisie et agriculture">
+                <option value="batiments-bourgeoisie-et-agriculture--batiments" data-email="batiments@valdebagnes.ch" data-do="alain.muri@valdebagnes.ch">Bâtiments</option>
+              </optgroup>
+              <optgroup label="Construction &amp; AT-Mobilité">
+                <option value="construction-at-mobilite--at" data-email="at@valdebagnes.ch" data-do="cedric.felley@valdebagnes.ch">AT</option>
+                <option value="construction-at-mobilite--constructions" data-email="constructions@valdebagnes.ch" data-do="cedric.felley@valdebagnes.ch">Constructions</option>
+              </optgroup>
+              <optgroup label="Contribution - population - cadastre">
+                <option value="contribution-population-cadastre--avs-social" data-email="ursula.abbet@valdebagnes.ch" data-do="alexandre.gordio@valdebagnes.ch">AVS-Social</option>
+                <option value="contribution-population-cadastre--cadastre" data-email="cadastre@valdebagnes.ch" data-do="alexandre.gordio@valdebagnes.ch">Cadastre</option>
+                <option value="contribution-population-cadastre--contributions" data-email="contributions@valdebagnes.ch" data-do="alexandre.gordio@valdebagnes.ch">Contributions</option>
+                <option value="contribution-population-cadastre--mathilde-crettenand" data-email="mathilde.crettenand@valdebagnes.ch" data-do="alexandre.gordio@valdebagnes.ch">Mathilde Crettenand</option>
+                <option value="contribution-population-cadastre--office-de-la-population" data-email="population@valdebagnes.ch" data-do="alexandre.gordio@valdebagnes.ch">Office de la population</option>
+              </optgroup>
+              <optgroup label="Culture - tourisme et sport">
+                <option value="culture-tourisme-et-sport--archives" data-email="archives@valdebagnes.ch" data-do="bertrand.deslarzes@valdebagnes.ch">Archives</option>
+                <option value="culture-tourisme-et-sport--bibliotheque" data-email="biblio@valdebagnes.ch" data-do="bertrand.deslarzes@valdebagnes.ch">Bibliothèque</option>
+                <option value="culture-tourisme-et-sport--centre-sportif" data-email="centre.sportif@valdebagnes.ch" data-do="bertrand.deslarzes@valdebagnes.ch">Centre sportif</option>
+                <option value="culture-tourisme-et-sport--culture" data-email="cts@valdebagnes.ch" data-do="bertrand.deslarzes@valdebagnes.ch">Culture</option>
+                <option value="culture-tourisme-et-sport--espace-st-marc" data-email="espacesaintmarc@valdebagnes.ch" data-do="bertrand.deslarzes@valdebagnes.ch">Espace St-Marc</option>
+                <option value="culture-tourisme-et-sport--musee-de-bagnes" data-email="musee@valdebagnes.ch" data-do="bertrand.deslarzes@valdebagnes.ch">Musée de Bagnes</option>
+              </optgroup>
+              <optgroup label="Finances et gestion">
+                <option value="finances-et-gestion--finances" data-email="finances@valdebagnes.ch" data-do="vanessa.venceslau@valdebagnes.ch">Finances</option>
+              </optgroup>
+              <optgroup label="Jeunesse - formation et cohésion sociale">
+                <option value="jeunesse-formation-et-cohesion-sociale--creche-au-bois-de-quat-sous" data-email="boisdequatsous@valdebagnes.ch" data-do="matthieu.moulin@valdebagnes.ch">Crèche - Au bois de Quat&#x27;sous</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--creche-graines-de-marmots" data-email="grainesdemarmots@valdebagnes.ch" data-do="matthieu.moulin@valdebagnes.ch">Crèche - Graines de Marmots</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--creche-le-mayen-des-croues" data-email="mayendescroues@valdebagnes.ch" data-do="matthieu.moulin@valdebagnes.ch">Crèche - Le Mayen des Crouès</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--creche-les-mainoz" data-email="lesmainoz@valdebagnes.ch" data-do="matthieu.moulin@valdebagnes.ch">Crèche - Les Maïnoz</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--creche-les-moussaillons" data-email="moussaillons@valdebagnes.ch" data-do="matthieu.moulin@valdebagnes.ch">Crèche - Les Moussaillons</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--david-baillifard" data-email="david.baillifard@valdebagnes.ch" data-do="matthieu.moulin@valdebagnes.ch">David Baillifard</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--direction-des-ecoles" data-email="sylvie.monnet@edu.vs.ch" data-do="matthieu.moulin@valdebagnes.ch">Direction des écoles</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--direction-primaire" data-email="dirp.valdebagnes@edu.vs.ch" data-do="matthieu.moulin@valdebagnes.ch">Direction primaire</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--informatique-co" data-email="alain.abbet@edu.vs.ch" data-do="matthieu.moulin@valdebagnes.ch">Informatique CO</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--jeunesse" data-email="jeunesse@valdebagnes.ch" data-do="matthieu.moulin@valdebagnes.ch">Jeunesse</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--responsable-travaux-manuels-co" data-email="sophie.bender@edu.vs.ch" data-do="matthieu.moulin@valdebagnes.ch">Responsable travaux manuels CO</option>
+                <option value="jeunesse-formation-et-cohesion-sociale--secretariat-du-co" data-email="secretariatco@valdebagnes.ch" data-do="matthieu.moulin@valdebagnes.ch">Secrétariat du CO</option>
+              </optgroup>
+              <optgroup label="Secrétariat général">
+                <option value="secretariat-general--secretariat-general" data-email="secretariatgeneral@valdebagnes.ch" data-do="pierre-martin.moulin@valdebagnes.ch">Secrétariat général</option>
+              </optgroup>
+              <optgroup label="Sécurité et santé publiques">
+                <option value="securite-et-sante-publiques--csi-bvs" data-email="feu@valdebagnes.ch" data-do="louis-ernest.sidoli@valdebagnes.ch">CSI BVS</option>
+                <option value="securite-et-sante-publiques--emcr" data-email="emcr@valdebagnes.ch" data-do="louis-ernest.sidoli@valdebagnes.ch">EMCR</option>
+                <option value="securite-et-sante-publiques--police" data-email="police@valdebagnes.ch" data-do="louis-ernest.sidoli@valdebagnes.ch">Police</option>
+                <option value="securite-et-sante-publiques--securite-pci-sante" data-email="securite@valdebagnes.ch" data-do="louis-ernest.sidoli@valdebagnes.ch">Sécurité, Pci, santé</option>
+              </optgroup>
+              <optgroup label="Travaux publics - environnement">
+                <option value="travaux-publics-environnement--environnement" data-email="environnement@valdebagnes.ch" data-do="constance.jaillet@valdebagnes.ch">Environnement</option>
+                <option value="travaux-publics-environnement--sentiers-pedestres" data-email="herve.dumoulin@valdebagnes.ch" data-do="constance.jaillet@valdebagnes.ch">Sentiers pédestres</option>
+                <option value="travaux-publics-environnement--tp-vallee" data-email="pierre-yves.nicollier@valdebagnes.ch" data-do="constance.jaillet@valdebagnes.ch">TP Vallée</option>
+                <option value="travaux-publics-environnement--tp-verbier" data-email="olivier.fellay@valdebagnes.ch" data-do="constance.jaillet@valdebagnes.ch">TP Verbier</option>
+                <option value="travaux-publics-environnement--tp-bureau" data-email="travaux.publics@valdebagnes.ch" data-do="constance.jaillet@valdebagnes.ch">TP bureau</option>
+              </optgroup>
             </select>
-            <span class="field-hint">Liste provisoire, à confirmer avec Christian.</span>
-            <span class="field-error" role="alert"></span>
-          </label>
-          <label class="field field-wide" id="dicastere-autre-wrap" hidden>
-            <span>Précisez le dicastère</span>
-            <input type="text" data-name="dicastere-autre" placeholder="Nom du service ou dicastère">
-            <span class="field-error" role="alert"></span>
-          </label>
-          <label class="field">
-            <span>Évènement</span>
-            <input data-name="evenement" type="text" placeholder="Ex. Assemblée bourgeoisiale" required>
             <span class="field-error" role="alert"></span>
           </label>
           <label class="field field-wide">
-            <span>Justification</span>
-            <input data-name="justification" type="text" placeholder="Motif de la commande">
+            <span>Motif de l'évènement</span>
+            <input data-name="evenement" type="text" placeholder="Ex. Assemblée bourgeoisiale" required>
             <span class="field-error" role="alert"></span>
           </label>
           <label class="field">
-            <span>Lieu et salle</span>
+            <span>Lieu de l'évènement</span>
             <input data-name="lieu" type="text" placeholder="Ex. Salle de l'Arvine">
             <span class="field-error" role="alert"></span>
           </label>
@@ -741,21 +786,6 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
             <input data-name="personnes" type="number" min="1" placeholder="Ex. 40" required>
             <span class="field-error" role="alert"></span>
           </label>
-          <label class="field">
-            <span>Personne de contact</span>
-            <input data-name="contact" type="text" placeholder="Nom et prénom" required>
-            <span class="field-error" role="alert"></span>
-          </label>
-          <label class="field">
-            <span>Téléphone</span>
-            <input data-name="telephone" type="tel" placeholder="079 000 00 00" required>
-            <span class="field-error" role="alert"></span>
-          </label>
-          <label class="field">
-            <span>E-mail</span>
-            <input data-name="email" type="email" placeholder="prenom.nom@valdebagnes.ch" required>
-            <span class="field-error" role="alert"></span>
-          </label>
         </div>
       </div>
 
@@ -765,62 +795,46 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
           <span class="form-step">2</span>
           <div>
             <h2>Commande</h2>
-            <p>Quantité maximum recommandée : <strong>3 dl par personne</strong>.</p>
+            <p>Choisissez vos vins et leur quantité, en bouteilles ou en cartons.</p>
           </div>
         </div>
 
         <h3 class="wine-group-title">Vins rouges</h3>
         <div class="wine-list">
         <div class="wine-row">
-          <div class="wine-name">Gamay Vieilles Vignes 2022</div>
-          <div class="qty-stepper" data-qty="0">
-            <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
-            <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre de bouteilles, Gamay Vieilles Vignes 2022">
-            <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
+          <div class="wine-name">Gamay<span class="wine-cave">Cave Clément Gay, Charrat</span></div>
+          <div class="qty-controls">
+            <div class="qty-stepper" data-qty="0">
+              <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
+              <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre, Gamay, Cave Clément Gay">
+              <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
+            </div>
+            <select class="qty-unit" data-name="unite" aria-label="Unité, Gamay">
+              <option value="bouteille" selected>Bouteille</option>
+              <option value="carton">Carton</option>
+            </select>
           </div>
         </div>
-        <div class="wine-row">
-          <div class="wine-name">Mauvoisin – Diolinoir – Cabernet 2015</div>
-          <div class="qty-stepper" data-qty="0">
-            <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
-            <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre de bouteilles, Mauvoisin – Diolinoir – Cabernet 2015">
-            <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
-          </div>
         </div>
-        <div class="wine-row">
-          <div class="wine-name">Humagne « Cinquième Saison » 2022</div>
-          <div class="qty-stepper" data-qty="0">
-            <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
-            <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre de bouteilles, Humagne « Cinquième Saison » 2022">
-            <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
-          </div>
-        </div>
-        <div class="wine-row">
-          <div class="wine-name">Vuège 2021 <span class="wine-note">réservé Bourgeoisie</span></div>
-          <div class="qty-stepper" data-qty="0">
-            <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
-            <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre de bouteilles, Vuège 2021">
-            <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
-          </div>
-        </div>
+        <div class="wine-placeholder">
+          <strong>D'autres vins seront ajoutés à cette liste.</strong> La sélection complète des
+          encaveurs et des vins officiels est en cours de consolidation par le service des achats.
         </div>
 
         <h3 class="wine-group-title">Vins blancs</h3>
         <div class="wine-list">
         <div class="wine-row">
-          <div class="wine-name">Fendant 2023</div>
-          <div class="qty-stepper" data-qty="0">
-            <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
-            <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre de bouteilles, Fendant 2023">
-            <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
-          </div>
-        </div>
-        <div class="wine-row">
-          <div class="wine-name">Johannisberg « Cinquième Saison » 2022</div>
-          <div class="qty-stepper" data-qty="0">
-            <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
-            <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre de bouteilles, Johannisberg « Cinquième Saison » 2022">
-            <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
+          <div class="wine-name">Fendant<span class="wine-cave">Cave La Corbassière, Saillon</span></div>
+          <div class="qty-controls">
+            <div class="qty-stepper" data-qty="0">
+              <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
+              <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre, Fendant, Cave La Corbassière">
+              <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
+            </div>
+            <select class="qty-unit" data-name="unite" aria-label="Unité, Fendant">
+              <option value="bouteille" selected>Bouteille</option>
+              <option value="carton">Carton</option>
+            </select>
           </div>
         </div>
         </div>
@@ -829,22 +843,57 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
         <div class="wine-list">
         <div class="wine-row" data-supply="1">
           <div class="wine-name">Tire-bouchons</div>
-          <div class="qty-stepper" data-qty="0">
-            <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
-            <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre de bouteilles, Tire-bouchons">
-            <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
+          <div class="qty-controls">
+            <div class="qty-stepper" data-qty="0">
+              <button type="button" class="qty-btn minus" aria-label="Diminuer la quantité">−</button>
+              <input type="number" class="qty-input" value="0" min="0" inputmode="numeric" aria-label="Nombre, Tire-bouchons">
+              <button type="button" class="qty-btn plus" aria-label="Augmenter la quantité">+</button>
+            </div>
           </div>
         </div>
         </div>
       </div>
 
-      <!-- ---------- Section 3 : Envoi ---------- -->
+      <!-- ---------- Section 3 : Livraison ---------- -->
       <div class="form-block">
         <div class="form-block-head">
           <span class="form-step">3</span>
           <div>
+            <h2>Livraison</h2>
+            <p>La police commande, un concierge réceptionne. Sert aussi à la récupération des invendus.</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label class="field">
+            <span>Date de livraison</span>
+            <input data-name="livraison-date" type="date" required>
+            <span class="field-error" role="alert"></span>
+          </label>
+          <label class="field">
+            <span>Personne de contact sur place</span>
+            <input data-name="livraison-contact" type="text" placeholder="Nom et prénom" required>
+            <span class="field-error" role="alert"></span>
+          </label>
+          <label class="field">
+            <span>Téléphone du contact</span>
+            <input data-name="livraison-telephone" type="tel" placeholder="079 000 00 00" required>
+            <span class="field-error" role="alert"></span>
+          </label>
+          <label class="field field-wide">
+            <span>Lieu de livraison</span>
+            <input data-name="livraison-lieu" type="text" placeholder="Ex. Conciergerie, salle de l'Arvine" required>
+            <span class="field-error" role="alert"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ---------- Section 4 : Envoi ---------- -->
+      <div class="form-block">
+        <div class="form-block-head">
+          <span class="form-step">4</span>
+          <div>
             <h2>Envoi</h2>
-            <p>À transmettre au minimum une semaine avant l'évènement.</p>
+            <p>Merci de transmettre votre demande un mois avant l'évènement, sauf conditions particulières.</p>
           </div>
         </div>
         <p class="form-hint" id="send-hint"></p>
@@ -862,7 +911,7 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
       <p class="confirm-lead">Votre commande de vin a bien été prise en compte. Un récapitulatif vous est présenté ci-dessous.</p>
 
       <div class="confirm-recap">
-        <h3>Informations générales</h3>
+        <h3>Événement</h3>
         <table class="recap-table"><tbody id="recap-body"></tbody></table>
 
         <h3>Vins commandés</h3>
@@ -873,20 +922,30 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
           <table class="recap-table"><tbody id="recap-supplies"></tbody></table>
         </div>
 
+        <h3>Livraison</h3>
+        <table class="recap-table"><tbody id="recap-livraison"></tbody></table>
+
         <div class="recap-total">
           <span>Total commandé</span>
           <strong id="recap-total">0 bouteille</strong>
         </div>
 
+        <div class="confirm-recipients">
+          <h3>Destinataires</h3>
+          <p>Votre demande part au service des achats, avec copie à votre service et à votre
+            directeur opérationnel pour validation.</p>
+          <table class="recap-table"><tbody id="recap-destinataires"></tbody></table>
+        </div>
+
         <div class="confirm-reminder">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-          <span>À transmettre au minimum <strong>une semaine avant l'évènement</strong>.</span>
+          <span>Merci de transmettre votre demande <strong>un mois avant l'évènement</strong>, sauf conditions particulières.</span>
         </div>
 
         <div class="confirm-actions">
           <button type="button" class="btn-ghost" id="confirm-back">← Modifier ma demande</button>
         </div>
-        <p class="confirm-note">Simulation de maquette : aucun e-mail n'est envoyé. À l'intégration, la demande partira vers la Chancellerie.</p>
+        <p class="confirm-note">Simulation de maquette : aucun e-mail n'est envoyé. À l'intégration, la demande partira au service et au directeur opérationnel choisis, avec copie au service des achats.</p>
       </div>
     </div>
   </div>
@@ -1008,8 +1067,7 @@ function toggleNav(btn){
   var confirmScreen = document.getElementById('confirm-screen');
 
   var RULES = {
-    telephone: { test:function(v){ return /^[0-9+\s().\-]{9,}$/.test(v); }, msg:"Numéro de téléphone incomplet (min. 9 chiffres)." },
-    email:     { test:function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }, msg:"Adresse e-mail invalide." },
+    'livraison-telephone': { test:function(v){ return /^[0-9+\s().\-]{9,}$/.test(v); }, msg:"Numéro de téléphone incomplet (min. 9 chiffres)." },
     personnes: { test:function(v){ return +v >= 1; }, msg:"Indiquez au moins 1 personne." }
   };
 
@@ -1057,23 +1115,10 @@ function toggleNav(btn){
       hint.textContent = ok
         ? 'Formulaire complet, vous pouvez envoyer votre demande.'
         : (totalBottles() === 0
-            ? 'Complétez les informations générales et commandez au moins une bouteille.'
+            ? 'Complétez les informations générales et commandez au moins un vin.'
             : 'Complétez les champs obligatoires pour activer l\'envoi.');
     }
   }
-
-  var dicastereSelect = form.querySelector('[data-name="dicastere"]');
-  var autreWrap = document.getElementById('dicastere-autre-wrap');
-  var autreInput = form.querySelector('[data-name="dicastere-autre"]');
-  dicastereSelect.addEventListener('change', function(){
-    var isAutre = this.value === 'autre';
-    autreWrap.hidden = !isAutre;
-    if(isAutre){ autreInput.setAttribute('required',''); }
-    else { autreInput.removeAttribute('required'); autreInput.value=''; checkField(autreWrap, false); }
-    refresh();
-  });
-  autreInput.addEventListener('input', function(){ checkField(autreWrap, false); refresh(); });
-  autreInput.addEventListener('blur', function(){ checkField(autreWrap, true); refresh(); });
 
   fieldsList().forEach(function(w){
     var input = w.querySelector('input, select');
@@ -1097,10 +1142,6 @@ function toggleNav(btn){
     function val(n){
       var el = form.querySelector('[data-name="' + n + '"]');
       if(!el) return '';
-      if(n === 'dicastere' && el.value === 'autre'){
-        var precise = form.querySelector('[data-name="dicastere-autre"]');
-        return (precise && precise.value.trim()) ? precise.value.trim() : 'Autre (à préciser)';
-      }
       if(el.tagName === 'SELECT'){
         var o = el.options[el.selectedIndex];
         return (o && !o.disabled) ? o.text : '';
@@ -1108,13 +1149,25 @@ function toggleNav(btn){
       return (el.value || '').trim();
     }
 
-    var lines = [], supplies = [];
+    function selectedDicastereOption(){
+      var sel = form.querySelector('[data-name="dicastere"]');
+      return sel ? sel.options[sel.selectedIndex] : null;
+    }
+
+    function unitLabel(unit, qty){
+      if(unit === 'carton') return qty > 1 ? 'cartons' : 'carton';
+      return qty > 1 ? 'bouteilles' : 'bouteille';
+    }
+
+    var lines = [], supplies = [], byUnit = { bouteille:0, carton:0 };
     form.querySelectorAll('.wine-row').forEach(function(r){
       var q = +r.querySelector('.qty-stepper').getAttribute('data-qty') || 0;
       if(q <= 0) return;
-      var entry = { name:r.querySelector('.wine-name').childNodes[0].textContent.trim(), qty:q };
-      if(r.getAttribute('data-supply') === '1') supplies.push(entry);
-      else lines.push(entry);
+      var unitSel = r.querySelector('.qty-unit');
+      var unit = unitSel ? unitSel.value : '';
+      var entry = { name:r.querySelector('.wine-name').childNodes[0].textContent.trim(), qty:q, unit:unit };
+      if(r.getAttribute('data-supply') === '1'){ supplies.push(entry); }
+      else { lines.push(entry); byUnit[unit] = (byUnit[unit] || 0) + q; }
     });
 
     var dateVal = val('date');
@@ -1122,29 +1175,49 @@ function toggleNav(btn){
       var d = new Date(dateVal);
       if(!isNaN(d)) dateVal = d.toLocaleString('fr-CH', {dateStyle:'long', timeStyle:'short'});
     }
+    var livraisonDateVal = val('livraison-date');
+    if(livraisonDateVal){
+      var ld = new Date(livraisonDateVal);
+      if(!isNaN(ld)) livraisonDateVal = ld.toLocaleString('fr-CH', {dateStyle:'long'});
+    }
 
     document.getElementById('recap-body').innerHTML =
       '<tr><th scope="row">Dicastère</th><td>' + (val('dicastere') || 'Non renseigné') + '</td></tr>' +
-      '<tr><th scope="row">Évènement</th><td>' + val('evenement') + '</td></tr>' +
-      (val('justification') ? '<tr><th scope="row">Justification</th><td>' + val('justification') + '</td></tr>' : '') +
-      (val('lieu') ? '<tr><th scope="row">Lieu et salle</th><td>' + val('lieu') + '</td></tr>' : '') +
+      '<tr><th scope="row">Motif de l\'évènement</th><td>' + val('evenement') + '</td></tr>' +
+      (val('lieu') ? '<tr><th scope="row">Lieu de l\'évènement</th><td>' + val('lieu') + '</td></tr>' : '') +
       '<tr><th scope="row">Date et heure</th><td>' + dateVal + '</td></tr>' +
-      '<tr><th scope="row">Nombre de personnes</th><td>' + val('personnes') + '</td></tr>' +
-      '<tr><th scope="row">Personne de contact</th><td>' + val('contact') + '</td></tr>' +
-      '<tr><th scope="row">Téléphone</th><td>' + val('telephone') + '</td></tr>' +
-      '<tr><th scope="row">E-mail</th><td>' + val('email') + '</td></tr>';
+      '<tr><th scope="row">Nombre de personnes</th><td>' + val('personnes') + '</td></tr>';
+
+    document.getElementById('recap-livraison').innerHTML =
+      '<tr><th scope="row">Date de livraison</th><td>' + livraisonDateVal + '</td></tr>' +
+      '<tr><th scope="row">Contact sur place</th><td>' + val('livraison-contact') + '</td></tr>' +
+      '<tr><th scope="row">Téléphone</th><td>' + val('livraison-telephone') + '</td></tr>' +
+      '<tr><th scope="row">Lieu de livraison</th><td>' + val('livraison-lieu') + '</td></tr>';
 
     function rows(arr){
       return arr.map(function(l){
-        return '<tr><th scope="row">' + l.name + '</th><td>' + l.qty + '</td></tr>';
+        var qtyLabel = l.unit ? (l.qty + ' ' + unitLabel(l.unit, l.qty)) : l.qty;
+        return '<tr><th scope="row">' + l.name + '</th><td>' + qtyLabel + '</td></tr>';
       }).join('');
     }
     document.getElementById('recap-lines').innerHTML = rows(lines);
     document.getElementById('recap-supplies').innerHTML = rows(supplies);
     document.getElementById('supplies-block').hidden = supplies.length === 0;
 
-    var bottles = totalBottles();
-    document.getElementById('recap-total').textContent = bottles + (bottles > 1 ? ' bouteilles' : ' bouteille');
+    var totalParts = [];
+    if(byUnit.bouteille > 0) totalParts.push(byUnit.bouteille + ' ' + unitLabel('bouteille', byUnit.bouteille));
+    if(byUnit.carton > 0) totalParts.push(byUnit.carton + ' ' + unitLabel('carton', byUnit.carton));
+    document.getElementById('recap-total').textContent = totalParts.length ? totalParts.join(' + ') : '0 bouteille';
+
+    var dicOpt = selectedDicastereOption();
+    var recipients = [
+      { role:'Service des achats', email:'achats@valdebagnes.ch' },
+      { role:'Votre service', email:dicOpt ? (dicOpt.getAttribute('data-email') || '') : '' },
+      { role:'Directeur opérationnel', email:dicOpt ? (dicOpt.getAttribute('data-do') || '') : '' }
+    ];
+    document.getElementById('recap-destinataires').innerHTML = recipients.map(function(r){
+      return '<tr><th scope="row">' + r.role + '</th><td>' + (r.email || 'Non renseigné') + '</td></tr>';
+    }).join('');
 
     form.hidden = true;
     confirmScreen.hidden = false;
