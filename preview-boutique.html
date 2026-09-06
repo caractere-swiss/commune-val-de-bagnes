@@ -413,18 +413,22 @@ img,svg{ display:block; max-width:100%; }
 .hero-reduit-panel p{ text-align:center; color:var(--estompe); font-size:clamp(17px,1.4vw,19px); max-width:640px; margin:0 auto; }
 
 /* Comment commander */
-.commander-wrap{
-  display:grid; grid-template-columns:1fr 1.2fr; gap:clamp(24px,4vw,56px);
-  background:var(--carte); border:1px solid var(--trait); border-radius:var(--r-xl);
-  box-shadow:var(--shadow-soft); padding:clamp(28px,4vw,56px);
+.commander-steps{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:clamp(24px,3vw,40px);
 }
-.commander-copy p{ color:var(--estompe); font-size:17px; margin:0 0 20px; }
-.commander-table-wrap{ overflow-x:auto; }
-.commander-table{ width:100%; border-collapse:collapse; font-size:15px; }
-.commander-table th, .commander-table td{ text-align:left; padding:12px 14px; border-bottom:1px solid var(--trait); }
-.commander-table th{ font-family:var(--titre); font-weight:bold; color:var(--vdb-bleu); font-size:13px; text-transform:uppercase; letter-spacing:.04em; }
-.commander-table td{ color:var(--encre); }
-@media (max-width:900px){ .commander-wrap{ grid-template-columns:1fr; } }
+.commander-step{
+  background:var(--carte); border:1px solid var(--trait); border-radius:var(--r-lg);
+  box-shadow:var(--shadow-soft); padding:clamp(24px,3vw,32px);
+}
+.commander-step-num{
+  display:grid; place-items:center; width:40px; height:40px; border-radius:50%;
+  background:var(--vdb-bleu); color:#fff; font-family:var(--titre); font-weight:bold;
+  font-size:17px; margin-bottom:16px;
+}
+.commander-step h3{ font-family:var(--titre); font-weight:bold; font-size:19px; margin:0 0 10px; color:var(--vdb-bleu-fonce); }
+.commander-step p{ color:var(--estompe); font-size:15.5px; margin:0; }
+.commander-foot{ text-align:center; color:var(--estompe); font-size:16px; margin:clamp(28px,4vw,40px) 0 0; }
+@media (max-width:900px){ .commander-steps{ grid-template-columns:1fr; } }
 
 /* =========================================================
    PRODUITS (aperçu catalogue)
@@ -617,6 +621,17 @@ img,svg{ display:block; max-width:100%; }
 .modal-more summary{ cursor:pointer; font-size:14px; color:var(--vdb-bleu); padding:8px 0; min-height:38px; display:flex; align-items:center; }
 .modal-more p{ font-size:15px; color:var(--estompe); margin:6px 0 0; }
 .modal-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding-top:6px; }
+.avail-badge{
+  display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600;
+  color:var(--vdb-bleu-fonce); background:var(--bleu-voile); padding:6px 14px;
+  border-radius:var(--r-pill); margin-bottom:18px;
+}
+.avail-dot{ width:8px; height:8px; border-radius:50%; background:var(--vdb-bleu); flex-shrink:0; }
+.modal-foot-info{
+  list-style:none; margin:20px 0 0; padding:16px 0 0; border-top:1px solid var(--trait);
+  display:flex; flex-direction:column; gap:8px; font-size:13.5px; color:var(--estompe);
+}
+.modal-foot-info a{ color:var(--vdb-bleu); text-decoration:underline; }
 .modal-similar{ margin-top:36px; border-top:1px solid var(--trait); padding-top:28px; }
 .modal-similar h3{ font-family:var(--titre); font-size:16px; margin:0 0 16px; }
 .similar-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
@@ -1096,38 +1111,32 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
   </div>
 </section>
 
-<!-- ===================== COMMENT COMMANDER / CONDITIONS ===================== -->
+<!-- ===================== COMMENT COMMANDER ===================== -->
 <section class="section" id="commander" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow"><span class="dot"></span> Bon à savoir</span>
       <h2>Comment commander</h2>
-      <p>La commande se fait directement depuis le catalogue en ligne, service par service. Quelques règles pratiques à connaître avant de valider votre panier.</p>
+      <p>La boutique communale regroupe le matériel disponible pour l'ensemble des services. Les commandes se font en ligne, sans passer par un bon de commande papier.</p>
     </div>
-    <div class="commander-wrap">
-      <div class="commander-copy">
-        <p>Chaque service communal commande son propre matériel via son compte. Les commandes sont centralisées par le service des achats, qui assure le suivi jusqu'à la livraison ou le retrait.</p>
-        <ul class="flotte-list">
-          <li>Commande en ligne, validation par le responsable de service</li>
-          <li>Livraison groupée ou retrait au magasin communal, sous 24 à 48 h</li>
-          <li>Facturation interne en fin de mois</li>
-        </ul>
+    <div class="commander-steps">
+      <div class="commander-step">
+        <span class="commander-step-num">1</span>
+        <h3>Choisissez votre matériel</h3>
+        <p>Parcourez le catalogue par famille ou utilisez la recherche. Chaque fiche indique le conditionnement et la disponibilité de l'article.</p>
       </div>
-      <div class="commander-table-wrap">
-        <table class="commander-table">
-          <thead>
-            <tr><th>Catégorie</th><th>Minimum de commande</th><th>Conditionnement</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Fournitures de bureau</td><td>Aucun minimum</td><td>À l'unité ou par boîte</td></tr>
-            <tr><td>Produits d'entretien</td><td>1 carton</td><td>Par carton (6 à 12 pièces)</td></tr>
-            <tr><td>Vêtements de travail</td><td>Aucun minimum</td><td>Par taille, à l'unité</td></tr>
-            <tr><td>Vin officiel</td><td>6 bouteilles</td><td>Par carton de 6</td></tr>
-          </tbody>
-        </table>
-        <p class="stats-note">Données d'exemple pour la maquette, à confirmer avec le service des achats.</p>
+      <div class="commander-step">
+        <span class="commander-step-num">2</span>
+        <h3>Validez votre panier</h3>
+        <p>Les articles restent dans votre panier jusqu'à la validation. Votre service est identifié automatiquement : aucune donnée de facturation à saisir.</p>
+      </div>
+      <div class="commander-step">
+        <span class="commander-step-num">3</span>
+        <h3>Réceptionnez la commande</h3>
+        <p>Livraison groupée ou retrait au magasin communal, sous 24-48 h. Un message de confirmation vous parvient dès la préparation.</p>
       </div>
     </div>
+    <p class="commander-foot">Une question sur un article ou sur une commande en cours ? Le service des achats vous répond.</p>
   </div>
 </section>
 
@@ -1398,6 +1407,7 @@ var VDB_ICONS = {"bureau": "<path d=\"M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a
             '<tr><th scope="row">Minimum de commande</th><td>1</td></tr>' +
             '<tr><th scope="row">Prix unitaire</th><td>' + fmt(p.price) + '</td></tr>' +
           '</tbody></table>' +
+          (p.real ? '<span class="avail-badge"><span class="avail-dot"></span>Sur commande</span>' : '') +
           (p.long ? '<details class="modal-more"><summary>En savoir plus</summary><p>' + p.long + '</p></details>' : '') +
           '<div class="modal-actions">' +
             '<div class="qty-stepper" data-qty="1">' +
@@ -1407,6 +1417,11 @@ var VDB_ICONS = {"bureau": "<path d=\"M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a
             '</div>' +
             '<button type="button" class="btn" data-add-modal="' + p.ref + '">Ajouter à la commande <span class="arr">\u2192</span></button>' +
           '</div>' +
+          '<ul class="modal-foot-info">' +
+            '<li><a href="#" data-demo="1" title="Fonction du site Odoo — non couverte par la maquette">Conditions générales</a></li>' +
+            '<li>Garantie satisfait ou remboursé de 30 jours</li>' +
+            '<li>Livraison : 24-48 h</li>' +
+          '</ul>' +
         '</div>' +
       '</div>' +
       (similar.length ? '<div class="modal-similar"><h3>Produits similaires</h3><div class="similar-list">' +
