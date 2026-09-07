@@ -119,7 +119,7 @@ img,svg{ display:block; max-width:100%; }
 .brand{ display:flex; align-items:center; gap:14px; flex:0 0 auto; }
 .brand .logo{ height:54px; width:auto; }
 .brand .baseline{
-  font-family:var(--corps); font-size:12px; letter-spacing:.14em;
+  font-family:var(--corps); font-size:13px; letter-spacing:.14em;
   text-transform:uppercase; color:var(--estompe); line-height:1.25;
   border-left:1px solid var(--trait); padding-left:14px; max-width:150px;
 }
@@ -151,7 +151,7 @@ img,svg{ display:block; max-width:100%; }
   transition:opacity .18s ease, transform .18s ease, visibility .18s ease;
 }
 .nav-item:hover .mega{ visibility:visible; opacity:1; transform:translateY(0); pointer-events:auto; }
-.mega-title{ font-family:var(--corps); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--vdb-bleu); font-weight:700; margin:4px 10px 12px; }
+.mega-title{ font-family:var(--corps); font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--vdb-bleu); font-weight:700; margin:4px 10px 12px; }
 .mega-grid{ display:grid; grid-template-columns:1fr 1fr; gap:2px; width:520px; }
 .mega-grid.narrow{ grid-template-columns:1fr; width:240px; }
 .mega-link{ display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:var(--r-md); color:var(--encre); transition:background .15s ease; }
@@ -160,7 +160,7 @@ img,svg{ display:block; max-width:100%; }
 .mega-ico svg{ width:20px; height:20px; }
 .mega-link .txt{ display:flex; flex-direction:column; line-height:1.2; }
 .mega-link .txt strong{ font-family:var(--titre); font-weight:bold; font-size:14px; }
-.mega-link .txt span{ font-size:11px; color:var(--estompe); margin-top:2px; }
+.mega-link .txt span{ font-size:13px; color:var(--estompe); margin-top:2px; }
 .burger{ display:none; margin-left:auto; border:0; background:transparent; cursor:pointer; padding:10px; border-radius:var(--r-pill); }
 .burger:hover{ background:var(--brun-voile); }
 .burger span{ display:block; width:24px; height:2px; background:var(--encre); margin:5px 0; border-radius:2px; transition:.25s; }
@@ -447,7 +447,7 @@ img,svg{ display:block; max-width:100%; }
 .product:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
 .product-flag{
   position:absolute; top:12px; right:12px; z-index:2;
-  font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+  font-size:12px; letter-spacing:.06em; text-transform:uppercase;
   background:rgba(255,255,255,.92); color:var(--estompe);
   padding:4px 9px; border-radius:var(--r-pill); border:1px solid var(--trait);
 }
@@ -456,7 +456,7 @@ img,svg{ display:block; max-width:100%; }
 .product-body{ padding:18px 20px 20px; display:flex; flex-direction:column; gap:6px; }
 .product-tag{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--estompe); }
 .product-name{ font-family:var(--titre); font-weight:bold; font-size:17px; margin:0; }
-.product-meta{ font-size:14px; color:var(--estompe); margin:0; text-align:left; }
+.product-meta{ font-size:14px; font-weight:600; color:var(--encre); margin:0; text-align:left; }
 .product-foot{ margin-top:8px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .product-price{ font-family:var(--titre); font-weight:bold; font-size:15px; color:var(--vdb-bleu); }
 .btn-sm{
@@ -637,7 +637,6 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
         </div>
       </div>
       <div class="flotte-copy">
-        <span class="eyebrow"><span class="dot"></span> JAC T9</span>
         <h2>Un marquage unifié</h2>
         <p>Chaque véhicule de service porte le blason communal selon un marquage unique, pensé pour rester lisible sur l'ensemble de la flotte.</p>
         <ul class="flotte-list">
