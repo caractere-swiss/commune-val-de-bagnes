@@ -15,7 +15,7 @@
   Polices reprises de theme_vdb : 'Rotis Bold' (titres) et
   'OPTI Sarone' (corps), chargées depuis ./fonts/ (mêmes
   fichiers que theme_vdb/static/fonts/).
-  Palette reprise de theme_vdb.css / CLAUDE.md (variables --vdb-*).
+  Palette reprise de theme_vdb.css (variables --vdb-*).
   But : valider la direction visuelle AVANT intégration QWeb.
   ============================================================
 -->
@@ -40,7 +40,7 @@
 
 /* ---------- Variables ---------- */
 :root{
-  /* Palette communale (theme_vdb.css / CLAUDE.md) — ACCENTS DISCRETS */
+  /* Palette communale (theme_vdb.css) — ACCENTS DISCRETS */
   --vdb-bleu:        #005EB8;
   --vdb-bleu-fonce:  #003F7A;
   --vdb-jaune:       #FFCD00;
@@ -779,6 +779,19 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
   </div>
 </section>
 
+<!-- ===================== LIQUIDATION (vitrine dediee, avant le catalogue, 05.09) ===================== -->
+<section class="section" id="liquidation" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow"><span class="dot"></span> Fin de série</span>
+      <h2>Bonnes affaires</h2>
+      <p>Articles en fin de série, à écouler en priorité, dans la limite du stock disponible.</p>
+    </div>
+    <div class="products liquidation-grid" id="liquidation-grid"></div>
+    <a class="btn-sm liquidation-see-all" href="#cat-bonnes-affaires">Voir toutes les bonnes affaires <span class="arr">→</span></a>
+  </div>
+</section>
+
 <!-- ===================== CATÉGORIES (cœur du shop) ===================== -->
 <section class="section" id="shop">
   <div class="wrap">
@@ -866,18 +879,6 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
   </div>
 </section>
 
-<!-- ===================== LIQUIDATION (vitrine dediee, avant le catalogue, 05.09) ===================== -->
-<section class="section" id="liquidation" style="padding-top:0;">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow"><span class="dot"></span> Fin de série</span>
-      <h2>Bonnes affaires</h2>
-      <p>Articles en fin de série, à écouler en priorité, dans la limite du stock disponible.</p>
-    </div>
-    <div class="products liquidation-grid" id="liquidation-grid"></div>
-    <a class="btn-sm liquidation-see-all" href="#cat-bonnes-affaires">Voir toutes les bonnes affaires <span class="arr">→</span></a>
-  </div>
-</section>
 
 <!-- ===================== CATALOGUE (sidebar + grille) ===================== -->
 <section class="section" id="catalogue" style="padding-top:0;">
