@@ -52,14 +52,15 @@
   --vdb-vert-fonce:  #ACB200;
 
   /* Neutres dérivés — le blanc/sable domine */
-  --fond:    #FCFAF6;
+  --fond:    #F5F8FC;  /* BRIEF-15 : dérivée du bleu-voile de charte, pas une couleur de charte */
   --carte:   #FFFFFF;
   --encre:   #1C1A17;
   --estompe: #6E665C;
   --trait:   #ECE6DC;
 
   /* Teintes très douces (accents ponctuels, jamais d'aplat plein) */
-  --bleu-voile:  #EAF1FA;   /* charte: bleu très clair */
+  --bleu-voile:       #EAF1FA;   /* charte: bleu très clair */
+  --bleu-voile-leger: #F0F5FB;  /* BRIEF-15 : variante plus légère, fond global uniquement */
   --jaune-voile: #FFF6D6;
   --sable-voile: #FBF1E6;
   --brun-voile:  #F1ECE5;
@@ -89,9 +90,9 @@ body{
   background:var(--fond);
   /* Fond uni extensible + voiles ronds très doux (lisible de 15" à 34") */
   background-image:
-    radial-gradient(50vw 50vw at 88% -8%, var(--sable-voile), transparent 60%),
+    radial-gradient(50vw 50vw at 88% -8%, var(--bleu-voile-leger), transparent 60%),
     radial-gradient(40vw 40vw at -6% 18%, var(--bleu-voile), transparent 55%),
-    radial-gradient(46vw 46vw at 108% 78%, var(--jaune-voile), transparent 60%);
+    radial-gradient(46vw 46vw at 108% 78%, var(--bleu-voile-leger), transparent 60%);
   background-attachment:fixed;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
@@ -231,9 +232,9 @@ img,svg{ display:block; max-width:100%; }
 }
 .slide .visual .car-panel img{ max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block; }
 /* Teintes de fond par slide — discrètes, pas institutionnelles */
-.slide[data-tint="sable"]{ background:linear-gradient(120deg, var(--sable-voile), var(--carte) 70%); }
+.slide[data-tint="sable"]{ background:var(--carte); }  /* BRIEF-15 : grande surface, plus de sable */
 .slide[data-tint="bleu"]{ background:linear-gradient(120deg, var(--bleu-voile), var(--carte) 70%); }
-.slide[data-tint="jaune"]{ background:linear-gradient(120deg, var(--jaune-voile), var(--carte) 70%); }
+.slide[data-tint="jaune"]{ background:var(--carte); }  /* BRIEF-15 : grande surface, plus de jaune */
 
 /* Contrôles carrousel */
 .car-btn{
@@ -296,7 +297,7 @@ img,svg{ display:block; max-width:100%; }
    ========================================================= */
 .stats-wrap{
   border-radius:var(--r-xl);
-  background:radial-gradient(60% 100% at 100% 0%, var(--sable-voile), transparent 70%), var(--carte);
+  background:radial-gradient(60% 100% at 100% 0%, var(--bleu-voile), transparent 70%), var(--carte);  /* BRIEF-15 */
   border:1px solid var(--trait); box-shadow:var(--shadow-soft);
   padding:clamp(32px,5vw,64px);
 }
@@ -323,7 +324,7 @@ img,svg{ display:block; max-width:100%; }
 }
 .flotte-visual{
   position:relative; border-radius:var(--r-lg); min-height:240px;
-  background:radial-gradient(120% 120% at 30% 20%, var(--bleu-voile), var(--sable-voile));
+  background:radial-gradient(120% 120% at 30% 20%, var(--bleu-voile), var(--bleu-voile-leger));  /* BRIEF-15 */
   display:grid; place-items:center; padding:clamp(18px,3vw,34px);
 }
 .flotte-visual .car-card{ background:#fff; border-radius:var(--r-md); box-shadow:var(--shadow-soft); padding:16px; width:100%; }
