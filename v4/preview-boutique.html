@@ -412,10 +412,27 @@ img,svg{ display:block; max-width:100%; }
 .hero-reduit-panel h1{ font-size:clamp(32px,4.4vw,54px); margin-bottom:14px; }
 .hero-reduit-panel p{ text-align:center; color:var(--estompe); font-size:clamp(17px,1.4vw,19px); max-width:640px; margin:0 auto; }
 
-/* BRIEF-14 (02.10) : bandeau boutique, montagnes SVG decoratives derriere le texte du .hero-reduit-panel (fond photo retire). */
-.vdb-bandeau{ position:relative; overflow:hidden; }
-.vdb-bandeau-mountains{ position:absolute; left:0; right:0; bottom:0; width:100%; height:55%; z-index:0; pointer-events:none; }
-.vdb-bandeau-content{ position:relative; z-index:1; }
+/* BRIEF-14 bis (02.10) : bandeau boutique, photo reelle en fond (cover,
+   ancree a droite pour garder la tasse entiere), texte aligne a gauche
+   sur la zone claire. Decouple de .hero-reduit-panel (centre, utilise
+   tel quel sur la page Flotte) : regles propres a ce bandeau. */
+.vdb-bandeau{
+  position:relative; overflow:hidden; text-align:left;
+  border-radius:var(--r-xl); border:1px solid var(--trait); box-shadow:var(--shadow-soft);
+  padding:clamp(40px,6vw,72px) clamp(32px,6vw,80px);
+  background-image:url(../assets/shop-bandeau-fond.jpg);
+  background-size:cover; background-position:right center;
+}
+.vdb-bandeau-content{ position:relative; z-index:1; max-width:52%; }
+.vdb-bandeau-content h1{ font-size:clamp(32px,4.4vw,54px); margin:0 0 14px; }
+.vdb-bandeau-content p{ text-align:left; color:var(--estompe); font-size:clamp(17px,1.4vw,19px); max-width:46em; margin:0; }
+@media (max-width:760px){
+  .vdb-bandeau{
+    background-image:none;
+    background:linear-gradient(120deg, var(--bleu-voile), var(--carte) 70%);
+  }
+  .vdb-bandeau-content{ max-width:100%; }
+}
 
 /* Comment commander */
 .commander-steps{
@@ -772,31 +789,23 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 </header>
 
 <!-- ===================== HERO RÉDUIT — page Shop ===================== -->
-<!-- ===================== BANDEAU (BRIEF-14, 02.10) =====================
-     Reconstruit en code : le photomontage de Christian (croquis de
-     concept, texte fige dans l'image, flou/lettres deformees a
-     l'agrandissement) est retire. Texte HTML vivant (polices/couleurs
-     de charte), meme pastille "Service des achats" que l'accueil.
-     Fond : reutilise .hero-reduit-panel (degrade bleute + mêmes
-     arrondis/ombre que l'ancien cadre photo, deja utilise tel quel sur
-     la page Flotte) + silhouette de montagnes en SVG, decorative,
-     opacite reduite, derriere le texte.
-     Tasse au blason (seule partie photo du montage) : NON reprise.
-     Decoupee et mesuree (120x150 px, source 714x171 px globale) : a
-     cette resolution, affichee a une taille utile dans un bandeau
-     1280px (>120px CSS) elle depasserait sa resolution native et
-     resterait floue, a fortiori en Retina (2x) ou la limite nette est
-     60px. Retiree conformement a la consigne, emplacement decoratif
-     sans photo. Image HD a redemander a Christian.
-     Sous le bandeau, inchange : une seule ligne (prix TTC centrale
-     d'achat). -->
+<!-- ===================== BANDEAU (BRIEF-14 bis, 02.10) =====================
+     Photo reelle de Christian (2026-10-02_bandeau-boutique-tasse.jpg,
+     3168x1344, tasse SANS blason pour l'instant — Ilias le posera plus
+     tard, meme nom de fichier). Preparee : 2400px de large, JPEG
+     qualite 92, 131 Ko (cible 350 Ko). Servie depuis ../assets/ (plus
+     leger qu'un nouveau base64 pour ce poids-la). Fond du panneau en
+     background-size:cover, ancree a droite pour garder la tasse
+     entiere ; les montagnes SVG du precedent correctif sont retirees,
+     l'image a les siennes. Texte aligne a GAUCHE (zone claire ~55% de
+     l'image), memes arrondis/ombre que le cadre precedent.
+     390px : image masquee, degrade clair de repli (meme technique que
+     le correctif precedent) — la tasse ne doit jamais passer sous le
+     texte, verifie au scrollWidth. Sous le bandeau, inchange : une
+     seule ligne (prix TTC centrale d'achat). -->
 <section class="hero hero-reduit" style="padding-bottom:0;">
   <div class="wrap">
-    <div class="hero-reduit-panel vdb-bandeau">
-      <svg class="vdb-bandeau-mountains" viewBox="0 0 800 160" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-        <path d="M0,160 L90,70 L170,120 L280,30 L380,110 L480,50 L580,115 L680,60 L800,100 L800,160 Z" fill="var(--bleu-voile)"></path>
-        <path d="M0,160 L140,100 L260,140 L420,70 L560,130 L720,85 L800,120 L800,160 Z" fill="var(--sable-voile)" opacity="0.7"></path>
-      </svg>
+    <div class="vdb-bandeau">
       <div class="vdb-bandeau-content">
         <span class="eyebrow"><span class="dot"></span> Service des achats</span>
         <h1>Boutique communale</h1>
