@@ -125,6 +125,7 @@ img,svg{ display:block; max-width:100%; }
   border-left:1px solid var(--trait); padding-left:14px; max-width:150px;
 }
 .nav{ margin-left:auto; display:flex; align-items:center; gap:6px; }
+.nav a{ white-space:nowrap; }
 .nav > a, .nav-item > a{
   font-family:var(--corps); font-size:14px; color:var(--encre); cursor:pointer;
   text-transform:uppercase; letter-spacing:.06em;
@@ -344,7 +345,7 @@ img,svg{ display:block; max-width:100%; }
   border-radius:var(--r-xl) var(--r-xl) 0 0;
   border-top:3px solid var(--vdb-jaune);
   box-shadow:var(--shadow-soft);
-  padding:clamp(48px,6vw,80px) 0 32px;
+  padding:clamp(48px,6vw,80px) 0 128px;
 }
 .footer-grid{ display:grid; grid-template-columns:1.6fr 1fr; gap:clamp(28px,4vw,56px); }
 .footer-brand .wordmark{ font-family:var(--titre); font-weight:bold; font-size:22px; color:#fff; line-height:1.1; }
@@ -379,6 +380,7 @@ img,svg{ display:block; max-width:100%; }
   border-top:1px solid rgba(255,255,255,.18);
   display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
   font-size:13px; color:rgba(255,255,255,.65);
+  padding-right:96px;
 }
 
 /* =========================================================
@@ -391,7 +393,7 @@ img,svg{ display:block; max-width:100%; }
   .footer-grid{ grid-template-columns:1fr 1fr; }
   .footer-brand{ grid-column:1 / -1; }
 }
-@media (max-width:760px){
+@media (max-width:900px){
   .nav{ display:none; position:absolute; top:100%; left:0; right:0;
     flex-direction:column; align-items:stretch; gap:4px;
     background:var(--fond); padding:16px var(--gut) 24px; border-bottom:1px solid var(--trait); }
@@ -565,6 +567,14 @@ a.account-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift);
 .data-table th, .data-table td{ text-align:left; padding:14px 16px; border-bottom:1px solid var(--trait); font-size:14px; }
 .data-table th{ color:var(--estompe); font-weight:600; text-transform:uppercase; font-size:11.5px; letter-spacing:.05em; }
 .data-table-wrap{ overflow-x:auto; }
+@media (max-width:600px){
+  .data-table thead{ display:none; }
+  .data-table, .data-table tbody{ display:block; }
+  .data-table tr{ display:block; border:1px solid var(--trait); border-radius:var(--r-md); padding:6px 16px; margin-bottom:14px; }
+  .data-table td{ display:flex; justify-content:space-between; align-items:center; gap:16px; padding:10px 0; border-bottom:1px solid var(--trait); }
+  .data-table td:last-child{ border-bottom:0; }
+  .data-table td::before{ content:attr(data-label); color:var(--estompe); font-weight:600; text-transform:uppercase; font-size:11.5px; letter-spacing:.05em; }
+}
 .status-pill{ display:inline-block; padding:5px 14px; border-radius:var(--r-pill); font-size:12.5px; font-weight:600; white-space:nowrap; }
 .status-pill.en-cours{ background:var(--jaune-voile); color:var(--vdb-brun); }
 .status-pill.livree{ background:var(--vert-voile); color:var(--vdb-bleu-fonce); }
@@ -681,10 +691,10 @@ a.account-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift);
             <tr><th>Référence</th><th>Date</th><th>Contenu</th><th>Statut</th><th>Total</th></tr>
           </thead>
           <tbody>
-            <tr><td>CMD-2026-0341</td><td>28.08.2026</td><td>Fournitures de bureau</td><td><span class="status-pill livree">Livrée</span></td><td>CHF 84.50</td></tr>
-            <tr><td>CMD-2026-0338</td><td>21.08.2026</td><td>Produits d'entretien</td><td><span class="status-pill en-cours">En cours</span></td><td>CHF 152.00</td></tr>
-            <tr><td>CMD-2026-0312</td><td>04.08.2026</td><td>Vêtements de travail</td><td><span class="status-pill preparation">En préparation</span></td><td>CHF 238.00</td></tr>
-            <tr><td>CMD-2026-0287</td><td>15.07.2026</td><td>Vin officiel</td><td><span class="status-pill livree">Livrée</span></td><td>CHF 96.00</td></tr>
+            <tr><td data-label="Référence">CMD-2026-0341</td><td data-label="Date">28.08.2026</td><td data-label="Contenu">Fournitures de bureau</td><td data-label="Statut"><span class="status-pill livree">Livrée</span></td><td data-label="Total">CHF 84.50</td></tr>
+            <tr><td data-label="Référence">CMD-2026-0338</td><td data-label="Date">21.08.2026</td><td data-label="Contenu">Produits d'entretien</td><td data-label="Statut"><span class="status-pill en-cours">En cours</span></td><td data-label="Total">CHF 152.00</td></tr>
+            <tr><td data-label="Référence">CMD-2026-0312</td><td data-label="Date">04.08.2026</td><td data-label="Contenu">Vêtements de travail</td><td data-label="Statut"><span class="status-pill preparation">En préparation</span></td><td data-label="Total">CHF 238.00</td></tr>
+            <tr><td data-label="Référence">CMD-2026-0287</td><td data-label="Date">15.07.2026</td><td data-label="Contenu">Vin officiel</td><td data-label="Statut"><span class="status-pill livree">Livrée</span></td><td data-label="Total">CHF 96.00</td></tr>
           </tbody>
         </table>
       </div>

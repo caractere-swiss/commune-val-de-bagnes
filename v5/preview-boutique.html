@@ -125,6 +125,7 @@ img,svg{ display:block; max-width:100%; }
   border-left:1px solid var(--trait); padding-left:14px; max-width:150px;
 }
 .nav{ margin-left:auto; display:flex; align-items:center; gap:6px; }
+.nav a{ white-space:nowrap; }
 .nav > a, .nav-item > a{
   font-family:var(--corps); font-size:14px; color:var(--encre); cursor:pointer;
   text-transform:uppercase; letter-spacing:.06em;
@@ -136,7 +137,7 @@ img,svg{ display:block; max-width:100%; }
 .nav > a.cta{ background:var(--vdb-bleu); color:#fff; }
 .nav > a.cta:hover{ background:var(--vdb-bleu-fonce); transform:translateY(-1px); }
 .nav > a.cta svg{ flex-shrink:0; }
-.nav-cart{ position:relative; display:inline-grid; place-items:center; width:44px; height:44px;
+.nav-cart{ position:relative; display:inline-grid; place-items:center; flex:0 0 44px; width:44px; height:44px;
   border:1px solid var(--trait); background:var(--carte); border-radius:50%; cursor:pointer;
   color:var(--encre); transition:background .18s ease, color .18s ease; }
 .nav-cart:hover{ background:var(--bleu-voile); color:var(--vdb-bleu); }
@@ -338,7 +339,7 @@ img,svg{ display:block; max-width:100%; }
   border-radius:var(--r-xl) var(--r-xl) 0 0;
   border-top:3px solid var(--vdb-jaune);
   box-shadow:var(--shadow-soft);
-  padding:clamp(48px,6vw,80px) 0 32px;
+  padding:clamp(48px,6vw,80px) 0 128px;
 }
 .footer-grid{ display:grid; grid-template-columns:1.6fr 1fr; gap:clamp(28px,4vw,56px); }
 .footer-brand .wordmark{ font-family:var(--titre); font-weight:bold; font-size:22px; color:#fff; line-height:1.1; }
@@ -373,6 +374,7 @@ img,svg{ display:block; max-width:100%; }
   border-top:1px solid rgba(255,255,255,.18);
   display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
   font-size:13px; color:rgba(255,255,255,.65);
+  padding-right:96px;
 }
 
 /* =========================================================
@@ -385,7 +387,7 @@ img,svg{ display:block; max-width:100%; }
   .footer-grid{ grid-template-columns:1fr 1fr; }
   .footer-brand{ grid-column:1 / -1; }
 }
-@media (max-width:760px){
+@media (max-width:900px){
   .nav{ display:none; position:absolute; top:100%; left:0; right:0;
     flex-direction:column; align-items:stretch; gap:4px;
     background:var(--fond); padding:16px var(--gut) 24px; border-bottom:1px solid var(--trait); }
