@@ -293,7 +293,7 @@ img,svg{ display:block; max-width:100%; }
 .section-head{ text-align:center; max-width:680px; margin:0 auto 52px; }
 .section-head .eyebrow{ margin-bottom:20px; }
 .section-head h2{ font-size:clamp(30px,3.8vw,46px); margin-bottom:14px; }
-.section-head p{ text-align:center; color:var(--estompe); font-size:19px; }
+.section-head p{ text-align:justify; text-align-last:center; color:var(--estompe); font-size:19px; }
 
 .cats{
   display:grid; grid-template-columns:repeat(4, 1fr);   /* 8 catégories → 4 + 4 équilibré */
@@ -340,6 +340,7 @@ img,svg{ display:block; max-width:100%; }
 .stat .num{
   font-family:var(--titre); font-weight:bold;
   font-size:clamp(38px,5vw,62px); line-height:1; color:var(--vdb-bleu); letter-spacing:-.02em;
+  white-space:nowrap;
 }
 .stat .num .affix{ color:inherit; font-size:0.42em; }   /* prefixe/suffixe reduits (CHF.../HT) : evite le retour a la ligne mesure au rendu reel */
 .stat:nth-child(1) .num{ color:var(--vdb-bleu); }
@@ -367,7 +368,7 @@ img,svg{ display:block; max-width:100%; }
 .flotte-copy h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:16px; }
 .flotte-copy > p{ color:var(--estompe); font-size:18px; margin:0 0 20px; }
 .flotte-list{ list-style:none; margin:0 0 28px; padding:0; display:flex; flex-direction:column; gap:11px; }
-.flotte-list li{ display:flex; align-items:center; gap:12px; font-size:17px; text-align:left; }
+.flotte-list li{ display:flex; align-items:center; gap:12px; font-size:17px; text-align:justify; text-align-last:left; }
 .flotte-list li::before{ content:''; width:9px; height:9px; border-radius:50%; background:var(--vdb-jaune); flex-shrink:0; }
 
 /* =========================================================
@@ -416,6 +417,7 @@ img,svg{ display:block; max-width:100%; }
   font-size:13px; color:rgba(255,255,255,.65);
   padding-right:96px;
 }
+.sep{ font-family:var(--titre); }
 
 /* =========================================================
    RESPONSIVE
@@ -601,7 +603,7 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
     <div class="news-grid">
       <article class="news-card">
         <h3>Nouveau design</h3>
-        <p>La boutique communale fait peau neuve : navigation simplifiée et catégories plus lisibles.</p>
+        <p>La boutique communale fait peau neuve : navigation simplifiée et catégories plus lisibles.</p>
       </article>
       <article class="news-card">
         <h3>Thés pour l'hiver</h3>
@@ -619,9 +621,9 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
         <h2>La boutique en chiffres</h2>
       </div>
       <div class="stats" id="stats">
-        <div class="stat"><div class="num" data-to="2566" style="opacity:.7">2566</div><div class="cap">commandes traitées depuis janvier 2024</div></div>
-        <div class="stat"><div class="num" data-to="500" style="opacity:.7">500</div><div class="cap">références au catalogue</div></div>
-        <div class="stat"><div class="num" data-to="205501" data-prefix="CHF " style="opacity:.7">CHF 205 501</div><div class="cap">de commandes en 2025</div></div>
+        <div class="stat"><div class="num" data-to="2566">2 566</div><div class="cap">commandes traitées depuis janvier 2024</div></div>
+        <div class="stat"><div class="num" data-to="500">500</div><div class="cap">références au catalogue</div></div>
+        <div class="stat"><div class="num" data-to="205501" data-prefix="CHF "><span class="affix">CHF </span>205 501</div><div class="cap">de commandes en 2025</div></div>
       </div>
     </div>
   </div>
@@ -638,7 +640,7 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
       <div id="contact-form-screen">
         <span class="modal-eyebrow">Service des achats</span>
         <h2 id="contact-modal-title">Contactez-nous</h2>
-        <p class="modal-short">Une question sur une commande ou un produit ? Écrivez-nous, nous revenons vers vous rapidement.</p>
+        <p class="modal-short">Une question sur une commande ou un produit ? Écrivez-nous, nous revenons vers vous rapidement.</p>
         <form id="contact-form" novalidate>
           <div class="contact-field">
             <label for="contact-name">Nom</label>
@@ -657,9 +659,9 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
       </div>
       <div id="contact-confirm-screen" hidden tabindex="-1">
         <span class="modal-eyebrow">Message transmis</span>
-        <h2>Merci, c'est envoyé !</h2>
+        <h2>Merci, c'est envoyé !</h2>
         <p class="modal-short">Le service des achats revient vers vous rapidement.</p>
-        <p class="contact-confirm-note">Maquette : aucun message n'est réellement envoyé.</p>
+        <p class="contact-confirm-note">Maquette : aucun message n'est réellement envoyé.</p>
         <button type="button" class="btn-ghost" id="contact-confirm-close">Fermer</button>
       </div>
     </div>
@@ -706,7 +708,7 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 
     <div class="footer-bottom">
       <span>© Commune de Val de Bagnes, Boutique communale</span>
-      <span>Maquette Homepage v3 · VDB</span>
+      <span>Maquette Homepage v3 <span class="sep">·</span> VDB</span>
     </div>
   </div>
 </footer>

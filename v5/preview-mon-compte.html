@@ -264,7 +264,7 @@ img,svg{ display:block; max-width:100%; }
 .section-head{ text-align:center; max-width:680px; margin:0 auto 52px; }
 .section-head .eyebrow{ margin-bottom:20px; }
 .section-head h2{ font-size:clamp(30px,3.8vw,46px); margin-bottom:14px; }
-.section-head p{ text-align:center; color:var(--estompe); font-size:19px; }
+.section-head p{ text-align:justify; text-align-last:center; color:var(--estompe); font-size:19px; }
 
 .cats{
   display:grid; grid-template-columns:repeat(4, 1fr);   /* 8 catégories → 4 + 4 équilibré */
@@ -309,6 +309,7 @@ img,svg{ display:block; max-width:100%; }
 .stat .num{
   font-family:var(--titre); font-weight:bold;
   font-size:clamp(38px,5vw,62px); line-height:1; color:var(--vdb-bleu); letter-spacing:-.02em;
+  white-space:nowrap;
 }
 .stat .num .suffix{ color:inherit; }            /* suffixe = même couleur que le nombre */
 .stat:nth-child(1) .num{ color:var(--vdb-bleu); }
@@ -336,7 +337,7 @@ img,svg{ display:block; max-width:100%; }
 .flotte-copy h2{ font-size:clamp(28px,3.6vw,44px); margin-bottom:16px; }
 .flotte-copy > p{ color:var(--estompe); font-size:18px; margin:0 0 20px; }
 .flotte-list{ list-style:none; margin:0 0 28px; padding:0; display:flex; flex-direction:column; gap:11px; }
-.flotte-list li{ display:flex; align-items:center; gap:12px; font-size:17px; text-align:left; }
+.flotte-list li{ display:flex; align-items:center; gap:12px; font-size:17px; text-align:justify; text-align-last:left; }
 .flotte-list li::before{ content:''; width:9px; height:9px; border-radius:50%; background:var(--vdb-jaune); flex-shrink:0; }
 
 /* =========================================================
@@ -385,6 +386,7 @@ img,svg{ display:block; max-width:100%; }
   font-size:13px; color:rgba(255,255,255,.65);
   padding-right:96px;
 }
+.sep{ font-family:var(--titre); }
 
 /* =========================================================
    RESPONSIVE
@@ -427,7 +429,7 @@ img,svg{ display:block; max-width:100%; }
 .hero-reduit-panel .eyebrow{ margin-bottom:20px; }
 .hero-reduit-panel h1{ font-size:clamp(32px,4.4vw,54px); margin-bottom:14px; }
 .hero-reduit-panel .btn{ margin-top:6px; }
-.hero-reduit-panel p{ text-align:center; color:var(--estompe); font-size:clamp(17px,1.4vw,19px); max-width:640px; margin:0 auto; }
+.hero-reduit-panel p{ text-align:justify; text-align-last:center; color:var(--estompe); font-size:clamp(17px,1.4vw,19px); max-width:640px; margin:0 auto; }
 
 /* Comment commander */
 .commander-wrap{
@@ -488,7 +490,7 @@ img,svg{ display:block; max-width:100%; }
   display:grid; place-items:center; font-family:var(--titre); font-weight:bold; font-size:17px;
 }
 .form-block-head h2{ font-size:clamp(22px,2.6vw,28px); margin-bottom:6px; }
-.form-block-head p{ color:var(--estompe); font-size:16px; margin:0; text-align:left; }
+.form-block-head p{ color:var(--estompe); font-size:16px; margin:0; text-align:justify; text-align-last:left; }
 .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px 24px; }
 .field{ display:flex; flex-direction:column; gap:8px; font-size:14px; color:var(--estompe); }
 .field-wide{ grid-column:1 / -1; }
@@ -681,7 +683,7 @@ a.account-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift);
         </div>
       </div>
       <ul class="account-list">
-        <li><span class="label">Nom</span><span class="value">Jean Dupont · Exemple</span></li>
+        <li><span class="label">Nom</span><span class="value">Jean Dupont <span class="sep">·</span> Exemple</span></li>
         <li><span class="label">Service</span><span class="value">Travaux publics (TP Vallée)</span></li>
         <li><span class="label">E-mail</span><span class="value">jean.dupont@valdebagnes.ch</span></li>
       </ul>
@@ -719,7 +721,7 @@ a.account-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift);
       <div id="contact-form-screen">
         <span class="modal-eyebrow">Service des achats</span>
         <h2 id="contact-modal-title">Contactez-nous</h2>
-        <p class="modal-short">Une question sur une commande ou un produit ? Écrivez-nous, nous revenons vers vous rapidement.</p>
+        <p class="modal-short">Une question sur une commande ou un produit ? Écrivez-nous, nous revenons vers vous rapidement.</p>
         <form id="contact-form" novalidate>
           <div class="contact-field">
             <label for="contact-name">Nom</label>
@@ -738,9 +740,9 @@ a.account-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift);
       </div>
       <div id="contact-confirm-screen" hidden tabindex="-1">
         <span class="modal-eyebrow">Message transmis</span>
-        <h2>Merci, c'est envoyé !</h2>
+        <h2>Merci, c'est envoyé !</h2>
         <p class="modal-short">Le service des achats revient vers vous rapidement.</p>
-        <p class="contact-confirm-note">Maquette : aucun message n'est réellement envoyé.</p>
+        <p class="contact-confirm-note">Maquette : aucun message n'est réellement envoyé.</p>
         <button type="button" class="btn-ghost" id="contact-confirm-close">Fermer</button>
       </div>
     </div>
@@ -787,7 +789,7 @@ a.account-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift);
 
     <div class="footer-bottom">
       <span>© Commune de Val de Bagnes, Boutique communale</span>
-      <span>Maquette Mon compte v1 · VDB</span>
+      <span>Maquette Mon compte v1 <span class="sep">·</span> VDB</span>
     </div>
   </div>
 </footer>
