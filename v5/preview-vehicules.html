@@ -171,6 +171,8 @@ img,svg{ display:block; max-width:100%; }
    HERO — carrousel dynamique
    ========================================================= */
 .hero{ padding:clamp(28px,5vw,64px) 0 8px; }
+.hero-reduit{ padding-bottom:32px; }
+@media (max-width:760px){ .hero-reduit{ padding-bottom:20px; } }
 .carousel{ position:relative; border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-soft); background:var(--carte); }
 .slides{ display:flex; transition:transform .85s cubic-bezier(.22,.61,.36,1); }
 .slide{
@@ -257,9 +259,9 @@ img,svg{ display:block; max-width:100%; }
 /* =========================================================
    SECTION CATÉGORIES (cœur du shop)
    ========================================================= */
-.section{ padding:clamp(48px,7vw,96px) 0; }
-.section-head{ text-align:center; max-width:680px; margin:0 auto clamp(28px,5vw,52px); }
-.section-head .eyebrow{ margin-bottom:18px; }
+.section{ padding:clamp(48px,7vw,96px) 0 64px; }
+.section-head{ text-align:center; max-width:680px; margin:0 auto 52px; }
+.section-head .eyebrow{ margin-bottom:20px; }
 .section-head h2{ font-size:clamp(30px,3.8vw,46px); margin-bottom:14px; }
 .section-head p{ text-align:center; color:var(--estompe); font-size:19px; }
 
@@ -348,7 +350,7 @@ img,svg{ display:block; max-width:100%; }
    FOOTER
    ========================================================= */
 .site-footer{
-  margin-top:clamp(48px,7vw,96px);
+  margin-top:0;
   background:var(--vdb-bleu-fonce); color:#fff;
   border-radius:var(--r-xl) var(--r-xl) 0 0;
   border-top:3px solid var(--vdb-jaune);
@@ -429,7 +431,7 @@ img,svg{ display:block; max-width:100%; }
   padding:clamp(40px,6vw,72px) clamp(32px,6vw,80px);
   text-align:center;
 }
-.hero-reduit-panel .eyebrow{ margin-bottom:16px; }
+.hero-reduit-panel .eyebrow{ margin-bottom:20px; }
 .hero-reduit-panel h1{ font-size:clamp(32px,4.4vw,54px); margin-bottom:14px; }
 .hero-reduit-panel .btn{ margin-top:6px; }
 .hero-reduit-panel p{ text-align:center; color:var(--estompe); font-size:clamp(17px,1.4vw,19px); max-width:640px; margin:0 auto; }
@@ -483,8 +485,12 @@ img,svg{ display:block; max-width:100%; }
 
 .form-block{
   background:var(--carte); border:1px solid var(--trait); border-radius:var(--r-xl);
-  box-shadow:var(--shadow-soft); padding:clamp(28px,4vw,48px); margin-bottom:clamp(20px,3vw,32px);
+  box-shadow:var(--shadow-soft); padding:clamp(28px,4vw,48px); margin-bottom:32px;
 }
+.form-block:last-child{ margin-bottom:0; }
+#conditions{ padding-bottom:32px; }
+@media (max-width:760px){ #conditions{ padding-bottom:20px; } }
+@media (max-width:760px){ .form-block{ margin-bottom:20px; } }
 .form-block-head{ display:flex; align-items:flex-start; gap:18px; margin-bottom:28px; }
 .form-step{
   flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--vdb-bleu); color:#fff;
