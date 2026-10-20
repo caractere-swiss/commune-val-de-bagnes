@@ -420,7 +420,7 @@ img,svg{ display:block; max-width:100%; }
 }
 .hero-reduit-panel .eyebrow{ margin-bottom:20px; }
 .hero-reduit-panel h1{ font-size:clamp(32px,4.4vw,54px); margin-bottom:14px; }
-.hero-reduit-panel p{ text-align:justify; text-align-last:center; color:var(--estompe); font-size:clamp(17px,1.4vw,19px); max-width:640px; margin:0 auto; }
+.hero-reduit-panel p{ text-align:justify; text-align-last:center; color:var(--estompe); font-size:clamp(17px,1.4vw,19px); max-width:640px; margin:0 auto; hyphenate-limit-chars:6 3 3; text-wrap:pretty; }
 
 /* BRIEF-14 bis (02.10) : bandeau boutique, photo reelle en fond (cover,
    ancree a droite pour garder la tasse entiere), texte aligne a gauche
@@ -1487,7 +1487,7 @@ var VDB_ICONS = {"bureau": "<path d=\"M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a
         '<div>' +
           '<span class="modal-eyebrow">' + (famName[p.fam]||'') + ' › ' + p.sub + '</span>' +
           '<h2 id="modal-title">' + p.name + '</h2>' +
-          '<p class="modal-ref">Réf. ' + p.ref + (p.real ? '' : ' · produit d\'exemple (maquette)') + '</p>' +
+          '<p class="modal-ref">Réf. ' + p.ref + (p.real ? '' : ' <span class="sep">·</span> produit d\'exemple (maquette)') + '</p>' +
           '<p class="modal-short">' + (p.short || p.cond) + '</p>' +
           '<table class="spec-table"><tbody>' +
             '<tr><th scope="row">Unité de vente</th><td>' + unites.unite + '</td></tr>' +
