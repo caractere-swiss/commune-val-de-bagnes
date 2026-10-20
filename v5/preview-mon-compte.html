@@ -630,6 +630,11 @@ a.account-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift);
   .cynthia-bubble{ right:14px; bottom:14px; padding:6px 14px 6px 6px; }
   .cynthia-photo{ width:58px; height:58px; }
 }
+/* Cibles tactiles (44 px minimum) sur tablette et mobile */
+@media (max-width:1023px){
+  .btn-sm, .flotte-dealer-link, .cat-reset, .breadcrumb button, .cat-sub{ min-height:44px; display:inline-flex; align-items:center; }
+  .footer-col li a{ display:inline-block; padding:10px 0; }
+}
 </style>
 </head>
 <body>
