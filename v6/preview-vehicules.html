@@ -348,6 +348,8 @@ img,svg{ display:block; max-width:100%; }
 .flotte-brand-tile{ font-size:13px; color:var(--estompe); background:var(--sable-voile); border-radius:var(--r-pill); padding:6px 12px; display:inline-flex; align-items:center; justify-content:center; min-height:48px; min-width:88px; box-sizing:border-box; }
 .flotte-brand-tile img{ display:block; height:28px; width:auto; max-width:96px; object-fit:contain; filter:grayscale(1); opacity:.75; }
 @media (max-width:600px){ .flotte-brand-tile img{ height:24px; max-width:80px; } }
+/* v6 : cinq logos rendus trop petits, agrandis (hauteur 39 px, largeur selon le dessin) */
+.flotte-brand-tile img.logo-grand{ height:39px; max-width:160px; }
 .flotte-dealer-link{ display:inline-flex; align-items:center; gap:8px; margin-top:14px; font-size:14px; color:var(--vdb-bleu); font-weight:600; }
 
 /* =========================================================
@@ -740,12 +742,12 @@ h1{ line-height:1.12; }
     <div class="flotte-brands">
       <div class="flotte-dealer">
         <h3>Garage Olympic <span class="sep">·</span> Sierre, Sion, Martigny</h3>
-        <div class="flotte-brand-tiles"><span class="flotte-brand-tile"><img src="logos/skoda.svg" alt="Škoda"></span><span class="flotte-brand-tile"><img src="logos/vw.svg" alt="Volkswagen"></span><span class="flotte-brand-tile"><img src="logos/seat.svg" alt="Seat"></span><span class="flotte-brand-tile"><img src="logos/cupra.svg" alt="Cupra"></span><span class="flotte-brand-tile"><img src="logos/audi.svg" alt="Audi"></span></div>
+        <div class="flotte-brand-tiles"><span class="flotte-brand-tile"><img src="logos/skoda.svg" alt="Škoda"></span><span class="flotte-brand-tile"><img src="logos/vw.svg" alt="Volkswagen"></span><span class="flotte-brand-tile"><img class="logo-grand" src="logos/seat.svg" alt="Seat"></span><span class="flotte-brand-tile"><img class="logo-grand" src="logos/cupra.svg" alt="Cupra"></span><span class="flotte-brand-tile"><img src="logos/audi.svg" alt="Audi"></span></div>
         <a class="flotte-dealer-link" href="#" data-demo="1" title="Document officiel, disponible sur le site interne">Plus d'informations <span class="arr">→</span></a>
       </div>
       <div class="flotte-dealer">
         <h3>Garage Mistral</h3>
-        <div class="flotte-brand-tiles"><span class="flotte-brand-tile"><img src="logos/peugeot.svg" alt="Peugeot"></span><span class="flotte-brand-tile"><img src="logos/citroen.svg" alt="Citroën"></span><span class="flotte-brand-tile"><img src="logos/opel.svg" alt="Opel"></span><span class="flotte-brand-tile"><img src="logos/mazda.svg" alt="Mazda"></span><span class="flotte-brand-tile"><img src="logos/hyundai.svg" alt="Hyundai"></span><span class="flotte-brand-tile"><img src="logos/suzuki.svg" alt="Suzuki"></span><span class="flotte-brand-tile">Alfa Romeo</span><span class="flotte-brand-tile"><img src="logos/jeep.svg" alt="Jeep"></span><span class="flotte-brand-tile"><img src="logos/fiat.svg" alt="Fiat"></span></div>
+        <div class="flotte-brand-tiles"><span class="flotte-brand-tile"><img src="logos/peugeot.svg" alt="Peugeot"></span><span class="flotte-brand-tile"><img class="logo-grand" src="logos/citroen.svg" alt="Citroën"></span><span class="flotte-brand-tile"><img class="logo-grand" src="logos/opel.svg" alt="Opel"></span><span class="flotte-brand-tile"><img src="logos/mazda.svg" alt="Mazda"></span><span class="flotte-brand-tile"><img src="logos/hyundai.svg" alt="Hyundai"></span><span class="flotte-brand-tile"><img src="logos/suzuki.svg" alt="Suzuki"></span><span class="flotte-brand-tile">Alfa Romeo</span><span class="flotte-brand-tile"><img src="logos/jeep.svg" alt="Jeep"></span><span class="flotte-brand-tile"><img src="logos/fiat.svg" alt="Fiat"></span></div>
       </div>
       <div class="flotte-dealer">
         <h3>Garage Mont-Blanc <span class="sep">·</span> Martigny-Croix</h3>
@@ -757,7 +759,7 @@ h1{ line-height:1.12; }
       </div>
       <div class="flotte-dealer">
         <h3>Car Vine <span class="sep">·</span> Boisset SA</h3>
-        <div class="flotte-brand-tiles"><span class="flotte-brand-tile"><img src="logos/toyota.svg" alt="Toyota"></span><span class="flotte-brand-tile"><img src="logos/mercedes.svg" alt="Mercedes-Benz"></span></div>
+        <div class="flotte-brand-tiles"><span class="flotte-brand-tile"><img src="logos/toyota.svg" alt="Toyota"></span><span class="flotte-brand-tile"><img class="logo-grand" src="logos/mercedes.svg" alt="Mercedes-Benz"></span></div>
       </div>
       <div class="flotte-dealer">
         <h3>Cristal Garage SA</h3>
