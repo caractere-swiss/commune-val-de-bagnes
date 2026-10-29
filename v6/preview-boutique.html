@@ -796,8 +796,15 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 .news-modal{ width:min(640px,100%); text-align:left; }
 .news-modal .news-grid{ margin-top:20px; }
 .site-footer{ padding-bottom:184px; }
+/* v6 : a 760 px et moins, bouton compact sur la ligne de la bulle, a sa gauche */
+.news-fab-court{ display:none; }
+@media (max-width:760px){
+  .news-fab{ right:calc(24px + var(--bubble-w, 211px) + 10px); bottom:24px; height:40px; min-height:40px; padding:0 18px; }
+  .news-fab-long{ display:none; }
+  .news-fab-court{ display:inline; }
+}
 @media (max-width:600px){
-  .news-fab{ right:14px; bottom:calc(14px + var(--bubble-h, 72px) + 10px); }
+  .news-fab{ right:calc(14px + var(--bubble-w, 185px) + 10px); bottom:14px; }
   .site-footer{ padding-bottom:152px; }
 }
 /* v6 G1/constat 9 : rivieres. Sans cesure automatique (mesure de la relecture), les colonnes etroites
@@ -1288,7 +1295,7 @@ h1{ line-height:1.12; }
 </section>
 
 <!-- Nouveautés : contenu modifiable, retirer ce bloc masque la fonction. -->
-<button type="button" class="btn-ghost news-fab" id="news-btn" aria-haspopup="dialog">Voir les nouveautés</button>
+<button type="button" class="btn-ghost news-fab" id="news-btn" aria-haspopup="dialog" aria-label="Voir les nouveautés"><span class="news-fab-long">Voir les nouveautés</span><span class="news-fab-court">Nouveautés</span></button>
 <div class="modal-backdrop" id="news-modal" hidden>
   <div class="modal news-modal" role="dialog" aria-modal="true" aria-labelledby="news-modal-title">
     <button type="button" class="modal-close" id="news-modal-close" aria-label="Fermer les nouveautés">
