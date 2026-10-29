@@ -638,6 +638,8 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
   .news-fab{ right:14px; bottom:calc(14px + var(--bubble-h, 72px) + 10px); }
   .site-footer{ padding-bottom:152px; }
 }
+/* v6 G1/N1 : en tete de bloc, la pastille passe au-dessus du texte sur mobile */
+@media (max-width:600px){ .form-block-head{ flex-direction:column; gap:12px; } }
 /* Cibles tactiles (44 px minimum) sur tablette et mobile */
 @media (max-width:1023px){
   .btn-sm, .flotte-dealer-link, .cat-reset, .breadcrumb button, .cat-sub{ min-height:44px; display:inline-flex; align-items:center; }
