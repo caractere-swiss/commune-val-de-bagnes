@@ -632,7 +632,12 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 .news-fab:hover{ background:var(--bleu-voile); }
 .news-modal{ width:min(640px,100%); text-align:left; }
 .news-modal .news-grid{ margin-top:20px; }
-.site-footer{ padding-bottom:184px; }
+/* v6 : espace bas = hauteur de la bulle + 24 px (+ 1 px contre l'arrondi du defilement) ; au-dela de 760 px les credits s'arretent avant le bouton */
+.site-footer{ padding-bottom:calc(var(--bubble-h, 94px) + 25px); }
+@media (min-width:761px){
+  .footer-bottom{ margin-right:200px; padding-right:0; border-top:0; position:relative; }
+  .footer-bottom::before{ content:""; position:absolute; top:0; left:0; right:-200px; border-top:1px solid rgba(255,255,255,.18); }
+}
 /* v6 : a 760 px et moins, bouton compact sur la ligne de la bulle, a sa gauche */
 .news-fab-court{ display:none; }
 @media (max-width:760px){
@@ -642,7 +647,7 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 }
 @media (max-width:600px){
   .news-fab{ right:calc(14px + var(--bubble-w, 185px) + 10px); bottom:14px; }
-  .site-footer{ padding-bottom:152px; }
+  .site-footer{ padding-bottom:calc(var(--bubble-h, 72px) + 24px); }
 }
 /* v6 G1/N1 : en tete de bloc, la pastille passe au-dessus du texte sur mobile */
 @media (max-width:600px){ .form-block-head{ flex-direction:column; gap:12px; } }
