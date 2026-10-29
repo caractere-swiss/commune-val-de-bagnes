@@ -659,8 +659,8 @@ a.account-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift);
 /* v6 G2/N7 */
 h1{ line-height:1.12; }
 .form-block-head h2{ line-height:1.2; }
-/* Cibles tactiles (44 px minimum) sur tablette et mobile */
-@media (max-width:1023px){
+/* Cibles tactiles (44 px minimum) sur tablette, mobile et ecrans tactiles */
+@media (max-width:1023px), (pointer:coarse){
   .btn-sm, .flotte-dealer-link, .cat-reset, .breadcrumb button, .cat-sub{ min-height:44px; display:inline-flex; align-items:center; }
   .footer-col li a{ display:inline-block; padding:10px 0; }
 }
