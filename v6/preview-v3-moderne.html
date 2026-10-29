@@ -522,6 +522,32 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
   .cynthia-bubble{ right:14px; bottom:14px; padding:6px 14px 6px 6px; }
   .cynthia-photo{ width:58px; height:58px; }
 }
+.btn-ghost{
+  display:inline-flex; align-items:center; gap:8px; font-family:var(--corps); font-size:15px; font-weight:600;
+  background:transparent; color:var(--vdb-bleu); border:1px solid var(--vdb-bleu);
+  padding:13px 24px; border-radius:var(--r-pill); cursor:pointer; min-height:44px;
+  transition:background .18s ease;
+}
+.btn-ghost:hover{ background:var(--bleu-voile); }
+.btn-ghost .arr{ transition:transform .2s ease; }
+.btn-ghost:hover .arr{ transform:translateX(3px); }
+/* NOUVEAUTES : bouton fixe pres de la bulle de contact, fenetre sur le modele de la fenetre de contact */
+.news-fab{
+  position:fixed; z-index:60; min-height:44px; background:var(--carte); box-shadow:var(--shadow-lift);
+  right:calc(24px + var(--bubble-w, 300px) + 12px);
+  bottom:calc(24px + (var(--bubble-h, 94px) - 44px) / 2);
+}
+.news-fab:hover{ background:var(--bleu-voile); }
+.news-modal{ width:min(640px,100%); text-align:left; }
+.news-modal .news-grid{ margin-top:20px; }
+@media (max-width:760px){
+  .news-fab{ right:24px; bottom:calc(24px + var(--bubble-h, 94px) + 10px); }
+  .site-footer{ padding-bottom:184px; }
+}
+@media (max-width:600px){
+  .news-fab{ right:14px; bottom:calc(14px + var(--bubble-h, 72px) + 10px); }
+  .site-footer{ padding-bottom:152px; }
+}
 /* Cibles tactiles (44 px minimum) sur tablette et mobile */
 @media (max-width:1023px){
   .btn-sm, .flotte-dealer-link, .cat-reset, .breadcrumb button, .cat-sub{ min-height:44px; display:inline-flex; align-items:center; }
@@ -597,27 +623,6 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
   </div>
 </section>
 
-<!-- ===================== NOUVEAUTES (A7) =====================
-     Un seul element : le retirer suffit a masquer toute la fonctionnalite. -->
-<section class="section" style="padding-bottom:0;">
-  <div class="wrap">
-    <div class="section-head" style="margin-bottom:clamp(14px,2vw,22px);">
-      <span class="eyebrow"><span class="dot"></span> Nouveautés</span>
-      <h2>Ce qui change</h2>
-    </div>
-    <div class="news-grid">
-      <article class="news-card">
-        <h3>Nouveau design</h3>
-        <p>La boutique communale fait peau neuve : navigation simplifiée et catégories plus lisibles.</p>
-      </article>
-      <article class="news-card">
-        <h3>Thés pour l'hiver</h3>
-        <p>Une sélection de thés rejoint le catalogue pour la saison froide.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== BANNIÈRE CHIFFRES ===================== -->
 <section class="section" style="padding-top:0;">
   <div class="wrap">
@@ -667,6 +672,30 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
         <p class="modal-short">Le service des achats revient vers vous rapidement.</p>
         <p class="contact-confirm-note">Maquette : aucun message n'est réellement envoyé.</p>
         <button type="button" class="btn-ghost" id="contact-confirm-close">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Nouveautés : contenu modifiable, retirer ce bloc masque la fonction. -->
+<button type="button" class="btn-ghost news-fab" id="news-btn" aria-haspopup="dialog">Voir les nouveautés</button>
+<div class="modal-backdrop" id="news-modal" hidden>
+  <div class="modal news-modal" role="dialog" aria-modal="true" aria-labelledby="news-modal-title">
+    <button type="button" class="modal-close" id="news-modal-close" aria-label="Fermer les nouveautés">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-body">
+      <span class="modal-eyebrow">Boutique communale</span>
+      <h2 id="news-modal-title">Nouveautés</h2>
+      <div class="news-grid">
+        <article class="news-card">
+          <h3>Nouveau design</h3>
+          <p>La boutique communale fait peau neuve : navigation simplifiée et catégories plus lisibles.</p>
+        </article>
+        <article class="news-card">
+          <h3>Thés pour l'hiver</h3>
+          <p>Une sélection de thés rejoint le catalogue pour la saison froide.</p>
+        </article>
       </div>
     </div>
   </div>
@@ -812,6 +841,48 @@ document.addEventListener('keydown', function(ev){
     else if(!ev.shiftKey && document.activeElement === last){ ev.preventDefault(); first.focus(); }
   }
 });
+</script>
+<script>
+/* ---------- Nouveautes : fenetre ouverte au clic seulement ---------- */
+(function(){
+  var btn = document.getElementById('news-btn');
+  var modal = document.getElementById('news-modal');
+  var closeBtn = document.getElementById('news-modal-close');
+  var bubble = document.getElementById('contact-bubble');
+  function place(){
+    var r = bubble.getBoundingClientRect();
+    document.documentElement.style.setProperty('--bubble-w', r.width + 'px');
+    document.documentElement.style.setProperty('--bubble-h', r.height + 'px');
+  }
+  function openNews(){
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeNews(){
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    btn.focus();
+  }
+  btn.addEventListener('click', openNews);
+  closeBtn.addEventListener('click', closeNews);
+  modal.addEventListener('click', function(ev){ if(ev.target === modal) closeNews(); });
+  document.addEventListener('keydown', function(ev){
+    if(modal.hidden) return;
+    if(ev.key === 'Escape'){ closeNews(); return; }
+    if(ev.key === 'Tab'){
+      var f = Array.prototype.filter.call(modal.querySelectorAll('button, [href]'), function(el){ return el.offsetParent !== null; });
+      if(!f.length) return;
+      var first = f[0], last = f[f.length-1];
+      if(ev.shiftKey && document.activeElement === first){ ev.preventDefault(); last.focus(); }
+      else if(!ev.shiftKey && document.activeElement === last){ ev.preventDefault(); first.focus(); }
+    }
+  });
+  place();
+  window.addEventListener('resize', place);
+  window.addEventListener('load', place);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+})();
 </script>
 </body>
 </html>
