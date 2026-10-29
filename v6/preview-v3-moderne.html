@@ -534,16 +534,13 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 /* NOUVEAUTES : bouton fixe pres de la bulle de contact, fenetre sur le modele de la fenetre de contact */
 .news-fab{
   position:fixed; z-index:60; min-height:44px; background:var(--carte); box-shadow:var(--shadow-lift);
-  right:calc(24px + var(--bubble-w, 300px) + 12px);
-  bottom:calc(24px + (var(--bubble-h, 94px) - 44px) / 2);
+  right:24px;
+  bottom:calc(24px + var(--bubble-h, 94px) + 10px);
 }
 .news-fab:hover{ background:var(--bleu-voile); }
 .news-modal{ width:min(640px,100%); text-align:left; }
 .news-modal .news-grid{ margin-top:20px; }
-@media (max-width:760px){
-  .news-fab{ right:24px; bottom:calc(24px + var(--bubble-h, 94px) + 10px); }
-  .site-footer{ padding-bottom:184px; }
-}
+.site-footer{ padding-bottom:184px; }
 @media (max-width:600px){
   .news-fab{ right:14px; bottom:calc(14px + var(--bubble-h, 72px) + 10px); }
   .site-footer{ padding-bottom:152px; }
