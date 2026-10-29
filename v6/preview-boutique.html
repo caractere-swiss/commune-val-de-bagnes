@@ -810,6 +810,11 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 .faq-item p{ font-size:14.5px; letter-spacing:-.02em; }
 /* v6 G1/N2 : justification des notes de bas de bloc */
 .stats-note, .commander-foot{ text-align:justify; text-align-last:center; }
+/* v6 G2/N3 : respiration sous le bandeau */
+.vdb-bandeau + .stats-note, .hero + .stats-note{ margin:20px auto 32px; }
+@media (max-width:760px){ .vdb-bandeau + .stats-note, .hero + .stats-note{ margin:16px auto 20px; } }
+/* v6 G2/N7 */
+h1{ line-height:1.12; }
 /* Cibles tactiles (44 px minimum) sur tablette et mobile */
 @media (max-width:1023px){
   .btn-sm, .flotte-dealer-link, .cat-reset, .breadcrumb button, .cat-sub{ min-height:44px; display:inline-flex; align-items:center; }
@@ -874,7 +879,7 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
         <p>Commande de matériel pour les services communaux, centralisée, transparente et en quelques clics.</p>
       </div>
     </div>
-    <p class="stats-note" style="margin-top:18px;">Les prix affichés sont ceux pratiqués par la centrale d'achat, TTC.</p>
+    <p class="stats-note">Les prix affichés sont ceux pratiqués par la centrale d'achat, TTC.</p>
   </div>
 </section>
 

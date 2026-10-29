@@ -640,6 +640,12 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 }
 /* v6 G1/N1 : en tete de bloc, la pastille passe au-dessus du texte sur mobile */
 @media (max-width:600px){ .form-block-head{ flex-direction:column; gap:12px; } }
+/* v6 G2/N4 : puce calee sur la premiere ligne */
+.flotte-list li{ align-items:flex-start; }
+.flotte-list li::before{ margin-top:9px; }
+/* v6 G2/N7 */
+h1{ line-height:1.12; }
+.form-block-head h2{ line-height:1.2; }
 /* Cibles tactiles (44 px minimum) sur tablette et mobile */
 @media (max-width:1023px){
   .btn-sm, .flotte-dealer-link, .cat-reset, .breadcrumb button, .cat-sub{ min-height:44px; display:inline-flex; align-items:center; }
