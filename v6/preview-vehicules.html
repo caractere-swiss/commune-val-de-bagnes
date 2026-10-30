@@ -651,6 +651,9 @@ select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
 }
 /* v6 G1/N1 : en tete de bloc, la pastille passe au-dessus du texte sur mobile */
 @media (max-width:600px){ .form-block-head{ flex-direction:column; gap:12px; } }
+/* v6 blancs du texte justifie : cesure assouplie, corps resserre en 760 px et moins (mesure a 390 : aucun blanc au-dela de 16 px) */
+.form-block-head p, .flotte-list li{ hyphens:auto; hyphenate-limit-chars:5 2 2; }
+@media (max-width:760px){ .form-block-head p{ font-size:14.5px; } .flotte-list li{ font-size:15.5px; } }
 /* v6 G2/N4 : puce calee sur la premiere ligne */
 .flotte-list li{ align-items:flex-start; }
 .flotte-list li::before{ margin-top:9px; }
